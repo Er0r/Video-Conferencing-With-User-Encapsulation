@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<meta name="Description" content="Enter your description here" />
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css"
+		/>
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"
+		/>
+		<script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+        <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
+        <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css"/>
+        <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/semantic.min.css"/>
+        <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/bootstrap.min.css"/>
+        <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.rtl.min.css"/>
+        <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.rtl.min.css"/>
+        <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/semantic.rtl.min.css"/>
+        <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/bootstrap.rtl.min.css"/>
+        <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-analytics.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-auth.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-firestore.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-database.js"></script>
+        <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyAUCgn__4r9gxa1nIHWuibSz-NxzdeEofw",
+            authDomain: "ishwarsingh-fe6da.firebaseapp.com",
+            projectId: "ishwarsingh-fe6da",
+            storageBucket: "ishwarsingh-fe6da.appspot.com",
+            messagingSenderId: "113178540955",
+            appId: "1:113178540955:web:f443106593679e5c937f3e",
+            measurementId: "G-NGDRDVFQ7S"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        firebase.analytics();
+        </script>
+		
+		<title>Dashboard</title>
+	</head>
+	<body>
+		<style>
+			.nav-link[data-toggle].collapsed:before {
+				content: " ▾";
+			}
+			.nav-link[data-toggle]:not(.collapsed):before {
+				content: " ▴";
+			}
+			i {
+				color: #f49303;
+				padding-right: 1rem;
+			}
+		</style>
+		<div class="container-fluid min-vh-100 min-vw-100">
+			<div class="d-flex justify-content-between">
+				<div class="" style="width: 220px; height: 120px">
+					
+				</div>
+
+				<div class="d-flex align-items-center">
+					<div class="pr-1">
+						<h5 id="loginname">
+							Welcome <strong> username </strong> <span class="pl-2">|</span>
+						</h5>
+					</div>
+					
+					<div class="ml-1 logout">
+						<a href="/" style="color: black">
+							<span style="color: #f49303" class=""
+								><i class="fas fa-sign-out-alt"></i></span
+							><strong>Logout</strong>
+						</a>
+					</div>
+				</div>
+			</div>
+
+			<div class="row ml-1">
+				<div class="col-2 collapse show d-md-flex mt-2 pl-0" id="sidebar">
+					<ul class="nav flex-column flex-nowrap overflow-hidden">
+						<li class="nav-item mb-2">
+							<a
+								class="nav-link collapsed text-truncate"
+								href="#submenu1"
+								data-toggle="collapse"
+								data-target="#submenu1"
+								style="background-color: rgb(11, 11, 44)"
+							>
+								<i class="fas fa-user"></i>
+								<span class="d-none d-sm-inline text-white"
+									><strong>Admin</strong></span
+								></a
+							>
+							<div class="collapse" id="submenu1" aria-expanded="false">
+								<ul class="flex-column pl-3 nav">
+									<li class="nav-item m-2" id="agenttable">
+										<a class="nav-link py-0 FAQ" >
+											<i class="fas fa-table"></i><span>FAQ</span></a>
+									</li>
+									<li class="nav-item m-2 ma" id="pr_open">
+										<a class="nav-link py-0" href="#">
+											<i class="fas fa-globe"></i
+											><span>Priority Openings (Map)</span></a
+										>
+									</li>
+									<li class="nav-item m-2" id="cnt_avb">
+										<a class="nav-link py-0" href="#">
+											<i class="fas fa-male"></i
+											><span>County Availability</span></a
+										>
+									</li>
+								</ul>
+							</div>
+						</li>
+						<li class="nav-item">
+							<a
+								class="nav-link collapsed text-truncate"
+								href="#submenu1"
+								data-toggle="collapse"
+								data-target="#submenu2"
+								style="background-color: rgb(11, 11, 44)"
+								><i class="fas fa-tachometer-alt"></i>
+								<span class="d-none d-sm-inline text-white"
+									><strong>Buy Leads</strong></span
+								></a
+							>
+							<div class="collapse" id="submenu2" aria-expanded="false">
+								<ul class="flex-column pl-3 nav">
+									<li class="nav-item m-2">
+										<a class="nav-link py-0" href="#">
+											<i class="fas fa-tachometer-alt"></i
+											><span>Dashboard</span></a
+										>
+									</li>
+									<li class="nav-item m-2">
+										<a class="nav-link py-0" href="/card">
+											<i class="far fa-credit-card"></i
+											><span>Manage Cards</span></a
+										>
+									</li>
+									<li class="nav-item m-2">
+										<a class="nav-link py-0" href="/notification">
+											<i class="fas fa-bell"></i><span>Notifications</span></a
+										>
+									</li>
+									<li class="nav-item m-2">
+										<a class="nav-link py-0" href="#">
+											<i class="fas fa-chart-line"></i><span>Reports</span></a
+										>
+									</li>
+								</ul>
+							</div>
+						</li>
+					</ul>
+				</div>
+				<div class="col">
+					<div class="mt-5" id="lo">
+                        <h5>Dashboard</h5>
+                    </div>
+				</div>
+			</div>
+		</div>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+		<script>
+			$(document).ready(function () {
+				$(".FAQ").click(function () {
+					$("#lo").load("faq")
+				});
+
+			});
+		</script>
+		<script src="../assets/js/dashboardhandler.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"></script>
+	</body>
+</html>

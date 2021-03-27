@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<meta name="Description" content="Enter your description here" />
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css"
+		/>
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"
+		/>
+		<script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-analytics.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-auth.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-firestore.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-database.js"></script>
+        <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyAUCgn__4r9gxa1nIHWuibSz-NxzdeEofw",
+            authDomain: "ishwarsingh-fe6da.firebaseapp.com",
+            projectId: "ishwarsingh-fe6da",
+            storageBucket: "ishwarsingh-fe6da.appspot.com",
+            messagingSenderId: "113178540955",
+            appId: "1:113178540955:web:f443106593679e5c937f3e",
+            measurementId: "G-NGDRDVFQ7S"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        firebase.analytics();
+        </script>
+		<title>Title</title>
+	</head>
+	<body>
+		<style>
+			/* .faq-section {
+				min-height: 100vh;
+				padding: 10vh 0 0;
+			} */
+			.faq-title h2 {
+				position: relative;
+				/* margin-bottom: 45px; */
+				display: inline-block;
+				font-weight: 600;
+				line-height: 1;
+			}
+			.faq-title h2::before {
+				content: "";
+				position: absolute;
+				left: 50%;
+				width: 60px;
+				height: 2px;
+				background: #e91e63;
+				bottom: -25px;
+				margin-left: -30px;
+			}
+			.faq-title p {
+				padding: 0 190px;
+				margin-bottom: 10px;
+			}
+
+			.faq {
+				background: #ffffff;
+				box-shadow: 0 2px 48px 0 rgba(0, 0, 0, 0.06);
+				border-radius: 4px;
+			}
+
+			.faq .card {
+				border: none;
+				background: none;
+				border-bottom: 1px dashed #cee1f8;
+			}
+
+			.faq .card .card-header {
+				padding: 0px;
+				border: none;
+				background: none;
+				-webkit-transition: all 0.3s ease 0s;
+				-moz-transition: all 0.3s ease 0s;
+				-o-transition: all 0.3s ease 0s;
+				transition: all 0.3s ease 0s;
+			}
+
+			.faq .card .card-header:hover {
+				background: rgba(233, 30, 99, 0.1);
+				padding-left: 10px;
+			}
+			.faq .card .card-header .faq-title {
+				width: 100%;
+				text-align: left;
+				padding: 0px;
+				padding-left: 30px;
+				padding-right: 30px;
+				font-weight: 400;
+				font-size: 15px;
+				letter-spacing: 1px;
+				color: #3b566e;
+				text-decoration: none !important;
+				-webkit-transition: all 0.3s ease 0s;
+				-moz-transition: all 0.3s ease 0s;
+				-o-transition: all 0.3s ease 0s;
+				transition: all 0.3s ease 0s;
+				cursor: pointer;
+				padding-top: 20px;
+				padding-bottom: 20px;
+			}
+
+			.faq .card .card-header .faq-title .badge {
+				display: inline-block;
+				width: 20px;
+				height: 20px;
+				line-height: 14px;
+				-webkit-border-radius: 100px;
+				-moz-border-radius: 100px;
+				border-radius: 100px;
+				text-align: center;
+				background: #e91e63;
+				color: #fff;
+				font-size: 12px;
+				margin-right: 20px;
+			}
+
+			.faq .card .card-body {
+				padding: 30px;
+				padding-left: 35px;
+				padding-bottom: 16px;
+				font-weight: 400;
+				font-size: 16px;
+				color: #6f8ba4;
+				line-height: 28px;
+				letter-spacing: 1px;
+				border-top: 1px solid #f3f8ff;
+			}
+
+			/* .faq .card .card-body p {
+				margin-bottom: 14px;
+			} */
+
+			@media (max-width: 991px) {
+				.faq {
+					margin-bottom: 30px;
+				}
+				.faq .card .card-header .faq-title {
+					line-height: 26px;
+					margin-top: 10px;
+				}
+			}
+		</style>
+		<div class="container-fluid b" style="min-height: 100vh; min-width: 100vh" >
+			<section class="faq-section">
+				<div class="">
+					<div class="row">
+						<!-- ***** FAQ Start ***** -->
+						<div class="col-md-6 offset-md-3">
+							<div class="faq-title text-center pb-3">
+								<h2 class="text-white font-weight-bold mt-2">FAQ</h2>
+							</div>
+						</div>
+						<div class="col-md-6 offset-md-3">
+							<div class="faq" id="accordion">
+								<div class="card" id="card-cd">
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</div>
+		
+		<script src="../assets/js/faqhandler.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.slim.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"></script>
+	</body>
+</html>

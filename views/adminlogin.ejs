@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<meta name="Description" content="Enter your description here" />
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css"
+		/>
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"
+		/>
+		<link
+			rel="stylesheet"
+			href="https://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900,900italic"
+		/>
+		<!-- JavaScript -->
+		<script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+
+		<!-- CSS -->
+		<link
+			rel="stylesheet"
+			href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"
+		/>
+		<!-- Default theme -->
+		<link
+			rel="stylesheet"
+			href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css"
+		/>
+		<!-- Semantic UI theme -->
+		<link
+			rel="stylesheet"
+			href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/semantic.min.css"
+		/>
+		<!-- Bootstrap theme -->
+		<link
+			rel="stylesheet"
+			href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/bootstrap.min.css"
+		/>
+
+		<!-- 
+			RTL version
+		-->
+		<link
+			rel="stylesheet"
+			href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.rtl.min.css"
+		/>
+		<!-- Default theme -->
+		<link
+			rel="stylesheet"
+			href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.rtl.min.css"
+		/>
+		<!-- Semantic UI theme -->
+		<link
+			rel="stylesheet"
+			href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/semantic.rtl.min.css"
+		/>
+		<!-- Bootstrap theme -->
+		<link
+			rel="stylesheet"
+			href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/bootstrap.rtl.min.css"
+		/>
+
+		<script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-app.js"></script>
+		<script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-analytics.js"></script>
+		<script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-auth.js"></script>
+		<script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-firestore.js"></script>
+		<script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-database.js"></script>
+
+		<script>
+			const firebaseConfig = {
+				apiKey: "AIzaSyAUCgn__4r9gxa1nIHWuibSz-NxzdeEofw",
+				authDomain: "ishwarsingh-fe6da.firebaseapp.com",
+				projectId: "ishwarsingh-fe6da",
+				storageBucket: "ishwarsingh-fe6da.appspot.com",
+				messagingSenderId: "113178540955",
+				appId: "1:113178540955:web:f443106593679e5c937f3e",
+				measurementId: "G-NGDRDVFQ7S",
+			};
+
+			firebase.initializeApp(firebaseConfig);
+			firebase.analytics();
+		</script>
+		<!-- Firebase End -->
+
+		<title>Title</title>
+	</head>
+
+	<body>
+		<div class="container-fluid">
+			<div class="offset-md-3 container mb-3">
+				<h1>Login</h1>
+			</div>
+			<div
+				class="card offset-md-3"
+				style="width: 50%; border: 2px solid black; background-color: #cecece"
+			>
+				<div class="p-4">
+					<div class="form-group">
+						<label for="exampleInputEmail1"><strong>UserEmail</strong></label>
+						<input
+							type="email"
+							class="form-control"
+							id="adminemail"
+							aria-describedby="emailHelp"
+							placeholder="Enter email"
+						/>
+					</div>
+
+					<div class="form-group">
+						<label for="exampleInputPassword1"><strong>Password</strong></label>
+						<input
+							type="password"
+							class="form-control"
+							id="adminpassword"
+							placeholder="Password"
+						/>
+					</div>
+					<div class="form-check">
+						<input
+							type="checkbox"
+							class="form-check-input"
+							id="exampleCheck1"
+						/>
+						<label class="form-check-label" for="exampleCheck1"
+							><strong>Remember me</strong>
+						</label>
+					</div>
+					<button
+						type="submit"
+						id="adminloginbtn"
+						class="btn btn-default text-white pl-4 pr-4"
+						style="background-color: #f49303"
+					>
+						<strong>Submit</strong>
+					</button>
+				</div>
+			</div>
+		</div>
+		<script src="../assets/js/loginhandler.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.slim.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"></script>
+	</body>
+</html>
