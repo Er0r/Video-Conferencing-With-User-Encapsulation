@@ -15,8 +15,9 @@ function signUpWithEmailPassword() {
         firebase.database().ref('/login/admin/'+random).set({
             email: user.email,
             uid: user.uid,
-            status: 'admin'
-            
+            status: 'admin',
+            count: 0,
+            random: random
         })
         alertify.success('Data Inserted Successfully');
       })
@@ -39,10 +40,13 @@ function signUpWithEmailPasswordmentor() {
       // Signed in 
       var user = userCredential.user;
       var random = Math.random().toString(36).substring(2,7);
+
       firebase.database().ref('/login/mentor/'+random).set({
           email: user.email,
           uid: user.uid,
-          status: 'mentor'
+          status: 'mentor',
+          count: 0,
+          random: random
       })
       alertify.success('Data Inserted Successfully');
     })
@@ -64,7 +68,9 @@ function signUpWithEmailPassworduser() {
       firebase.database().ref('/login/user/'+random).set({
           email: user.email,
           uid: user.uid,
-          status: 'user'
+          status: 'user',
+          count: 0,
+          random: random
       })
       alertify.success('Data Inserted Successfully');
     })

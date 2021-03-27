@@ -18,12 +18,13 @@ function signInWithEmailPassword() {
         var user = userCredential.user;
         var flag = 0;
         adminref.on('value', function(snapshot){
-            console.log(snapshot);
             snapshot.forEach((childSnapshot)=>{
                 
-                if(childSnapshot.val().email === user.email && childSnapshot.val().status === 'admin') {
-                  // successfully done //
+                if(childSnapshot.val().email === user.email && childSnapshot.val().status === 'admin' && childSnapshot.val().count === 0) {
                   alertify.success('Login Successfully');
+                  firebase.database().ref('/login/admin/'+childSnapshot.val().random).update({
+                    count: firebase.database.ServerValue.increment(1)
+                  });
                   location.replace(`${location.origin}/admindashboard`);
                   flag= 1;
                 } else if(childSnapshot.val().email === user.email && childSnapshot.val().status === 'user') {
