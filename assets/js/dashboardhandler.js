@@ -61,6 +61,7 @@ function logout() {
       }).catch((error) => {
         alertify.error('Please Try Again Later');
     });
+    location.replace(`${location.origin}`);
 }
 logoutbtn.addEventListener('click', logoutprocedure);
 
