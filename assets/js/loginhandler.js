@@ -1,11 +1,10 @@
-var userref = firebase.database().ref('/login/userlogin');
+
 var adminref = firebase.database().ref('/login/admin');
 var mentorref = firebase.database().ref('/login/mentor');
 
 
 var adminloginbtn = document.getElementById('adminloginbtn');
-var userloginbtn = document.getElementById('userloginbtn');
-var userloginbtn = document.getElementById('userloginbtn');
+
 
 function signInWithEmailPassword() {
     var email = document.getElementById('adminemail').value;
@@ -58,5 +57,6 @@ function signInWithEmailPassword() {
       })
     })   
   }
+
 adminloginbtn.addEventListener('click', signInWithEmailPassword);
 

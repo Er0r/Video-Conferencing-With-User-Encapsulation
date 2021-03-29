@@ -6,7 +6,6 @@
 
  window.addEventListener( 'load', () => {
         const room = window.location.href;
-        console.log(`${room} from rtc`);
         const username = sessionStorage.getItem('email');
  
          let commElem = document.getElementsByClassName( 'room-comm' );
@@ -22,8 +21,6 @@
          var socketId = '';
          var myStream = '';
          var screen = '';
-         var recordedStream = [];
-         var mediaRecorder = '';
  
          //Get user video by default
          getAndSetUserStream();
@@ -315,32 +312,7 @@
          }
  
  
-         function startRecording( stream ) {
-             mediaRecorder = new MediaRecorder( stream, {
-                 mimeType: 'video/webm;codecs=vp9'
-             } );
- 
-             mediaRecorder.start( 1000 );
-             toggleRecordingIcons( true );
- 
-             mediaRecorder.ondataavailable = function ( e ) {
-                 recordedStream.push( e.data );
-             };
- 
-             mediaRecorder.onstop = function () {
-                 toggleRecordingIcons( false );
- 
-                 h.saveRecordedStream( recordedStream, username );
- 
-                 setTimeout( () => {
-                     recordedStream = [];
-                 }, 3000 );
-             };
- 
-             mediaRecorder.onerror = function ( e ) {
-                 console.error( e );
-             };
-         }
+      
  
          
          
@@ -420,57 +392,61 @@
                  shareScreen();
              }
          } );
+         
+         document.getElementById('leavebtn').addEventListener('click', ( e ) => {
+             e.preventDefault();
+             location.replace(`${window.origin}/mentordashboard`);
+         })
  
+        //  //When record button is clicked
+        //  document.getElementById( 'record' ).addEventListener( 'click', ( e ) => {
+        //      /**
+        //       * Ask user what they want to record.
+        //       * Get the stream based on selection and start recording
+        //       */
+        //      if ( !mediaRecorder || mediaRecorder.state == 'inactive' ) {
+        //          h.toggleModal( 'recording-options-modal', true );
+        //      }
  
-         //When record button is clicked
-         document.getElementById( 'record' ).addEventListener( 'click', ( e ) => {
-             /**
-              * Ask user what they want to record.
-              * Get the stream based on selection and start recording
-              */
-             if ( !mediaRecorder || mediaRecorder.state == 'inactive' ) {
-                 h.toggleModal( 'recording-options-modal', true );
-             }
+        //      else if ( mediaRecorder.state == 'paused' ) {
+        //          mediaRecorder.resume();
+        //      }
  
-             else if ( mediaRecorder.state == 'paused' ) {
-                 mediaRecorder.resume();
-             }
- 
-             else if ( mediaRecorder.state == 'recording' ) {
-                 mediaRecorder.stop();
-             }
-         } );
+        //      else if ( mediaRecorder.state == 'recording' ) {
+        //          mediaRecorder.stop();
+        //      }
+        //  } );
  
  
          //When user choose to record screen
-         document.getElementById( 'record-screen' ).addEventListener( 'click', () => {
-             h.toggleModal( 'recording-options-modal', false );
+        //  document.getElementById( 'record-screen' ).addEventListener( 'click', () => {
+        //      h.toggleModal( 'recording-options-modal', false );
  
-             if ( screen && screen.getVideoTracks().length ) {
-                 startRecording( screen );
-             }
+        //      if ( screen && screen.getVideoTracks().length ) {
+        //          startRecording( screen );
+        //      }
  
-             else {
-                 h.shareScreen().then( ( screenStream ) => {
-                     startRecording( screenStream );
-                 } ).catch( () => { } );
-             }
-         } );
+        //      else {
+        //          h.shareScreen().then( ( screenStream ) => {
+        //              startRecording( screenStream );
+        //          } ).catch( () => { } );
+        //      }
+        //  } );
  
  
-         //When user choose to record own video
-         document.getElementById( 'record-video' ).addEventListener( 'click', () => {
-             h.toggleModal( 'recording-options-modal', false );
+        //  //When user choose to record own video
+        //  document.getElementById( 'record-video' ).addEventListener( 'click', () => {
+        //      h.toggleModal( 'recording-options-modal', false );
  
-             if ( myStream && myStream.getTracks().length ) {
-                 startRecording( myStream );
-             }
+        //      if ( myStream && myStream.getTracks().length ) {
+        //          startRecording( myStream );
+        //      }
  
-             else {
-                 h.getUserFullMedia().then( ( videoStream ) => {
-                     startRecording( videoStream );
-                 } ).catch( () => { } );
-             }
-         } );
+        //      else {
+        //          h.getUserFullMedia().then( ( videoStream ) => {
+        //              startRecording( videoStream );
+        //          } ).catch( () => { } );
+        //      }
+        //  } );
  } );
  

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<meta name="Description" content="Enter your description here" />
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css"
+		/>
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"
+		/>
+		<title>Title</title>
+		<style>
+			.center {
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				transform: translate(-50%, -50%);
+			}
+		</style>
+        <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+        <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
+        <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css"/>
+        <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/semantic.min.css"/>
+        <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/bootstrap.min.css"/>
+        <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.rtl.min.css"/>
+        <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.rtl.min.css"/>
+        <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/semantic.rtl.min.css"/>
+        <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/bootstrap.rtl.min.css"/>
+         <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-app.js"></script>
+         <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-analytics.js"></script>
+         <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-auth.js"></script>
+         <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-firestore.js"></script>
+         <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-database.js"></script>
+         <script>
+             const firebaseConfig = {
+                 apiKey: "AIzaSyAUCgn__4r9gxa1nIHWuibSz-NxzdeEofw",
+                 authDomain: "ishwarsingh-fe6da.firebaseapp.com",
+                 projectId: "ishwarsingh-fe6da",
+                 storageBucket: "ishwarsingh-fe6da.appspot.com",
+                 messagingSenderId: "113178540955",
+                 appId: "1:113178540955:web:f443106593679e5c937f3e",
+                 measurementId: "G-NGDRDVFQ7S"
+             };
+     
+             firebase.initializeApp(firebaseConfig);
+             firebase.analytics();
+         </script>
+	</head>
+	<body>
+		<div class="container">
+			<nav class="navbar navbar-light justify-content-between">
+				<div style="height: 5rem; width: 5rem">
+					<a class="navbar-brand" href="#"
+						><img
+							src="logo.png"
+							alt=""
+							style="height: 100%; width: 100%; object-fit: contain"
+					/></a>
+				</div>
+			</nav>
+		</div>
+		<div class="col-md-4 center card p-3">
+		
+				<div class="form-group">
+					<label for="exampleInputEmail1">Email address</label>
+					<input
+						type="email"
+						class="form-control"
+						id="user_email"
+						aria-describedby="emailHelp"
+						placeholder="Enter email"
+					/>
+				</div>
+				<div class="form-group">
+					<label for="exampleInputPassword1">Password</label>
+					<input
+						type="password"
+						class="form-control"
+						id="user_pass"
+						placeholder="Password"
+					/>
+				</div>
+				<button
+					type="submit"
+					class="btn btn-default text-white"
+                    id="userloginbtn"
+					style="background-color: #08165c"
+				>
+					Login
+				</button>
+			
+		</div>
+        <script src="../assets/js/studentloginhandler.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.slim.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"></script>
+	</body>
+</html>

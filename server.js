@@ -10,6 +10,9 @@ console.log(`path.join(${__dirname}+'/views/admin'`);
 
 app.use("/assets",express.static(__dirname + '/assets'));
 app.set('view engine', 'ejs');
+app.use("/ws",express.static(__dirname + '/ws'));
+
+io.of('/stream').on('connection',stream);
 
 app.get('/adminlogin', (req,res) => {
     res.render('adminlogin');
@@ -56,6 +59,16 @@ app.get('/mentordashboard', (req,res) => {
     res.render('mentordashboard');
 })
 
-io.of('/stream').on('connection',stream);
+app.get('/notice',(req,res) => {
+    res.render('notice');
+})
+
+app.get('/studentlogin', (req,res) => {
+    res.render('studentlogin');
+})
+
+app.get('/studentdashboard',(req,res) => {
+    res.render('studentdashboard');
+})
 
 server.listen(3000, console.log('Server Is Running'));
