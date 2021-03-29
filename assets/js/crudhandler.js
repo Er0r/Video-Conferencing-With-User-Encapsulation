@@ -41,8 +41,18 @@ function signup(email,password, membership) {
         var errorMessage = error.message;
         alertify.error(errorMessage);
     });
-    
+
 }
+
+function readAll() {
+    var token = sessionStorage.getItem('email');
+    if(!token) 
+        location.replace(`${window.origin}`);
+    else 
+        loginname.innerHTML = `Welcome <strong> ${sessionStorage.getItem('email')} </strong> <span class="pl-2">|</span> `
+   
+}
+
 function showData() {
     count = 2;
     var tablebody  = document.getElementById('tablebody');
@@ -121,7 +131,7 @@ function deletehandler(count){
     const currentnode = document.getElementById(tablerow).querySelectorAll('td')[1].id;
     const nodeemail = document.getElementById(currentnode).innerText;
     sessionStorage.setItem('deleteuser', nodeemail);
-    
+    showData();
 }
 
 function deleteentry(){
@@ -143,3 +153,4 @@ deletebtn.addEventListener('click', deleteentry);
 
 addbtn.addEventListener('click',addUser);
 showData();
+readAll();

@@ -5,21 +5,12 @@ var adminref = firebase.database().ref('/login/admin');
 
 var email = "";
 function readAll() {
-    const request = window.indexedDB.open("firebaseLocalStorageDb", 1);
-    request.onerror = function (event) {
-        console.err("error fetching data", event);
-    };
-    request.onsuccess = function (dbEvent) {
-        const db = request.result;
-        const transaction = db.transaction(["firebaseLocalStorage"]);
-        const objectStore = transaction.objectStore("firebaseLocalStorage");
-        if ('getAll' in objectStore) {
-            objectStore.getAll().onsuccess = function (getAllEvent) {
-                loginname.innerHTML = `Welcome <strong> ${getAllEvent.target.result[0].value.email} </strong> <span class="pl-2">|</span> `
-                email = getAllEvent.target.result[0].value.email;
-            };
-        }
-    };
+    var token = sessionStorage.getItem('email');
+    if(!token) 
+        location.replace(`${window.origin}`);
+    else 
+        loginname.innerHTML = `Welcome <strong> ${sessionStorage.getItem('email')} </strong> <span class="pl-2">|</span> `
+   
 }
 
 function logoutprocedure(){
@@ -37,7 +28,7 @@ function logoutprocedure(){
 function logout() {
     
     firebase.auth().signOut().then(() => {
-        alertify.success('Signout Successfully');
+        
         window.indexedDB.databases().then((r) => {
             for (var i = 0; i < r.length; i++) 
                 window.indexedDB.deleteDatabase(r[i].name);
@@ -45,10 +36,13 @@ function logout() {
         }).then(() => {
             adminref.on('value', function(snapshot){
                 snapshot.forEach((childSnapshot)=>{
-                    if(childSnapshot.val().email === email) {
+                    if(childSnapshot.val().email === sessionStorage.getItem('email')) {
                         firebase.database().ref('/login/admin/'+childSnapshot.val().random).update({
                             count: 0
                         });
+                        sessionStorage.clear('email');
+                        sessionStorage.clear('status');
+                        alertify.success('Signout Successfully');
                         location.replace(`${location.origin}`);
                     }
                 })
@@ -61,7 +55,6 @@ function logout() {
       }).catch((error) => {
         alertify.error('Please Try Again Later');
     });
-    location.replace(`${location.origin}`);
 }
 logoutbtn.addEventListener('click', logoutprocedure);
 
