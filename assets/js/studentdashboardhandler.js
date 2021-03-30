@@ -1,5 +1,25 @@
 var logoutbtn = document.getElementById('logoutbtn');
 
+
+window.onload = function showData() {
+    var count = 2;
+    var marquee_contain = document.getElementById('marquee_contain');
+    firebase.database().ref('/login/admin/notice').on('value', function(snapshot){
+        snapshot.forEach((childSnapshot)=> {
+            var newnotice = document.createElement('div');
+            newnotice.id = `notice-${count}`;
+            newnotice.className = "bg-light p-2 h5 font-weight-bold";
+            newnotice.style = "color: #7b99ec"
+            newnotice.innerHTML = `
+                ${childSnapshot.val().notice}
+            `
+            marquee_contain.appendChild(newnotice);
+            count++;
+        })
+    })
+}
+
+
 logoutbtn.addEventListener('click', ( e ) => {
     e.preventDefault();
 
@@ -27,6 +47,7 @@ function logout() {
                         location.replace(`${location.origin}/studentlogin`);
                     }
                 })
+                alert('ok logout');
             })
             
         }).catch((error) => {

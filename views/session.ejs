@@ -51,7 +51,43 @@
             <button class="btn btn-sm rounded-0 btn-no-effect" id='share-screen' title="Share screen">
                 <i class="fa fa-desktop text-white"></i>
             </button>
-            
+
+            <button class="btn btn-sm rounded-0 btn-no-effect" id='chat-admin' title="Chat With Admin">
+                <i class="fa fa-user-secret text-white"></i>
+            </button>
+
+            <button class="btn btn-sm rounded-0 btn-no-effect" data-toggle="collapse" data-target="#collapseExample" id='chat-mentor'  title="Chat With Mentor">
+                <i class="fa fa-user-circle text-white"></i>
+            </button>
+            <div class="collapse" id="collapseExample">
+                <div
+                    class="card p-1"
+                    style="position: absolute; height: 20rem; width: 16rem"
+                >
+                    <div
+                        class="bg-light p-2 h6 font-weight-bold justify-content-end"
+                        style="color: #7b99ec; width: 50%; border-radius: 5px"
+                    >
+                        1st message
+                    </div>
+                    <div
+                        class="bg-light p-2 h6 font-weight-bold ml-auto"
+                        style="color: #7b99ec; width: 50%; border-radius: 5px"
+                    >
+                        2nd message
+                    </div>
+                    <div class="input-group" style="position: absolute; bottom: 0; left: 0">
+                        <input type="text" class="form-control" placeholder="Enter Message" />
+                        <div class="input-group-append">
+                            <span
+                                class="btn btn-default text-white"
+                                style="background-color: #08165c"
+                                >Send</span
+                            >
+                        </div>
+                    </div>
+                </div>
+            </div>
             <button class="btn btn-sm text-white pull-right btn-no-effect" id='toggle-chat-pane'>
                 <i class="fa fa-comment"></i> <span class="badge badge-danger very-small font-weight-lighter" id='new-chat-notification' hidden>New</span>
             </button>
