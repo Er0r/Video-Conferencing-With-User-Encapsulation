@@ -2,8 +2,10 @@ var logoutbtn = document.getElementById('logoutbtn');
 
 
 window.onload = function showData() {
-    var count = 2;
+    var count = 1;
     var marquee_contain = document.getElementById('marquee_contain');
+    var session_contain = document.getElementById('session_contain');
+
     firebase.database().ref('/login/admin/notice').on('value', function(snapshot){
         snapshot.forEach((childSnapshot)=> {
             var newnotice = document.createElement('div');
@@ -17,6 +19,25 @@ window.onload = function showData() {
             count++;
         })
     })
+    var session_count=1;
+    firebase.database().ref('/room').on('value', function(snapshot){
+        snapshot.forEach((childSnapshot) => {
+            var newsession = document.createElement('div');
+            newsession.className = "bg-light p-2 h5 font-weight-bold";
+            newsession.id = `session-${session_count}`; 
+            newsession.innerHTML = `
+                ${childSnapshot.val().roomName} <br /> ${childSnapshot.val().sessiontime} <br /><span
+                    class="btn btn-deafult text-white rounded-pill py-1"
+                    id="sessionbtn-${session_count}"
+                    style="background-color: #08165c"
+                    >Join</span
+                >
+            `
+            session_contain.appendChild(newsession);
+            session_count++;
+        })
+       
+    })
 }
 
 
@@ -27,7 +48,7 @@ logoutbtn.addEventListener('click', ( e ) => {
 
 
 function logout() {
-    
+    var flag =0;
     firebase.auth().signOut().then(() => {
         
         window.indexedDB.databases().then((r) => {
@@ -43,11 +64,14 @@ function logout() {
                         });
                         sessionStorage.clear('email');
                         sessionStorage.clear('status');
-                        alertify.success('Signout Successfully');
+                        flag = 1;
                         location.replace(`${location.origin}/studentlogin`);
                     }
                 })
-                alert('ok logout');
+                if(flag === 1){
+                    alertify.success('Signout Successfully');
+                    flag++;
+                }
             })
             
         }).catch((error) => {

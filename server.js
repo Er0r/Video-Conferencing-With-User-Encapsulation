@@ -19,7 +19,7 @@ app.get('/adminlogin', (req,res) => {
 })
 
 app.get('/', (req,res) => {
-    res.render('adminlogin');
+    res.render('login');
 })
 
 app.get('/admindashboard', (req,res) => {
