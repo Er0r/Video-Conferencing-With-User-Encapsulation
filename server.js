@@ -71,4 +71,8 @@ app.get('/studentdashboard',(req,res) => {
     res.render('studentdashboard');
 })
 
+app.get('/managechat',(req,res) => {
+    res.render('managechat');
+})
+
 server.listen(3000, console.log('Server Is Running'));

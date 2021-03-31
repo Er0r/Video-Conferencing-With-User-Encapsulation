@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<meta name="Description" content="Enter your description here" />
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css"
+		/>
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"
+		/>
+		
+		<title>Title</title>
+	</head>
+	<body>
+		<div class="container">
+			<div class="form-group" id="sess-div">
+				<select class="form-control" id="sessoption" onchange="showUser()">
+					<option id="session-1">Select Session</option>
+					
+				</select>
+			</div>
+			<hr />
+			<div class="row">
+				<div class="col-md-3 card">
+					<div class="text-center mt-2 font-weight-bold">User List</div>
+					<hr />
+					<div
+						class="d-flex flex-column mb-2"
+						style="overflow: auto; height: 25rem"
+						id="userlist"
+					>
+						<!-- <button class="btn btn-default btn-outline-primary rounded-sm mb-2">
+							User Name
+						</button> -->
+						
+					</div>
+				</div>
+				<div
+					class="col-md-6 card ml-2"
+					style="height: 30rem; overflow: auto"
+					id="usermsgs"
+				>
+					
+            	<div
+                class="bg-light p-2 h6 font-weight-bold ml-auto"
+                style="color: #7b99ec; width: 50%; border-radius: 5px"
+                id="msg-id-1"
+            >
+                Admin Message
+            </div>
+            <div
+                class="input-group"
+                style="position: absolute; bottom: 0; left: 0"
+            >
+                <input
+                    type="text"
+                    class="form-control"
+                    id="studetnttxt"
+                    placeholder="Enter Message"
+                />
+                <div class="input-group-append">
+                    <span
+                        class="btn btn-default text-white"
+                        style="background-color: #08165c"
+                        id="studentmsgbtn"
+                        >Send</span
+                    >
+                </div></div>
+			</div>
+		</div>
+		<script src="../assets/js/managechat.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.slim.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"></script>
+	</body>
+</html>

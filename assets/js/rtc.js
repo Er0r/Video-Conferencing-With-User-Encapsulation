@@ -394,59 +394,17 @@
          } );
          
          document.getElementById('leavebtn').addEventListener('click', ( e ) => {
-             e.preventDefault();
-             location.replace(`${window.origin}/mentordashboard`);
-         })
- 
-        //  //When record button is clicked
-        //  document.getElementById( 'record' ).addEventListener( 'click', ( e ) => {
-        //      /**
-        //       * Ask user what they want to record.
-        //       * Get the stream based on selection and start recording
-        //       */
-        //      if ( !mediaRecorder || mediaRecorder.state == 'inactive' ) {
-        //          h.toggleModal( 'recording-options-modal', true );
-        //      }
- 
-        //      else if ( mediaRecorder.state == 'paused' ) {
-        //          mediaRecorder.resume();
-        //      }
- 
-        //      else if ( mediaRecorder.state == 'recording' ) {
-        //          mediaRecorder.stop();
-        //      }
-        //  } );
- 
- 
-         //When user choose to record screen
-        //  document.getElementById( 'record-screen' ).addEventListener( 'click', () => {
-        //      h.toggleModal( 'recording-options-modal', false );
- 
-        //      if ( screen && screen.getVideoTracks().length ) {
-        //          startRecording( screen );
-        //      }
- 
-        //      else {
-        //          h.shareScreen().then( ( screenStream ) => {
-        //              startRecording( screenStream );
-        //          } ).catch( () => { } );
-        //      }
-        //  } );
- 
- 
-        //  //When user choose to record own video
-        //  document.getElementById( 'record-video' ).addEventListener( 'click', () => {
-        //      h.toggleModal( 'recording-options-modal', false );
- 
-        //      if ( myStream && myStream.getTracks().length ) {
-        //          startRecording( myStream );
-        //      }
- 
-        //      else {
-        //          h.getUserFullMedia().then( ( videoStream ) => {
-        //              startRecording( videoStream );
-        //          } ).catch( () => { } );
-        //      }
-        //  } );
+            e.preventDefault();
+            if(sessionStorage.getItem('status') === 'mentor')
+                location.replace(`${window.origin}/mentordashboard`);
+            else if(sessionStorage.getItem('status') === 'student') 
+                location.replace(`${window.origin}/studentdashboard`);
+            else if(sessionStorage.getItem('status') === 'admin')
+                location.replace(`${window.origin}/admindashboard`);
+            else {
+                location.replace(`${window.origin}`);
+            }
+        })
  } );
  
+

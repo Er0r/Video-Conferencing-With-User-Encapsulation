@@ -32,9 +32,12 @@ window.addEventListener( 'load', () => {
             sessionStorage.setItem('sessionLink', sessionLink);
             sessionStorage.setItem('roomName', roomName);
             sessionStorage.setItem('sessiontime', sessiontime);
-          
+            
+            if(sessionStorage.getItem('sessionLink')){
+                addvalue();
+            }
         }
-
+        
         else {
             document.querySelector( '#err-msg' ).innerHTML = "All fields are required";
         }
@@ -45,11 +48,14 @@ window.addEventListener( 'load', () => {
     }
 
    function addvalue() {
+        console.log('OK');
         var random = Math.random().toString(36).substring(2,7);  
         firebase.database().ref('/room/'+random).set({
             sessionLink: sessionStorage.getItem('sessionLink'),
             roomName: sessionStorage.getItem('roomName'),
-            sessiontime: sessionStorage.getItem('sessiontime')
+            sessiontime: sessionStorage.getItem('sessiontime'),
+            random: random,
+            count: 0
         })
 
    }
