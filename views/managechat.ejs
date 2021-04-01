@@ -17,7 +17,7 @@
 		<title>Title</title>
 	</head>
 	<body>
-		<div class="container">
+		<div class="container" id="refresh">
 			<div class="form-group" id="sess-div">
 				<select class="form-control" id="sessoption" onchange="showUser()">
 					<option>Select Session</option>
@@ -55,7 +55,8 @@
 					<input
 						type="text"
 						class="form-control"
-						id="adminmsgstxt"
+						id="adminmsgstxt" 
+						required
 						placeholder="Enter Message"
 					/>
 					<div class="input-group-append">
@@ -69,6 +70,7 @@
 				</div>
 			</div>
 		</div>
+
 		<script src="../assets/js/managechat.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.slim.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>

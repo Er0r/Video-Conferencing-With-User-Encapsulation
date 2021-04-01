@@ -1,27 +1,32 @@
 var usermessages = [{'username': '','msg':'','count': 0}];
 var global_msg_count=0;
-
-function init(){
-    showSession();
-    // showUser();
-}
-
-init();
+var sessionArray = new Array();
 function showSession(){ 
-    var count = 2;
-    var sesselect = document.getElementById('sessoption');
     firebase.database().ref('/room').on('value', function(snapshot){ 
         snapshot.forEach((childSnapshot) => { 
-            var newoption = document.createElement('option');
-            newoption.id = `${count}`;
-            newoption.innerHTML = `
-                ${childSnapshot.val().roomName}
-            `
-            count++;
-            sesselect.appendChild(newoption);
+            var name = childSnapshot.val().roomName;
+            console.log(name);
+            sessionArray.push(name);
         })
-        
-    })
+        sessionShow(sessionArray);
+    })   
+    
+  
+}
+showSession();
+
+function sessionShow(sessionArray){
+
+    var sessionSet = new Set(sessionArray);
+    var sesselect = document.getElementById('sessoption');
+    sesselect.innerHTML = ``;
+    for (let session of sessionSet){
+        var newoption = document.createElement('option');
+        newoption.innerHTML = `
+            ${session}
+        `
+        sesselect.appendChild(newoption);
+    }
 }
 
 function showUser() {
@@ -38,7 +43,7 @@ function showUser() {
                 sessionStorage.setItem('random',random);
                 firebase.database().ref('/room/'+random+'/user').on('value', function(snap){ 
                     snap.forEach((child) => {
-                        sessionStorage.setItem('msgrandom',child.val().random);
+                        
                         var user = child.val().username;
                         userset.add(user);
                     })
@@ -81,10 +86,13 @@ function showUserMsg(username){
     var random = sessionStorage.getItem('random');
     firebase.database().ref('/room/'+random+'/user').on('value', function(snap){ 
         snap.forEach((child) => {
-            if(child.val().username === username)
+            if(child.val().username === username){
+                sessionStorage.setItem('msgrandom',child.val().random);
                 usermsgs.push(child.val().msg);
                 if(child.val().username === username && child.val().adminmsg)
                     adminmsgs.push(child.val().adminmsg);
+            }
+                
         })
     })
     showMsg(usermsgs,adminmsgs);
@@ -122,4 +130,7 @@ adminmsgsbtn.addEventListener('click', ( e ) => {
         adminmsg: adminmsgstxt
     })
     showUserMsg(sessionStorage.getItem('username'));
+    // location.reload();
+    document.getElementById("adminmsgstxt").value = "";
+
 })

@@ -66,7 +66,7 @@
  
                          //save my stream
                          myStream = stream;
- 
+                         
                          stream.getTracks().forEach( ( track ) => {
                              pc[data.sender].addTrack( track, stream );
                          } );
@@ -332,21 +332,20 @@
              e.preventDefault();
  
              let elem = document.getElementById( 'toggle-video' );
- 
-             if ( myStream.getVideoTracks()[0].enabled ) {
-                 e.target.classList.remove( 'fa-video' );
-                 e.target.classList.add( 'fa-video-slash' );
-                 elem.setAttribute( 'title', 'Show Video' );
- 
-                 myStream.getVideoTracks()[0].enabled = false;
+             if ( !myStream.getVideoTracks()[0].enabled ) {
+                e.target.classList.remove( 'fa-video-slash' );
+                e.target.classList.add( 'fa-video' );
+                elem.setAttribute( 'title', 'Hide Video' );
+
+                myStream.getVideoTracks()[0].enabled = true;
              }
  
              else {
-                 e.target.classList.remove( 'fa-video-slash' );
-                 e.target.classList.add( 'fa-video' );
-                 elem.setAttribute( 'title', 'Hide Video' );
- 
-                 myStream.getVideoTracks()[0].enabled = true;
+                e.target.classList.remove( 'fa-video' );
+                e.target.classList.add( 'fa-video-slash' );
+                elem.setAttribute( 'title', 'Show Video' );
+
+                myStream.getVideoTracks()[0].enabled = false;
              }
  
              broadcastNewTracks( myStream, 'video' );
