@@ -13,14 +13,14 @@
 			rel="stylesheet"
 			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"
 		/>
-	
+		<link rel="stylesheet" href="assets/css/style.css" />
 		<title>Title</title>
 	</head>
 	<body>
 		<div class="container">
 			<div class="form-group" id="sess-div">
 				<select class="form-control" id="sessoption" onchange="showUser()">
-					<option>Select Session</option>
+					<option id="session-1">Select Session</option>
 				</select>
 			</div>
 			<hr />
@@ -28,45 +28,48 @@
 				<div class="col-md-3 card">
 					<div class="text-center mt-2 font-weight-bold">User List</div>
 					<hr />
-					<div style="overflow: auto; height: 25rem;">
-						<div id="userlist">
-
-						</div>
+					<div
+						class="d-flex flex-column mb-2"
+						style="overflow: auto; height: 25rem"
+						id="userlist"
+					>
 					</div>
 				</div>
-				
 				<div
 					class="col-md-6 card ml-2"
 					style="height: 30rem; overflow: auto"
 					
 				>
-					<div
-						
-						id="usermsgs"
-						>
-					</div>
-
-					<div id="adminmsgs">
-            		</div>
-				<div
-					class="input-group"
-					style="position: absolute; bottom: 0; left: 0"
-				>
-					<input
-						type="text"
-						class="form-control"
-						id="adminmsgstxt"
-						placeholder="Enter Message"
-					/>
-					<div class="input-group-append">
-						<span
-							class="btn btn-default text-white"
-							style="background-color: #08165c"
-							id="adminmsgsbtn"
-							>Send</span
-						>
-					</div>
-				</div>
+                <div
+                class="bg-light p-2 h6 font-weight-bold justify-content-end mt-2"
+                style="color: #7b99ec; width: 50%; border-radius: 5px"
+				id="usermsgs"
+            >
+            	</div>
+            	<div
+                class="bg-light p-2 h6 font-weight-bold ml-auto"
+                style="color: #7b99ec; width: 50%; border-radius: 5px"
+                id="adminmsgs"
+            >
+            </div>
+            <div
+                class="input-group"
+                style="position: absolute; bottom: 0; left: 0"
+            >
+                <input
+                    type="text"
+                    class="form-control"
+                    id="adminmsgstxt"
+                    placeholder="Enter Message"
+                />
+                <div class="input-group-append">
+                    <span
+                        class="btn btn-default text-white"
+                        style="background-color: #08165c"
+                        id="adminmsgsbtn"
+                        >Send</span
+                    >
+                </div></div>
 			</div>
 		</div>
 		<script src="../assets/js/managechat.js"></script>

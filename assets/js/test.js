@@ -4,7 +4,7 @@ var registrationmentorbtn = document.getElementById('registrationmentorbtn');
 var readallbtn = document.getElementById('readallbtn');
 
 function signUpWithEmailPassword() {
-    var email = "fahimmaria156@gmail.com";
+    var email = "fahimmaria@gmail.com";
     var password = "asdasd";
  
     firebase.auth().createUserWithEmailAndPassword(email, password)

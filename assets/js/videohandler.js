@@ -74,7 +74,8 @@ document.getElementById('studentmsgbtn').addEventListener('click', ( e ) => {
                 firebase.database().ref('/room/'+random+'/user/'+randomgenerate).set({
                     msg: studetnttxt,
                     username: sessionStorage.getItem('email'),
-                    random: randomgenerate
+                    random: randomgenerate,
+                    adminmsg: '' 
                 });  
                
             }
