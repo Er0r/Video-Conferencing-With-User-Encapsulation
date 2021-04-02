@@ -75,4 +75,8 @@ app.get('/managechat',(req,res) => {
     res.render('managechat');
 })
 
+app.get('/mentorlogin', (req,res) => {
+    res.render('mentorlogin');
+})
+
 server.listen(3000, console.log('Server Is Running'));

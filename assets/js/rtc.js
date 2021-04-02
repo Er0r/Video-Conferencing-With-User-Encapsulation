@@ -66,7 +66,7 @@
  
                          //save my stream
                          myStream = stream;
-                         
+                    
                          stream.getTracks().forEach( ( track ) => {
                              pc[data.sender].addTrack( track, stream );
                          } );
@@ -123,7 +123,7 @@
  
          function init( createOffer, partnerName ) {
              pc[partnerName] = new RTCPeerConnection( h.getIceServer() );
- 
+
              if ( screen && screen.getTracks().length ) {
                  screen.getTracks().forEach( ( track ) => {
                      pc[partnerName].addTrack( track, screen );//should trigger negotiationneeded event
@@ -149,9 +149,10 @@
                  } ).catch( ( e ) => {
                      console.error( `stream error: ${ e }` );
                  } );
+                 
              }
  
- 
+             
  
              //create offer
              if ( createOffer ) {
@@ -233,6 +234,8 @@
                          break;
                  }
              };
+             
+            
          }
  
  
@@ -314,19 +317,7 @@
  
       
  
-         
-         
-        document.getElementById( 'chat-input' ).addEventListener( 'keypress', ( e ) => {
-            if ( e.which === 13 && ( e.target.value.trim() ) ) {
-                alert('OK');
-                sendMsg( e.target.value );
-                setTimeout( () => {
-                    e.target.value = '';
-                }, 50 );
-            }
-        } );
- 
- 
+      
          //When the video icon is clicked
          document.getElementById( 'toggle-video' ).addEventListener( 'click', ( e ) => {
              e.preventDefault();
@@ -351,7 +342,7 @@
              broadcastNewTracks( myStream, 'video' );
          } );
  
-         
+           
  
          //When the mute icon is clicked
          document.getElementById( 'toggle-mute' ).addEventListener( 'click', ( e ) => {

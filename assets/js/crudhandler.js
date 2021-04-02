@@ -4,7 +4,7 @@ const deletebtn = document.getElementById('deletebtn');
 function addUser(){
 
     var useremail = document.getElementById('useremail').value;
-    var userpassword = document.getElementById('userpassword').value;
+    var userpassword = Math.random().toString(36).substring(2,11); 
     var membership = document.getElementById('usermembership').value;
     signup(useremail,userpassword, membership);
 

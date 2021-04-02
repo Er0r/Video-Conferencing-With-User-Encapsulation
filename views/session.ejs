@@ -109,6 +109,14 @@
 					<i class="fa fa-microphone-alt text-white"></i>
 				</button>
 
+				<button 
+					class="btn btn-sm text-white pull-right btn-no-effect" 
+					id='toggle-chat-pane'
+					title="chatpane"
+					>
+                    <i class="fa fa-comment"></i> <span class="badge badge-danger very-small font-weight-lighter" id='new-chat-notification' hidden>New</span>
+                </button>
+
 				<button
 					class="btn btn-sm rounded-0 btn-no-effect"
 					id="share-screen"
@@ -139,18 +147,91 @@
                 <div class="row mt-2 mb-2" id='videos'></div>
             </div>
 
-            <div class="col-md-3 chat-col d-print-none mb-2 bg-info" id='chat-pane' hidden>
+            <div class="col-md-6 chat-col d-print-none mb-2 bg-info" id='chat-pane' hidden>
                 <div class="row">
                     <div class="col-12 text-center h2 mb-3">CHAT</div>
                 </div>
 
-                <div id='chat-messages'></div>
+                <div id="chat-messages">
+					<div class="form-group" id="sess-div">
+						<select
+							class="form-control"
+							id="sessoption"
+							onchange="showUser()"
+							hidden
+						>
+							<option>Select Session</option>
+						</select>
+						<div id="sess-name">
 
-                <div class="row">
-                    <textarea id='chat-input' class="form-control rounded-0 chat-box border-info" rows='3' placeholder="Type here..."></textarea>
-                    <br>
-                    <button id="send-message">SEND</button>
-                </div>  
+						</div>
+					</div>
+					<hr />
+					<div class="row">
+						<div class="col-md-3 card" id="mentordiv" hidden>
+							<div class="text-center ml-2 mt-2 font-weight-bold text-dark">
+								Student List
+							</div>
+							<hr />
+							<div style="overflow: auto; height: 25rem">
+								<div id="userlist"></div>
+							</div>
+						</div>
+
+						<div class="col-md-8 card ml-1">
+							<div style="height: 30rem; overflow: auto">
+								<div id="usermsgs"></div>
+
+								<div id="adminmsgs"></div>
+							</div>
+							<div
+								class="input-group"
+								style="position: absolute; bottom: 0; left: 0"
+								id="mentorchatsection"
+								hidden
+							>
+								<input
+									type="text"
+									class="form-control"
+									id="adminmsgstxt"
+									required
+									placeholder="Enter Message"
+								/>
+								<div class="input-group-append">
+									<span
+										class="btn btn-default text-white"
+										style="background-color: #08165c"
+										id="adminmsgsbtn"
+										>Send</span
+									>
+								</div>
+							</div>
+							<div
+								class="input-group"
+								id="studentchatsection"
+								style="position: absolute; bottom: 0; left: 0"
+							>
+								<input
+									type="text"
+									class="form-control"
+									id="studentmsgstxt"
+									required
+									placeholder="Enter Message"
+								/>
+								<div class="input-group-append">
+									<span
+										class="btn btn-default text-white"
+										style="background-color: #08165c"
+										id="studentmsgsbtn"
+										>Send</span
+									>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- <script src="../assets/js/managechat.js"></script>  -->
+				<script src="../assets/js/studentsessionhandler.js"></script>
             </div>
         </div>
     </div>

@@ -11,7 +11,6 @@ function showSession(){
         sessionShow(sessionArray);
     })   
     
-  
 }
 showSession();
 

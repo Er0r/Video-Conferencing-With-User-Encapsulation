@@ -36,3 +36,17 @@ function signInWithEmailPassword() {
 }
 
   userloginbtn.addEventListener('click', signInWithEmailPassword);
+  userresetpass.addEventListener('click', ( e ) => {
+    var auth = firebase.auth();
+    var emailAddress = document.getElementById('user_email').value;
+    if(!emailAddress) {
+      alert('Please Provide your Email Address!');
+    } else {
+      auth.sendPasswordResetEmail(emailAddress).then(function() {
+        console.log('ok');
+      }).catch(function(error) {
+        console.log(error);
+      });
+    }
+    
+  })

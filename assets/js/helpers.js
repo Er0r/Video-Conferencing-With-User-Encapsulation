@@ -261,6 +261,7 @@ export default {
         const localVidElem = document.getElementById( 'local' );
 
         localVidElem.srcObject = stream;
+        localVidElem
         mirrorMode ? localVidElem.classList.add( 'mirror-mode' ) : localVidElem.classList.remove( 'mirror-mode' );
     },
 
