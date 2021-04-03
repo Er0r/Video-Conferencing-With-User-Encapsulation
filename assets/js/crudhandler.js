@@ -1,16 +1,20 @@
 const addbtn = document.getElementById('adduser');
 const deletebtn = document.getElementById('deletebtn');
 
+
+
 function addUser(){
 
     var useremail = document.getElementById('useremail').value;
     var userpassword = Math.random().toString(36).substring(2,11); 
     var membership = document.getElementById('usermembership').value;
-    signup(useremail,userpassword, membership);
+    var useraddress = document.getElementById('useraddress').value;
+    var userlocation = document.getElementById('userlocation').value;
+    signup(useremail,userpassword, membership, useraddress, userlocation);
 
 }
 
-function signup(email,password, membership) {
+function signup(email,password, membership, useraddress, userlocation) {
     firebase.auth().createUserWithEmailAndPassword(email, password)
       .then((userCredential) => {
         var user = userCredential.user;
@@ -30,6 +34,8 @@ function signup(email,password, membership) {
                 membership: membership,
                 random: random,
                 status: 'user',
+                useraddress: useraddress,
+                userlocation: userlocation,
                 uid: user.uid
             })
             alertify.success('User Added!');

@@ -27,12 +27,13 @@ window.onload = function showData() {
             newsession.id = `session-${session_count}`; 
             let sessionLink = childSnapshot.val().sessionLink;
             let roomName = childSnapshot.val().roomName;
+            let sessiontime = childSnapshot.val().sessiontime;
             newsession.innerHTML = `
                 ${childSnapshot.val().roomName} <br /> ${childSnapshot.val().sessiontime} <br /><span
                     class="btn btn-deafult text-white rounded-pill py-1"
                     id="sessionbtn-${session_count}"
                     style="background-color: #08165c"
-                    onclick="startSession('${sessionLink}', '${roomName}')"
+                    onclick="startSession('${sessionLink}', '${roomName}', '${sessiontime}')"
                     >Join</span
                 >
             `
@@ -42,9 +43,19 @@ window.onload = function showData() {
        
     })
 }
-function startSession(sessionLink, roomName) {
-    sessionStorage.setItem('roomName',roomName )
-    location.replace(`${sessionLink}`);
+function startSession(sessionLink, roomName, sessionTime) {
+    var date = moment().format(sessionTime);
+    var today = moment();
+    var status = today.to(date);
+    alert(`ok ${today.to(date)}`);
+    //condition //
+    if(status.includes("minutes")) {
+        console.log('ok');
+    }
+    
+
+    // sessionStorage.setItem('roomName',roomName )
+    // location.replace(`${sessionLink}`);
 }
 
 logoutbtn.addEventListener('click', ( e ) => {

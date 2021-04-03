@@ -79,4 +79,8 @@ app.get('/mentorlogin', (req,res) => {
     res.render('mentorlogin');
 })
 
+app.get('/managementor', (req,res) => {
+    res.render('manageMentor');
+})
+
 server.listen(3000, console.log('Server Is Running'));

@@ -133,9 +133,11 @@ function showUserMsg(username, status){
             }
                 
         })
-        showMsg(usermsgs,'student');
-        showMsg(adminmsgs,'mentor');
+        // showMsg(usermsgs,'student');
+        // showMsg(adminmsgs,'mentor');
     })
+    showMsg(usermsgs,'student');
+    showMsg(adminmsgs,'mentor');
     
 }
 
@@ -171,15 +173,15 @@ document.getElementById('adminmsgsbtn').addEventListener('click', ( e ) => {
     }
 })
 
+var msgSet = new Set();
 function showMsg(usermsgs,status){
-    console.log(usermsgs);
-    // console.log(msgarray);
+    msgSet.clear();
     for(msg of msgarray) {
-        console.log(msg['msg']);
+        msgSet.add(msg);
     }
     const usermsgsdiv = document.getElementById('usermsgs');
     usermsgsdiv.innerHTML = ``;
-    for(let usmsg of msgarray){
+    for(let usmsg of msgSet){
         var usermsg = document.createElement('div');
         if(usmsg['status'] === 'mentor') {
             usermsg.className = "bg-light p-2 h6 font-weight-bold mt-2";

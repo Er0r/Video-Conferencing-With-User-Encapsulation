@@ -1,10 +1,12 @@
 import helpers from './helpers.js';
 var mentorref = firebase.database().ref('/login/mentor');
 
+
+
+
 window.addEventListener( 'load', () => {
     //When the chat icon is clicked
     
-
     sessionStorage.removeItem('sessionLink');
     sessionStorage.removeItem('roomName');
     sessionStorage.removeItem('sessiontime');
@@ -57,8 +59,9 @@ window.addEventListener( 'load', () => {
             random: random,
             count: 0
         })
-
+        location.reload();
    }
+   
    document.getElementById('logoutbtn').addEventListener('click', ( e ) => {
         e.preventDefault();
         if(!sessionStorage.getItem('email') && !sessionStorage.getItem('status')){
@@ -68,6 +71,8 @@ window.addEventListener( 'load', () => {
         }
    })
 } );
+
+
 
 
 function logout() {
