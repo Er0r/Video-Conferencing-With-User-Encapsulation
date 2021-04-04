@@ -1,13 +1,15 @@
 window.addEventListener( 'load', () => { 
+    localStorage.setItem('usermsg',0);
+    localStorage.setItem('adminmsg', 0);
     if(sessionStorage.getItem('status') === 'mentor') {
         document.getElementById('studentchatsection').hidden = true;
         document.getElementById('mentordiv').hidden = false;
         document.getElementById('mentorchatsection').hidden = false;
-        showUser();
+        var  my = setInterval(showUser, 1000);
         sessionShow();
        
     } else {
-        showUserMsg(sessionStorage.getItem('username'));
+        var  myVar = setInterval(showUserMsg, 1000);
         document.getElementById('studentchatsection').hidden = false;
         document.getElementById('mentordiv').hidden = true;
         document.getElementById('mentorchatsection').hidden = true;
@@ -63,7 +65,7 @@ function UserShow(userset){
         userbtn.classList="d-flex flex-column mb-2"
         userbtn.innerHTML = `
             <button class="btn btn-default btn-outline-primary rounded-sm mb-2"
-            onclick='showUserMsg("${item}","${status}")'>
+            onclick='showUserMsg()'>
             ${item} 
             </button>
         `;
@@ -79,12 +81,15 @@ document.getElementById('studentmsgsbtn').addEventListener('click', ( e ) => {
     } else {
         var countres =0;
         var random = ``;
+        
         firebase.database().ref('/room').on('value', function(snapshot){
+            var count = localStorage.getItem('usermsg');
+
             snapshot.forEach((childSnapshot) => {
                 if(childSnapshot.val().roomName === sessionStorage.getItem('roomName') && countres === 0 ) {
                     random= childSnapshot.val().random;
                     sessionStorage.setItem('random',random);
-                    var randomgenerate = Math.random().toString(36).substring(2,7);
+                    var randomgenerate = `${count}${Math.random().toString(36).substring(2,7)}`;
                     countres++;
                     firebase.database().ref('/room/'+random+'/user/'+randomgenerate).set({
                         msg: studetnttxt,
@@ -96,8 +101,11 @@ document.getElementById('studentmsgsbtn').addEventListener('click', ( e ) => {
                 }
             })
             
+            count++;
+            localStorage.setItem('usermsg',count);
         })
-        showUserMsg(sessionStorage.getItem('email'), 'student');
+        
+        showUserMsg();
     }
  
 })
@@ -111,7 +119,7 @@ function clearArray(array) {
 var msgarray = new Array();
 
 // push msgs to an array
-function showUserMsg(username, status){
+function showUserMsg(){
     var usermsgs = new Array();
     var adminmsgs = new Array();
     clearArray(adminmsgs);
@@ -124,7 +132,6 @@ function showUserMsg(username, status){
             if(child.val().username === sessionStorage.getItem('email') && child.val().status === 'student' && child.val().sessionName === roomName){
                 sessionStorage.setItem('msgrandom',child.val().random);
                 usermsgs.push(child.val().msg);
-                console.log(usermsgs);
                 msgarray.push({'msg': child.val().msg, 'status': 'student'}); 
             } else if(child.val().studentName === sessionStorage.getItem('email') && child.val().status === 'mentor' && child.val().sessionName === roomName) {
                 sessionStorage.setItem('msgrandom',child.val().random);
@@ -133,8 +140,6 @@ function showUserMsg(username, status){
             }
                 
         })
-        // showMsg(usermsgs,'student');
-        // showMsg(adminmsgs,'mentor');
     })
     showMsg(usermsgs,'student');
     showMsg(adminmsgs,'mentor');
@@ -151,11 +156,12 @@ document.getElementById('adminmsgsbtn').addEventListener('click', ( e ) => {
         var countres =0;
         var random = ``;
         firebase.database().ref('/room').on('value', function(snapshot){
+            var countad = localStorage.getItem('adminmsg');
             snapshot.forEach((childSnapshot) => {
                 if(childSnapshot.val().roomName === sessionStorage.getItem('roomName') && countres === 0) {
                     random= childSnapshot.val().random;
                     sessionStorage.setItem('random',random);
-                    var randomgenerate = Math.random().toString(36).substring(2,7);
+                    var randomgenerate =  `${countad}${Math.random().toString(36).substring(2,7)}`;
                     countres++;
                     firebase.database().ref('/room/'+random+'/user/'+randomgenerate).set({
                         msg: adminMsgtxt,
@@ -166,10 +172,11 @@ document.getElementById('adminmsgsbtn').addEventListener('click', ( e ) => {
                     }); 
                 }
             })
+            countad++;
+            localStorage.setItem('adminmsg',countad);
             
         })
-        // showAdminMsg(sessionStorage.getItem('studentName'), 'mentor', sessionStorage.getItem('roomName'));
-        showUserMsg(sessionStorage.getItem('email'), 'mentor')
+        showUserMsg()
     }
 })
 

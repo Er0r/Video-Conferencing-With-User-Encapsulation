@@ -13,9 +13,20 @@ window.addEventListener( 'load', () => {
     //When the 'Create room" is button is clicked
     document.getElementById( 'create-room' ).addEventListener( 'click', ( e ) => {
         e.preventDefault();
-
-        let roomName  = document.querySelector( '#room-name' ).value;
+        var selectprogram = sessionStorage.getItem('selectprogram');
+        console.log(selectprogram);
+        let roomName=``;
+        if(selectprogram === 'Pro Membership Program' && sessionStorage.getItem('mentorship') === 'Pro Mentorship-2') {
+            roomName  = document.getElementById( 'promember2' ).value; 
+        } else if(selectprogram === 'Foundation Membership Program'  && sessionStorage.getItem('mentorship') === 'Pro Mentorship-2') {
+            roomName  = document.getElementById( 'foundationmember2' ).value; 
+        } else if(selectprogram === 'Pro Membership Program' && sessionStorage.getItem('mentorship') === 'Pro Mentorship-1'){
+            roomName  = document.getElementById( 'promember1' ).value;
+        } else if(selectprogram === 'Foundation Membership Program' && sessionStorage.getItem('mentorship') === 'Pro Mentorship-1'){
+            roomName  = document.getElementById( 'foundationmember1' ).value; 
+        } 
         let sessiontime = document.getElementById('sessiontime').value;
+        console.log(`${roomName}`);
         if (sessiontime && roomName) {
             //remove error message, if any
             document.querySelector( '#err-msg' ).innerHTML = "";
@@ -49,18 +60,7 @@ window.addEventListener( 'load', () => {
         addvalue();
     }
 
-   function addvalue() {
-        console.log('OK');
-        var random = Math.random().toString(36).substring(2,7);  
-        firebase.database().ref('/room/'+random).set({
-            sessionLink: sessionStorage.getItem('sessionLink'),
-            roomName: sessionStorage.getItem('roomName'),
-            sessiontime: sessionStorage.getItem('sessiontime'),
-            random: random,
-            count: 0
-        })
-        location.reload();
-   }
+   
    
    document.getElementById('logoutbtn').addEventListener('click', ( e ) => {
         e.preventDefault();
@@ -73,7 +73,19 @@ window.addEventListener( 'load', () => {
 } );
 
 
-
+function addvalue() {
+    console.log(`${sessionStorage.getItem('sessionLink')} ${sessionStorage.getItem('roomName')} ${sessionStorage.getItem('sessiontime')}`);
+    var random = Math.random().toString(36).substring(2,7);  
+    firebase.database().ref('/room/'+random).set({
+        sessionLink: sessionStorage.getItem('sessionLink'),
+        roomName: sessionStorage.getItem('roomName'),
+        sessiontime: sessionStorage.getItem('sessiontime'),
+        selectprogram: sessionStorage.getItem('selectprogram'),
+        random: random,
+        count: 0
+    })
+    location.reload();
+}
 
 function logout() {
     

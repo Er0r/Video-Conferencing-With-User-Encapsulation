@@ -47,6 +47,32 @@
              firebase.initializeApp(firebaseConfig);
              firebase.analytics();
          </script>
+		 <script>
+			function programChange() {
+				if (document.getElementById("select-program").value == "Foundation Membership Program") {
+					sessionStorage.setItem('selectprogram', document.getElementById("select-program").value);
+					var cells = document.getElementsByClassName("cheque");
+					for (var i = 0; i < cells.length; i++) {
+						cells[i].disabled = true;
+					}
+					var cells = document.getElementsByClassName("chequed");
+					for (var i = 0; i < cells.length; i++) {
+						cells[i].disabled = false;
+					}
+				} else if (document.getElementById("select-program").value == "Pro Membership Program") {
+					sessionStorage.setItem('selectprogram', document.getElementById("select-program").value);
+					var cells = document.getElementsByClassName("chequed");
+					for (var i = 0; i < cells.length; i++) {
+						cells[i].disabled = true;
+					}
+					var cells = document.getElementsByClassName("cheque");
+					for (var i = 0; i < cells.length; i++) {
+						cells[i].disabled = false;
+					}
+				}
+			}
+		</script>
+		 
 	</head>
 	<body>
 		<nav class="navbar navbar-light bg-light justify-content-between">
@@ -96,68 +122,125 @@
 				aria-labelledby=""
 				aria-hidden="true"
 			>
-				<div class="modal-dialog modal-dialog-centered" role="document">
-					<div class="modal-content">
-						<div class="modal-header">
-							<h5 class="offset-md-4" id="ModalLongTitle">Create Session</h5>
-							<button
-								type="button"
-								class="close"
-								data-dismiss="modal"
-								aria-label="Close"
-							>
-								<span aria-hidden="true">&times;</span>
-							</button>
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="offset-md-4" id="ModalLongTitle">Create Session</h5>
+						<button
+							type="button"
+							class="close"
+							data-dismiss="modal"
+							aria-label="Close"
+						>
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<div class="text-center">
+							<span class="form-text small text-danger" id="err-msg"></span>
 						</div>
-						<div class="modal-body">
-							<div class="text-center">
-								<span class="form-text small text-danger" id="err-msg"></span>
-							</div>
-							<div class="">
-								<label for="room-name">Session Name: </label>
-								<input
-									type="text"
-									id="room-name"
-									class="form-control rounded-0"
-									placeholder="Room Name"
-								/>
-							</div>
-
-							<div class="mb-3">
-								<label for="your-name">Session Date: </label>
-								<input
-									type="datetime-local"
-									id="sessiontime"
-									class="form-control rounded-0"
-									placeholder="Your Name"
-								/>
-							</div>
-
-							<div class="">
-								<button
-									id="create-room"
-									class="btn btn-block rounded-0 btn-info"
+						<div>
+							<div class="form-group">
+								<label>Select Program</label>
+								<select
+									class="form-control select-program"
+									id="select-program"
+									onchange="programChange()"
+									required
 								>
-									Create Room
-								</button>
+									<option selected>Program List</option>
+									<option value="Foundation Membership Program">Foundation Membership Program</option>
+									<option value="Pro Membership Program">Pro Membership Program</option>
+								</select>
 							</div>
+							<div id="promembership-1" hidden>
+								<div class="form-group">
+									<label for="exampleFormControlSelect1"
+										>Foundation Membership Program</label
+									>
+									<select class="form-control chequed" id="foundationmember1">
+										<option selected>Session List</option>
+										<option value="fsession1">Session-1</option>
+										<option value="fsession2">Session-2</option>
+										<option value="fsession3">Session-3</option>
+										<option value="fsession4">Session-4</option>
+										<option value="fsession5">Session-5</option>
+									</select>
+								</div>
+								<div class="form-group">
+									<label>Pro Membership Program</label>
+									<select class="form-control cheque" id="promember1">
+										<option selected>Session List</option>
+										<option value="psession1">Session-1</option>
+										<option value="psession2">Session-2</option>
+										<option value="psession3">Session-3</option>
+										<option value="psession4">Session-4</option>
+										<option value="psession5">Session-5</option>
+									</select>
+								</div>
+							</div>
+							
+						</div>
+						<div id="promembership-2" hidden>
+							<div class="form-group">
+								<label>Foundation Membership Program</label>
+								<select class="form-control chequed" id="foundationmember2">
+									<option selected>Session List</option>
+									<option value="fsession6">Session-6</option>
+									<option value="fsession7">Session-7</option>
+									<option value="fsession8">Session-8</option>
+								</select>
+							</div>
+							<div class="form-group">
+								<label for="exampleFormControlSelect1"
+									>Pro Membership Program</label
+								>
+								<select class="form-control cheque" id="promember2">
+									<option selected>Session List</option>
+									<option value="psession6">Session-6</option>
+									<option value="psession7">Session-7</option>
+									<option value="psession8">Session-8</option>
+									<option value="psession9">Session-9</option>
+									<option value="psession10">Session-10</option>
+								</select>
+							</div>
+						</div>
 
-							<div class="" id="room-created"></div>
+						<div class="mb-3">
+							<label for="your-name">Session Date: </label>
+							<input
+								type="datetime-local"
+								id="sessiontime"
+								class="form-control rounded-0"
+								placeholder="Your Name"
+							/>
 						</div>
-						<div class="modal-footer">
+
+						<div class="">
 							<button
-								type="button"
-								class="btn btn-secondary"
-								data-dismiss="modal"
+								id="create-room"
+								class="btn btn-block rounded-0 btn-info"
 							>
-								Close
-							</button>
-							<button type="button" class="btn btn-primary">
-								Save changes
+								Create Room
 							</button>
 						</div>
+
+						<div class="" id="room-created"></div>
+					</div>
+					<div class="modal-footer">
+						<button
+							type="button"
+							class="btn btn-secondary"
+							data-dismiss="modal"
+						>
+							Close
+						</button>
+						<button type="button" class="btn btn-primary">
+							Save changes
+						</button>
 					</div>
 				</div>
+			</div>
 			</div>
 
 			<div
@@ -177,18 +260,6 @@
 				</div>
 			</div>
 		</div>
-
-		<script
-			type="text/javascript"
-			src="//code.jquery.com/jquery-1.10.2.js"
-		></script>
-		<!-- <script>
-			$(document).ready(function () {
-				setInterval(function () {
-					$("#ModalCenter_2").modal("show");
-				}, 5000);
-			});
-		</script> -->
 		<script src="../assets/js/mentorsessioncontrol.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.slim.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>

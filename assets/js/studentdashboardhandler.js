@@ -44,18 +44,18 @@ window.onload = function showData() {
     })
 }
 function startSession(sessionLink, roomName, sessionTime) {
-    var date = moment().format(sessionTime);
-    var today = moment();
-    var status = today.to(date);
-    alert(`ok ${today.to(date)}`);
-    //condition //
-    if(status.includes("minutes")) {
-        console.log('ok');
-    }
+    // var date = moment().format(sessionTime);
+    // var today = moment();
+    // var status = today.to(date);
+    // alert(`ok ${today.to(date)}`);
+    // //condition //
+    // if(status.includes("minutes")) {
+    //     console.log('ok');
+    // }
     
 
-    // sessionStorage.setItem('roomName',roomName )
-    // location.replace(`${sessionLink}`);
+    sessionStorage.setItem('roomName',roomName )
+    location.replace(`${sessionLink}`);
 }
 
 logoutbtn.addEventListener('click', ( e ) => {

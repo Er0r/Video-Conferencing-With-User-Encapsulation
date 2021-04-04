@@ -6,6 +6,7 @@ var mentorloginbtn = document.getElementById('mentorloginbtn');
 
 
 function signInWithEmailPassword() {
+  alert('ok');
     var email = document.getElementById('mentoremail').value;
     var password = document.getElementById('mentorpassword').value;
     if(!email || !password) {
@@ -22,7 +23,7 @@ function signInWithEmailPassword() {
                 if(childSnapshot.val().email === user.email && childSnapshot.val().status === 'mentor' && childSnapshot.val().count === 0) {
                   sessionStorage.setItem('email', user.email);
                   sessionStorage.setItem('status', 'mentor');
-                  
+                  sessionStorage.setItem('mentorship', childSnapshot.val().mentorship);
                   firebase.database().ref('/login/mentor/'+childSnapshot.val().random).update({
                     count: firebase.database.ServerValue.increment(1)
                   });

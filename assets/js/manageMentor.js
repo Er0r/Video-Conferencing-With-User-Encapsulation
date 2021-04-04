@@ -32,7 +32,7 @@ function signupmentor(mentormail,mentorpass, mentorship) {
                     email: mentormail,
                     mentorship: mentorship,
                     random: random,
-                    status: 'user',
+                    status: 'mentor',
                     uid: user.uid
                 })
                 alertify.success('Mentor Added!');
