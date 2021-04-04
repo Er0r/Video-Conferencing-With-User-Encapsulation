@@ -1,6 +1,5 @@
 window.addEventListener( 'load', () => { 
     localStorage.setItem('usermsg',0);
-    localStorage.setItem('adminmsg', 0);
     if(sessionStorage.getItem('status') === 'mentor') {
         document.getElementById('studentchatsection').hidden = true;
         document.getElementById('mentordiv').hidden = false;
@@ -89,7 +88,8 @@ document.getElementById('studentmsgsbtn').addEventListener('click', ( e ) => {
                 if(childSnapshot.val().roomName === sessionStorage.getItem('roomName') && countres === 0 ) {
                     random= childSnapshot.val().random;
                     sessionStorage.setItem('random',random);
-                    var randomgenerate = `${count}${Math.random().toString(36).substring(2,7)}`;
+                    // var randomgenerate = `${count}-${Math.random().toString(36).substring(2,7)}`;
+                    var randomgenerate = `${count}`;
                     countres++;
                     firebase.database().ref('/room/'+random+'/user/'+randomgenerate).set({
                         msg: studetnttxt,
@@ -156,12 +156,13 @@ document.getElementById('adminmsgsbtn').addEventListener('click', ( e ) => {
         var countres =0;
         var random = ``;
         firebase.database().ref('/room').on('value', function(snapshot){
-            var countad = localStorage.getItem('adminmsg');
+            var countad = localStorage.getItem('usermsg');
             snapshot.forEach((childSnapshot) => {
                 if(childSnapshot.val().roomName === sessionStorage.getItem('roomName') && countres === 0) {
                     random= childSnapshot.val().random;
                     sessionStorage.setItem('random',random);
-                    var randomgenerate =  `${countad}${Math.random().toString(36).substring(2,7)}`;
+                    // var randomgenerate =  `${countad}-${Math.random().toString(36).substring(2,7)}`;
+                    var randomgenerate = `${countad}`;
                     countres++;
                     firebase.database().ref('/room/'+random+'/user/'+randomgenerate).set({
                         msg: adminMsgtxt,
@@ -173,7 +174,7 @@ document.getElementById('adminmsgsbtn').addEventListener('click', ( e ) => {
                 }
             })
             countad++;
-            localStorage.setItem('adminmsg',countad);
+            localStorage.setItem('usermsg',countad);
             
         })
         showUserMsg()
@@ -190,16 +191,34 @@ function showMsg(usermsgs,status){
     usermsgsdiv.innerHTML = ``;
     for(let usmsg of msgSet){
         var usermsg = document.createElement('div');
-        if(usmsg['status'] === 'mentor') {
+        if(sessionStorage.getItem('status') === 'student' && usmsg['status'] === 'mentor') {
             usermsg.className = "bg-light p-2 h6 font-weight-bold mt-2";
             usermsg.style="color: #7b99ec; width: 50%; border-radius: 5px"
             usermsg.innerHTML = `${usmsg['msg']}`;
-        } 
-        if (usmsg['status'] === 'student'){
+        } else if(sessionStorage.getItem('status') === 'student' && usmsg['status'] === 'student'){
             usermsg.className = "bg-light p-2 h6 font-weight-bold mt-2 ml-auto";
             usermsg.style="color: #7b99ec; width: 50%; border-radius: 5px"
             usermsg.innerHTML = `${usmsg['msg']}`;
+        } else if(sessionStorage.getItem('status') === 'mentor' && usmsg['status'] === 'mentor') {
+            usermsg.className = "bg-light p-2 h6 font-weight-bold mt-2 ml-auto";
+            usermsg.style="color: #7b99ec; width: 50%; border-radius: 5px"
+            usermsg.innerHTML = `${usmsg['msg']}`;
+        } else if(sessionStorage.getItem('status') === 'mentor' && usmsg['status'] === 'student') {
+            usermsg.className = "bg-light p-2 h6 font-weight-bold mt-2";
+            usermsg.style="color: #7b99ec; width: 50%; border-radius: 5px"
+            usermsg.innerHTML = `${usmsg['msg']}`;
         }
+
+        // if(usmsg['status'] === 'mentor') {
+        //     usermsg.className = "bg-light p-2 h6 font-weight-bold mt-2";
+        //     usermsg.style="color: #7b99ec; width: 50%; border-radius: 5px"
+        //     usermsg.innerHTML = `${usmsg['msg']}`;
+        // } 
+        // if (usmsg['status'] === 'student'){
+        //     usermsg.className = "bg-light p-2 h6 font-weight-bold mt-2 ml-auto";
+        //     usermsg.style="color: #7b99ec; width: 50%; border-radius: 5px"
+        //     usermsg.innerHTML = `${usmsg['msg']}`;
+        // }
         usermsgsdiv.appendChild(usermsg);
     }
     

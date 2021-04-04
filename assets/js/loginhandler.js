@@ -62,3 +62,20 @@ document.getElementById('adminlogoutbtn').addEventListener('click', ( e ) => {
         alertify.error('Please Try Again Later');
       });
 } )
+
+var adminresetpass = document.getElementById('adminresetpass');
+
+adminresetpass.addEventListener('click', ( e ) => {
+  var auth = firebase.auth();
+  var emailAddress = document.getElementById('adminemail').value;
+  if(!emailAddress) {
+    alert('Please Provide your Email Address!');
+  } else {
+    auth.sendPasswordResetEmail(emailAddress).then(function() {
+      alert('Please Check Your Mail. You Will Find A link There');
+    }).catch(function(error) {
+      alert('Try Again Later');
+    });
+  }
+  
+})

@@ -73,6 +73,8 @@ window.addEventListener( 'load', () => {
 } );
 
 
+
+
 function addvalue() {
     console.log(`${sessionStorage.getItem('sessionLink')} ${sessionStorage.getItem('roomName')} ${sessionStorage.getItem('sessiontime')}`);
     var random = Math.random().toString(36).substring(2,7);  

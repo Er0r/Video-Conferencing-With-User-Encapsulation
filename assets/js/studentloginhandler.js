@@ -5,37 +5,65 @@ var userloginbtn = document.getElementById('userloginbtn');
 function signInWithEmailPassword() {
     var email = document.getElementById('user_email').value;
     var password = document.getElementById('user_pass').value;
-
-    firebase.auth().signInWithEmailAndPassword(email, password)
+    if(!email || !password) { 
+      alert('Please Enter Your Email And Password !');
+    } else {
+      firebase.auth().signInWithEmailAndPassword(email, password)
       .then((userCredential) => {
         var user = userCredential.user;
-        userref.on('value', function(snapshot){
-            var flag = 0;
+        var logginattempt = 0;
+        firebase.database().ref('/login/user').orderByKey().once("value").then(function(snapshot){
             snapshot.forEach((childSnapshot)=>{
-                if(childSnapshot.val().email === user.email && childSnapshot.val().status === 'user' ) {
-                  if(childSnapshot.val().count === 0) {
+                if(childSnapshot.val().email === user.email && childSnapshot.val().status === 'user' && childSnapshot.val().count === 0) {
                     sessionStorage.setItem('email', user.email);
                     sessionStorage.setItem('status', 'student')
+                    sessionStorage.setItem('membership', childSnapshot.val().membership);
                     firebase.database().ref('/login/user/'+childSnapshot.val().random).update({
                       count: firebase.database.ServerValue.increment(1)
                     });
+                    logginattempt= 1;
                     location.replace(`${location.origin}/studentdashboard`);
-                    flag= 1;
-                  } else if(childSnapshot.val().count > 0){
-                    alertify.error('Please Logout From Other Devices To Continue with this Device.');
-                  }
+                    return true;
+                  } 
+                else if(childSnapshot.val().email === user.email && childSnapshot.val().status === 'user' && childSnapshot.val().count > 0){
+                  document.getElementById('errormsg').innerHTML = `You Are Logged In From Different Device. Please Press Logout TO Continue with this Session`;
+                  document.getElementById('errormsg').hidden = false;
+                  document.getElementById('userlogoutbtn').hidden=false;
+                  logginattempt = 1;
+                  return true;
                 }  
             })
-            if(flag === 0) {
-                alertify.error('Please Enter Correct Email And Password');
-            } 
-        })
-      
+        }) 
      
-    })   
-}
-
+      }).catch((error) => {
+        var errormsg  = error.message;
+        document.getElementById('errormsg').innerHTML = `${errormsg}`;
+        document.getElementById('errormsg').hidden = false;  
+        
+      })
+    }   
+  }
   userloginbtn.addEventListener('click', signInWithEmailPassword);
+
+  document.getElementById('userlogoutbtn').addEventListener('click', ( e ) => {
+    firebase.auth().signOut().then(() => {
+      firebase.database().ref('/login/user').on('value', function(snapshot){
+          snapshot.forEach((childSnapshot)=>{
+              if(childSnapshot.val().count > 0) {
+                  firebase.database().ref('/login/user/'+childSnapshot.val().random).update({
+                      count: 0
+                  });
+                  sessionStorage.clear();
+                  alertify.success('Signout Successfully');
+                  location.replace(`${location.origin}/studentlogin`);
+              }
+          })
+      })
+    }).catch((error) => {
+      alertify.error('Please Try Again Later');
+    });
+} )
+
   userresetpass.addEventListener('click', ( e ) => {
     var auth = firebase.auth();
     var emailAddress = document.getElementById('user_email').value;

@@ -67,3 +67,21 @@ document.getElementById('mentorlogoutbtn').addEventListener('click', ( e ) => {
         alertify.error('Please Try Again Later');
       });
 } )
+
+
+var mentorresetpass = document.getElementById('mentorresetpass');
+
+mentorresetpass.addEventListener('click', ( e ) => {
+  var auth = firebase.auth();
+  var emailAddress = document.getElementById('mentoremail').value;
+  if(!emailAddress) {
+    alert('Please Provide your Email Address!');
+  } else {
+    auth.sendPasswordResetEmail(emailAddress).then(function() {
+      alert('Please Check Your Mail. You Will Find A link There');
+    }).catch(function(error) {
+      alert('Try Again Later');
+    });
+  }
+  
+})
