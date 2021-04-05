@@ -16,15 +16,12 @@ window.addEventListener( 'load', () => {
         var selectprogram = sessionStorage.getItem('selectprogram');
         console.log(selectprogram);
         let roomName=``;
-        if(selectprogram === 'Pro Membership Program' && sessionStorage.getItem('mentorship') === 'Pro Mentorship-2') {
-            roomName  = document.getElementById( 'promember2' ).value; 
-        } else if(selectprogram === 'Foundation Membership Program'  && sessionStorage.getItem('mentorship') === 'Pro Mentorship-2') {
-            roomName  = document.getElementById( 'foundationmember2' ).value; 
-        } else if(selectprogram === 'Pro Membership Program' && sessionStorage.getItem('mentorship') === 'Pro Mentorship-1'){
-            roomName  = document.getElementById( 'promember1' ).value;
-        } else if(selectprogram === 'Foundation Membership Program' && sessionStorage.getItem('mentorship') === 'Pro Mentorship-1'){
+        if(selectprogram === 'Pro Membership Program') {
+            roomName  = document.getElementById( 'promember1' ).value; 
+        } else if(selectprogram === 'Foundation Membership Program') {
             roomName  = document.getElementById( 'foundationmember1' ).value; 
-        } 
+        }
+        
         let sessiontime = document.getElementById('sessiontime').value;
         console.log(`${roomName}`);
         if (sessiontime && roomName) {

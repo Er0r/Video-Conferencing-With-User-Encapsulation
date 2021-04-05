@@ -1,3 +1,18 @@
+function initialize() {
+    // e.preventDefault();
+    var mentorship = document.getElementById('mentorship');
+    firebase.database().ref('/mentorship').on('value', function(snapshot){ 
+        snapshot.forEach((childSnapshot) => { 
+           var mentorshipstatus =  document.createElement('option');
+        //    console.log(childSnapshot.val().mentorshipname);
+           mentorshipstatus.innerHTML = childSnapshot.val().mentorshipname;
+           mentorship.appendChild(mentorshipstatus);
+        })
+    })
+}
+
+initialize();
+
 const addmentorbtn = document.getElementById('addmentorbtn');
 
 addmentorbtn.addEventListener('click', ( e ) => {
@@ -5,12 +20,13 @@ addmentorbtn.addEventListener('click', ( e ) => {
     var mentormail = document.getElementById('mentormail').value;
     var mentorpass = Math.random().toString(36).substring(2,11); 
     var mentorship = document.getElementById('mentorship').value;
+    var mentorname = document.getElementById('mentorname').value;
     console.log(mentormail + ' ' +  mentorpass + ' ' + mentorship);
-    signupmentor(mentormail,mentorpass, mentorship);
+    signupmentor(mentormail,mentorpass, mentorship, mentorname);
 })
 
 
-function signupmentor(mentormail,mentorpass, mentorship) {
+function signupmentor(mentormail,mentorpass, mentorship, mentorname) {
     if( !mentormail || mentorship === 'Select Program') {
         alert('Please Fill Up the Information with Correct Credentials');
     } else {
@@ -29,6 +45,7 @@ function signupmentor(mentormail,mentorpass, mentorship) {
                 var random = Math.random().toString(36).substring(2,7);  
                 firebase.database().ref('/login/mentor/'+random).set({
                     count: 0,
+                    name: mentorname,
                     email: mentormail,
                     mentorship: mentorship,
                     random: random,

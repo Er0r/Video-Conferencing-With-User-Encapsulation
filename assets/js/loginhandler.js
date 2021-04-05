@@ -29,7 +29,8 @@ function signInWithEmailPassword() {
                 else if(childSnapshot.val().email === user.email && childSnapshot.val().status === 'admin' && childSnapshot.val().count > 0){
                   document.getElementById('errormsg').innerHTML = `You Are Logged In From Different Device. Please Press Logout TO Continue with this Session`;
                   document.getElementById('errormsg').hidden = false;
-                  document.getElementById('adminlogoutbtn').hidden=false;
+                  document.getElementById('adminlogoutbtn').hidden = false;
+                  document.getElementById('test').style.display = 'none';
                   logginattempt = 1;
                   return true;
                 } 

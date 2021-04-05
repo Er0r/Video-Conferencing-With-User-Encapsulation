@@ -20,20 +20,31 @@
 			<div class="card col-md-6">
 				<div class="p-2">
 					<div class="form-group">
-						<label for="exampleFormControlInput1">Email address</label>
+						<label for="exampleFormControlInput1">Mentor Name</label>
+						<input
+							type="text"
+							class="form-control"
+							id="mentorname"
+							placeholder="Enter Mentor's Name"
+							required
+						/>
+					</div>
+					<div class="form-group">
+						<label for="exampleFormControlInput2">Email address</label>
 						<input
 							type="email"
 							class="form-control"
 							id="mentormail"
-							placeholder="Enter mentor mail"
+							placeholder="Enter Mentor's mail"
+							required
 						/>
 					</div>
 					<div class="form-group">
 						<label for="">Assign Program</label>
 						<select class="form-control" id="mentorship">
                             <option selected>Select Program </option>
-							<option>Pro Mentorship-1</option>
-							<option>Pro Mentorship-2</option>
+							<!-- <option>Pro Mentorship-1</option>
+							<option>Pro Mentorship-2</option> -->
 						</select>
 					</div>
 					<button class="btn btn-primary" id="addmentorbtn">Save</button>

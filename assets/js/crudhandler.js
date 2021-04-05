@@ -1,25 +1,26 @@
 const addbtn = document.getElementById('adduser');
 const deletebtn = document.getElementById('deletebtn');
 
-
+// const myvar = setInterval(showData, 1000);
 
 function addUser(){
 
     var useremail = document.getElementById('useremail').value;
+    var username = document.getElementById('username').value;
     var userpassword = Math.random().toString(36).substring(2,11); 
     var membership = document.getElementById('usermembership').value;
     var useraddress = document.getElementById('useraddress').value;
     var userlocation = document.getElementById('userlocation').value;
-    signup(useremail,userpassword, membership, useraddress, userlocation);
+    signup(useremail,username,userpassword, membership, useraddress, userlocation);
 
 }
 
-function signup(email,password, membership, useraddress, userlocation) {
+function signup(email,username,password, membership, useraddress, userlocation) {
     firebase.auth().createUserWithEmailAndPassword(email, password)
       .then((userCredential) => {
         var user = userCredential.user;
         var templateParams = {
-            to_name: 'fahimmaria155@gmail.com',
+            to_name: 'fahimmaria155@gmail.com', // will be changed here
             from_name: 'Fahim',
             message_html: `Email: ${email}  Password: ${password}`,
             reply_to: 'fahimmaria155@gmail.com'
@@ -31,6 +32,7 @@ function signup(email,password, membership, useraddress, userlocation) {
             firebase.database().ref('/login/user/'+random).set({
                 count: 0 ,
                 email: email,
+                name: username,
                 membership: membership,
                 random: random,
                 status: 'user',
@@ -39,6 +41,7 @@ function signup(email,password, membership, useraddress, userlocation) {
                 uid: user.uid
             })
             alertify.success('User Added!');
+            location.reload();
         }, (err) => {
             alertify.error('Something Error Happened!');
         })
@@ -150,7 +153,7 @@ function deleteentry(){
             }
         })
     })
-
+    location.reload();
     showData();
 }
 

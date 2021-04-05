@@ -34,7 +34,8 @@ function signInWithEmailPassword() {
                 else if(childSnapshot.val().email === user.email && childSnapshot.val().status === 'mentor' && childSnapshot.val().count > 0){
                   document.getElementById('errormsg').innerHTML = `You Are Logged In From Different Device. Please Press Logout TO Continue with this Session`;
                   document.getElementById('errormsg').hidden = false;
-                  document.getElementById('mentorlogoutbtn').hidden=false;
+                  document.getElementById('mentorlogoutbtn').hidden = false;
+                  document.getElementById('test').style.display = 'none';
                   logginattempt = 1;
                   return true;
                 } 
@@ -44,6 +45,7 @@ function signInWithEmailPassword() {
         var errormsg  = error.message;
         document.getElementById('errormsg').innerHTML = `${errormsg}`;
         document.getElementById('errormsg').hidden = false;
+        
       })
     }
 }

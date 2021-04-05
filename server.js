@@ -83,4 +83,8 @@ app.get('/managementor', (req,res) => {
     res.render('manageMentor');
 })
 
+app.get('/manageMembership', (req,res) => {
+    res.render('manageMembership');
+})
+
 server.listen(3000, console.log('Server Is Running'));

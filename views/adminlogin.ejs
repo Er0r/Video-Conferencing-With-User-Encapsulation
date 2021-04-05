@@ -90,10 +90,27 @@
 	</head>
 
 	<body>
+		<style>
+			#adminlogoutbtn,
+			#test {
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				transform: translate(-50%, -50%);
+			}
+		</style>
+		<button
+			type="submit"
+			id="adminlogoutbtn"
+			class="btn btn-danger text-white"
+			hidden
+		>
+			<strong>Logout From Other Devices.</strong>
+		</button>
 		<div class="container">
 			<nav class="navbar navbar-light justify-content-between">
 				<div style="height: 5rem; width: 5rem">
-					<a class="navbar-brand" href="/studentlogin"
+					<a class="navbar-brand" href="/"
 						><img
 							src="../assets/css/logo.png"
 							alt=""
@@ -102,15 +119,17 @@
 				</div>
 			</nav>
 		</div>
-		<div class="container-fluid">
+		<div class="container-fluid" id="test">
 			<div
 				class="card offset-md-3"
 				style="width: 50%; border: 2px solid black; background-color: #cecece"
-			>	
-
+			>
 				<div class="p-4">
 					<div class="form-group">
-						<span id="errormsg" hidden>asdasd</span><br>
+						<div class="text-center">
+							<span id="errormsg" class="text-danger" hidden></span><br />
+						</div>
+
 						<label for="exampleInputEmail1"><strong>UserEmail</strong></label>
 						<input
 							type="email"
@@ -148,19 +167,27 @@
 					>
 						<strong>Submit</strong>
 					</button>
+					<!-- <style>
+						#adminlogoutbtn {
+							position: absolute;
+							top: 50%;
+							left: 50%;
+							transform: translate(-50%, -50%);
+						}
+					</style>
 					<button
 						type="submit"
 						id="adminlogoutbtn"
-						class="btn btn-default text-white pl-4 pr-4"
+						class="btn btn-default text-white"
 						style="background-color: #f49303"
 						hidden
 					>
 						<strong>Logout From Other Devices.</strong>
-					</button>
+					</button> -->
 					<button
-					type="submit"
-					class="btn btn-default btn-warning btn-sm text-white"
-                    id="adminresetpass"
+						type="submit"
+						class="btn btn-default btn-danger text-white"
+						id="adminresetpass"
 					>
 						Reset Pass
 					</button>
