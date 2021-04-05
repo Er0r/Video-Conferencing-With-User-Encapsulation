@@ -2,10 +2,11 @@ var logoutbtn = document.getElementById('logoutbtn');
 
 
 window.onload = function showData() {
+    document.getElementById('username').innerHTML = `Welcome ${sessionStorage.getItem('username')}`;
     var count = 1;
     var marquee_contain = document.getElementById('marquee_contain');
     var session_contain = document.getElementById('session_contain');
-
+    
     firebase.database().ref('/login/admin/notice').on('value', function(snapshot){
         snapshot.forEach((childSnapshot)=> {
             var newnotice = document.createElement('div');

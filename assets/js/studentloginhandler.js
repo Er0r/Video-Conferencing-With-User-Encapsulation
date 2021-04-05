@@ -18,6 +18,7 @@ function signInWithEmailPassword() {
                     sessionStorage.setItem('email', user.email);
                     sessionStorage.setItem('status', 'student')
                     sessionStorage.setItem('membership', childSnapshot.val().membership);
+                    sessionStorage.setItem('username', childSnapshot.val().name);
                     firebase.database().ref('/login/user/'+childSnapshot.val().random).update({
                       count: firebase.database.ServerValue.increment(1)
                     });

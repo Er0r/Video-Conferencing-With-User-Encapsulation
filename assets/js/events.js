@@ -10,6 +10,7 @@ window.addEventListener( 'load', () => {
     sessionStorage.removeItem('sessionLink');
     sessionStorage.removeItem('roomName');
     sessionStorage.removeItem('sessiontime');
+    document.getElementById('mentorname').innerHTML = `Welcome ${sessionStorage.getItem('mentorname')}`;
     //When the 'Create room" is button is clicked
     document.getElementById( 'create-room' ).addEventListener( 'click', ( e ) => {
         e.preventDefault();

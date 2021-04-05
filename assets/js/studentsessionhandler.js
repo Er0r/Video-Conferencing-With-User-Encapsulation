@@ -1,5 +1,6 @@
 window.addEventListener( 'load', () => { 
-    localStorage.setItem('usermsg',0);
+    if(!localStorage.getItem('usermsg'))
+        localStorage.setItem('usermsg',0);
     if(sessionStorage.getItem('status') === 'mentor') {
         document.getElementById('studentchatsection').hidden = true;
         document.getElementById('mentordiv').hidden = false;
@@ -75,6 +76,7 @@ function UserShow(userset){
 
 document.getElementById('studentmsgsbtn').addEventListener('click', ( e ) => {
     var studetnttxt = document.getElementById('studentmsgstxt').value;
+    document.getElementById('studentmsgstxt').value='';
     if(!studetnttxt){
         alert('Please Enter a Text!');
     } else {
@@ -104,10 +106,9 @@ document.getElementById('studentmsgsbtn').addEventListener('click', ( e ) => {
             count++;
             localStorage.setItem('usermsg',count);
         })
-        
         showUserMsg();
     }
- 
+    
 })
 
 function clearArray(array) {
@@ -150,6 +151,7 @@ function showUserMsg(){
 
 document.getElementById('adminmsgsbtn').addEventListener('click', ( e ) => {
     var adminMsgtxt = document.getElementById('adminmsgstxt').value;
+    document.getElementById('adminmsgstxt').value='';
     if(!adminMsgtxt) {
         alert('Please Enter a Message');
     } else {
@@ -177,8 +179,10 @@ document.getElementById('adminmsgsbtn').addEventListener('click', ( e ) => {
             localStorage.setItem('usermsg',countad);
             
         })
+        adminMsgtxt.value = '';
         showUserMsg()
     }
+    
 })
 
 var msgSet = new Set();
