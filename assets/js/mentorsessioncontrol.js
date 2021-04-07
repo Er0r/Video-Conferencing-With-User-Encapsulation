@@ -1,4 +1,3 @@
-
 window.onload = function showData(){
     var session_contain = document.getElementById('session_contain');
     var up_session_contain = document.getElementById('up_session_contain');
@@ -94,6 +93,16 @@ function checkSessionValidity() {
 }
 
 function startSession(sessionLink, roomName) {
+
+    firebase.database().ref('/room').on('value', function(snapshot){
+        snapshot.forEach((childSnapshot) => { 
+            if(childSnapshot.val().mentorName === sessionStorage.getItem('mentorname')) {
+                firebase.database().ref('/room/'+childSnapshot.val().random).update({
+                    mentoronline: 1
+                });
+            }
+        })
+    })
     sessionStorage.setItem('roomName',roomName )
     location.replace(`${sessionLink}`);
 }
@@ -103,3 +112,9 @@ function myFunction() {
 }
 
 myFunction();
+
+
+var createnoticebtn = document.getElementById('createnoticebtn').addEventListener('click', ( e ) => {
+    e.preventDefault();
+    location.replace(`${window.location.origin}/mentornotice`);
+})

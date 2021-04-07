@@ -4,7 +4,7 @@ const app = express();
 let server = require('http').Server(app);
 let io = require( 'socket.io' )( server );
 let stream = require('./ws/steam');
-var encryptionhandler = require('./assets/js/encryption');
+
 
 console.log(`path.join(${__dirname}+'/views/admin'`);
 
@@ -23,7 +23,7 @@ app.get('/', (req,res) => {
 })
 
 app.get('/admindashboard', (req,res) => {
-    res.render('admindashboard', {encryptionhandler:encryptionhandler});
+    res.render('admindashboard');
 })
 
 app.get('/test', (req,res) => {
@@ -44,7 +44,7 @@ app.get('/userfaq', (req,res) =>{
 })
 
 app.get('/adminusercrud', (req,res) =>{
-    res.render('adminusercrud', {encryptionhandler:encryptionhandler});
+    res.render('adminusercrud');
 })
 
 app.get('/adminmanage', (req,res) =>{
@@ -85,6 +85,10 @@ app.get('/managementor', (req,res) => {
 
 app.get('/manageMembership', (req,res) => {
     res.render('manageMembership');
+})
+
+app.get('/mentornotice', (req,res) => {
+    res.render('mentornotice');
 })
 
 server.listen(3000, console.log('Server Is Running'));

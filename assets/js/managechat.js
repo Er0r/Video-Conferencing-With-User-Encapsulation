@@ -5,7 +5,6 @@ function showSession(){
     firebase.database().ref('/room').on('value', function(snapshot){ 
         snapshot.forEach((childSnapshot) => { 
             var name = childSnapshot.val().roomName;
-            console.log(name);
             sessionArray.push(name);
         })
         sessionShow(sessionArray);
@@ -30,6 +29,7 @@ function sessionShow(sessionArray){
 
 function showUser() {
     var sesselect = document.getElementById("sessoption").value
+    sessionStorage.setItem('sessionname',sesselect);
     var userlist = document.getElementById('userlist');
     userlist.innerHTML = ``;
     var countres =0;
@@ -41,10 +41,11 @@ function showUser() {
                 random = childSnapshot.val().random;
                 sessionStorage.setItem('random',random);
                 firebase.database().ref('/room/'+random+'/user').on('value', function(snap){ 
-                    snap.forEach((child) => {
-                        
-                        var user = child.val().username;
-                        userset.add(user);
+                    snap.forEach((child) => {  
+                        if(child.val().status === 'student') {
+                            var user = child.val().username;
+                            userset.add(user);
+                        } 
                     })
                 })
                 UserShow(userset);
@@ -55,7 +56,7 @@ function showUser() {
     
     
 }
-
+var myvar = setInterval(showUser,5000);
 function UserShow(userset){
     for (let item of userset){
         var userbtn = document.createElement('div');
@@ -85,13 +86,15 @@ function showUserMsg(username){
     var random = sessionStorage.getItem('random');
     firebase.database().ref('/room/'+random+'/user').on('value', function(snap){ 
         snap.forEach((child) => {
-            if(child.val().username === username){
+            if(child.val().username === username && child.val().status === 'student' && child.val().sessionName === sessionStorage.getItem('sessionname')){
                 sessionStorage.setItem('msgrandom',child.val().random);
                 usermsgs.push(child.val().msg);
-                if(child.val().username === username && child.val().adminmsg)
-                    adminmsgs.push(child.val().adminmsg);
-            }
                 
+            }
+            if(child.val().status === 'mentor' && child.val().sessionName === sessionStorage.getItem('sessionname')) {
+                adminmsgs.push(child.val().msg);   
+            }
+           
         })
     })
     showMsg(usermsgs,adminmsgs);
@@ -119,17 +122,3 @@ function showMsg(usermsgs,adminmsgs){
 }
 
 
-var adminmsgsbtn = document.getElementById('adminmsgsbtn');
-adminmsgsbtn.addEventListener('click', ( e ) => {
-    var adminmsgstxt = document.getElementById('adminmsgstxt').value;
-    var random = sessionStorage.getItem('random');
-    var msgrandom = sessionStorage.getItem('msgrandom');
-     
-    firebase.database().ref('/room/'+random+'/user/'+msgrandom).update({
-        adminmsg: adminmsgstxt
-    })
-    showUserMsg(sessionStorage.getItem('username'));
-    // location.reload();
-    document.getElementById("adminmsgstxt").value = "";
-
-})

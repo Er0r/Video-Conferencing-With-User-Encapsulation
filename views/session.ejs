@@ -16,6 +16,7 @@
 <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-auth.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-firestore.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-database.js"></script>
+<link rel="stylesheet" href="../assets/css/session.css">
 <script>
     const firebaseConfig = {
         apiKey: "AIzaSyAUCgn__4r9gxa1nIHWuibSz-NxzdeEofw",
@@ -36,6 +37,32 @@
 </head>
 
 <body>
+	<!-- <div class="login-popup">
+		<div class="box">
+			<div class="">
+				<div class="close">&times;</div>
+			</div>
+
+			<div class="a">
+				<button
+					class="btn btn-default rounded-0 btn-no-effect"
+					id="toggle-video"
+					title="Hide Video"
+				>
+					<i class="fa fa-video text-dark fa-3x"></i>
+				</button>
+				<button
+					class="btn btn-default rounded-0 btn-no-effect"
+					id="toggle-mute"
+					title="Mute"
+				>
+					<i class="fa fa-microphone-alt text-dark fa-3x"></i>
+				</button>
+			</div>
+		</div>
+	</div> -->
+
+	
     <nav>
         <style>
 			i {
@@ -235,6 +262,7 @@
             </div>
         </div>
     </div>
+<script src="../assets/js/videoaudiohandler.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.slim.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"></script>

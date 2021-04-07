@@ -186,7 +186,7 @@
                      let newVid = document.createElement( 'video' );
                      newVid.id = `${ partnerName }-video`;
                      newVid.srcObject = str;
-                     newVid.autoplay = true;
+                     newVid.autoplay = false;
                      newVid.className = 'remote-video';
  
                      //video controls elements
@@ -385,8 +385,16 @@
          
          document.getElementById('leavebtn').addEventListener('click', ( e ) => {
             e.preventDefault();
-            if(sessionStorage.getItem('status') === 'mentor')
+            if(sessionStorage.getItem('status') === 'mentor') {
                 location.replace(`${window.origin}/mentordashboard`);
+                var mentorname = sessionStorage.getItem('mentorname');
+                var random = sessionStorage.getItem('random');
+                var roomname = sessionStorage.getItem('roomName');
+                var ref = firebase.database().ref(`/room/${random}`);
+                ref.remove().then(() => {
+                    alert('ok');
+                });
+            }  
             else if(sessionStorage.getItem('status') === 'student') 
                 location.replace(`${window.origin}/studentdashboard`);
             else if(sessionStorage.getItem('status') === 'admin')

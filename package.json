@@ -4,14 +4,24 @@
   "description": "Web Application",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "ejs": "^3.1.6",
     "express": "^4.17.1",
+    "firebase": "^8.3.2",
     "firebase-admin": "^9.5.0",
     "socket.io": "^4.0.0"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Er0r/Video-Conferencing-With-User-Encapsulation.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Er0r/Video-Conferencing-With-User-Encapsulation/issues"
+  },
+  "homepage": "https://github.com/Er0r/Video-Conferencing-With-User-Encapsulation#readme"
 }

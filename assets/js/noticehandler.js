@@ -146,8 +146,9 @@ function deleteentry(){
     firebase.database().ref('/login/admin/notice').on('value', function(snapshot){
         snapshot.forEach((childSnapshot)=>{
             if(childSnapshot.val().notice === sessionStorage.getItem('deletenotice')) {
-                
-                var ref = firebase.database().ref(`/login/admin/notice/${childSnapshot.val().random}`);
+                var random = childSnapshot.val().random;
+                alert(random);
+                var ref = firebase.database().ref(`/login/admin/notice/${random}`);
                 alert(ref);
                 ref.remove();  
             }
@@ -171,7 +172,8 @@ function editNotice(){
         snapshot.forEach((childSnapshot)=>{
             if(childSnapshot.val().notice === sessionStorage.getItem('editnotice')) {
                 firebase.database().ref('/login/admin/notice/'+childSnapshot.val().random).set({
-                    notice: editnoticetxt
+                    notice: editnoticetxt,
+                    random: childSnapshot.val().random
                 });
             }
         })

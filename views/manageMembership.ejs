@@ -7,7 +7,29 @@
 <meta name="Description" content="Enter your description here"/>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
+<script>
+    var adminref = firebase.database().ref('/login/admin');
+    function AdminvalidateToken(){
+        var email = sessionStorage.getItem('email');
+        adminref.on('value', function(snapshot){
+            snapshot.forEach((childSnapshot)=>{
+                if(childSnapshot.val().email === sessionStorage.getItem('email')){ 
+                    if(childSnapshot.val().count > 0) {
+                        return true;
+                    }
+                } 
+            })
+        })
 
+        if(sessionStorage.getItem('status') !== 'admin' && !email) {
+            return false;
+        } 
+        return false;
+    }
+    if(!AdminvalidateToken()){
+        location.replace(`${location.origin}`);
+    }
+</script>
 <title>Manage Membership</title>
 </head>
 <body>

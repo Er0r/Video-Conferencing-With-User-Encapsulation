@@ -87,6 +87,7 @@ function showData() {
                 ${childSnapshot.val().email}
             `
             newtabledataemail.id = `email-${count}`;
+            
             var newtabledatapassword = document.createElement('td');
             newtabledatapassword.innerHTML = `
                 ${childSnapshot.val().uid}

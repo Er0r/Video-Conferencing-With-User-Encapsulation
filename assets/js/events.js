@@ -1,9 +1,6 @@
 import helpers from './helpers.js';
 var mentorref = firebase.database().ref('/login/mentor');
 
-
-
-
 window.addEventListener( 'load', () => {
     //When the chat icon is clicked
     
@@ -60,18 +57,8 @@ window.addEventListener( 'load', () => {
 
    
    
-   document.getElementById('logoutbtn').addEventListener('click', ( e ) => {
-        e.preventDefault();
-        if(!sessionStorage.getItem('email') && !sessionStorage.getItem('status')){
-            location.replace(`${window.origin}`);
-        } else {
-            logout();
-        }
-   })
-} );
-
-
-
+   
+});
 
 function addvalue() {
     console.log(`${sessionStorage.getItem('sessionLink')} ${sessionStorage.getItem('roomName')} ${sessionStorage.getItem('sessiontime')}`);
@@ -79,6 +66,8 @@ function addvalue() {
     firebase.database().ref('/room/'+random).set({
         sessionLink: sessionStorage.getItem('sessionLink'),
         roomName: sessionStorage.getItem('roomName'),
+        mentoronline: 0,
+        mentorName: sessionStorage.getItem('mentorname'),
         sessiontime: sessionStorage.getItem('sessiontime'),
         selectprogram: sessionStorage.getItem('selectprogram'),
         random: random,
@@ -88,33 +77,39 @@ function addvalue() {
 }
 
 function logout() {
-    
+    var flag = 0;
     firebase.auth().signOut().then(() => {
         
         window.indexedDB.databases().then((r) => {
             for (var i = 0; i < r.length; i++) 
                 window.indexedDB.deleteDatabase(r[i].name);
             
-        }).then(() => {
-            mentorref.on('value', function(snapshot){
-                snapshot.forEach((childSnapshot)=>{
-                    if(childSnapshot.val().email === sessionStorage.getItem('email')) {
-                        firebase.database().ref('/login/mentor/'+childSnapshot.val().random).update({
-                            count: 0
-                        });
-                        sessionStorage.clear('email');
-                        sessionStorage.clear('status');
-                        alert('Signout Successfully');
-                        location.replace(`${location.origin}`);
-                    }
-                })
+        })
+        mentorref.on('value', function(snapshot){
+            snapshot.forEach((childSnapshot)=>{
+                if(childSnapshot.val().email === sessionStorage.getItem('email') && flag === 0) {
+                    firebase.database().ref('/login/mentor/'+childSnapshot.val().random).update({
+                        count: 0
+                    });
+                    sessionStorage.clear('email');
+                    sessionStorage.clear('status');
+                    location.replace(`${location.origin}`);
+                    flag =1;
+                }
             })
+        })
             
-        }).catch((error) => {
-            alert('Please Try Again Later');
-        });
-        
       }).catch((error) => {
         alert('Please Try Again Later');
     });
 }
+
+
+document.getElementById('logoutbtn').addEventListener('click', ( e ) => {
+    e.preventDefault();
+    if(!sessionStorage.getItem('email') && !sessionStorage.getItem('status')){
+        location.replace(`${window.origin}`);
+    } else {
+        logout();
+    }
+})

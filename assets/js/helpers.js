@@ -255,11 +255,14 @@ export default {
         }
     },
 
-
+    setManipulators(ImageManipulators)
+    {
+        this._ImageManipulators = ImageManipulators;
+    },
 
     setLocalStream( stream, mirrorMode = true ) {
         const localVidElem = document.getElementById( 'local' );
-
+        
         localVidElem.srcObject = stream;
         localVidElem
         mirrorMode ? localVidElem.classList.add( 'mirror-mode' ) : localVidElem.classList.remove( 'mirror-mode' );

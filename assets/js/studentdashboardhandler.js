@@ -1,12 +1,13 @@
 var logoutbtn = document.getElementById('logoutbtn');
 
 
-window.onload = function showData() {
+function showData() {
     document.getElementById('username').innerHTML = `Welcome ${sessionStorage.getItem('username')}`;
     var count = 1;
+    var tablebody  = document.getElementById('tablebody');
     var marquee_contain = document.getElementById('marquee_contain');
-    var session_contain = document.getElementById('session_contain');
-    
+    marquee_contain.innerHTML = ``;
+    tablebody.innerHTML= ``;
     firebase.database().ref('/login/admin/notice').on('value', function(snapshot){
         snapshot.forEach((childSnapshot)=> {
             var newnotice = document.createElement('div');
@@ -20,71 +21,112 @@ window.onload = function showData() {
             count++;
         })
     })
+    
     var session_count=1;
+   
     firebase.database().ref('/room').on('value', function(snapshot){
-        snapshot.forEach((childSnapshot) => {
-            // ekhane foundation program er if else hobe // 
+        
+        snapshot.forEach((childSnapshot)=> { 
             if(sessionStorage.getItem('membership').includes('Foundation')) {
                 if(childSnapshot.val().selectprogram === 'Foundation Membership Program') {
-                    var newsession = document.createElement('div');
-                    newsession.className = "bg-light p-2 h5 font-weight-bold";
-                    newsession.id = `session-${session_count}`; 
-                    let sessionLink = childSnapshot.val().sessionLink;
-                    let roomName = childSnapshot.val().roomName;
-                    let sessiontime = childSnapshot.val().sessiontime;
-                    newsession.id = `${sessiontime}`; 
-                    newsession.innerHTML = `
-                        ${childSnapshot.val().roomName} <br /> ${childSnapshot.val().sessiontime} <br /><span
+                    var newtablerow = document.createElement('tr');
+                    newtablerow.id = `${childSnapshot.val().sessiontime}`;
+                    var sessionnametabledata = document.createElement('td');
+                    sessionnametabledata.id = `data-${session_count}`;
+                    sessionnametabledata.innerHTML = `${childSnapshot.val().roomName}`;
+                    
+                    var sessiontimetabledata = document.createElement('td');
+                    sessiontimetabledata.innerHTML = `${childSnapshot.val().sessiontime}`;
+        
+            
+                    var sessionmentornametabledata = document.createElement('td');
+                    sessionmentornametabledata.innerHTML = `${childSnapshot.val().mentorName}`;
+                    
+                    
+                    var sessionLink = childSnapshot.val().sessionLink; 
+                    var roomName = childSnapshot.val().roomName;
+                    var action = document.createElement('td');
+                    action.innerHTML = ` ${childSnapshot.val().roomName} <br /> ${childSnapshot.val().sessiontime} <br />
+                            <span
                             class="btn btn-deafult text-white rounded-pill py-1"
                             id="sessionbtn-${session_count}"
-                            style=" display:none; background-color: #08165c"
+                            style="display: none; background-color: #08165c"
                             onclick="startSession('${sessionLink}', '${roomName}')"
                             >Join</span
                         >
-                    `
-                    session_contain.appendChild(newsession);
+                    `;
+        
+                    newtablerow.appendChild(sessionnametabledata);
+                    newtablerow.appendChild(sessiontimetabledata);
+                    newtablerow.appendChild(sessionmentornametabledata);
+                    newtablerow.appendChild(action);
+                    tablebody.appendChild(newtablerow);
                     session_count++;
                 }
             } else {
                 if(childSnapshot.val().selectprogram === 'Pro Membership Program') { 
-                    var newsession = document.createElement('div');
-                    newsession.className = "bg-light p-2 h5 font-weight-bold";
-                    newsession.id = `session-${session_count}`; 
-                    let sessionLink = childSnapshot.val().sessionLink;
-                    let roomName = childSnapshot.val().roomName;
-                    let sessiontime = childSnapshot.val().sessiontime;
-                    newsession.id = `${sessiontime}`; 
-                    newsession.innerHTML = `
-                        ${childSnapshot.val().roomName} <br /> ${childSnapshot.val().sessiontime} <br /><span
+                    var newtablerow = document.createElement('tr');
+                    newtablerow.id = `${childSnapshot.val().sessiontime}`;
+                    var sessionnametabledata = document.createElement('td');
+                    sessionnametabledata.id = `data-${session_count}`;
+                    sessionnametabledata.innerHTML = `${childSnapshot.val().roomName}`;
+                    
+                    var sessiontimetabledata = document.createElement('td');
+                    sessiontimetabledata.innerHTML = `${childSnapshot.val().sessiontime}`;
+        
+            
+                    var sessionmentornametabledata = document.createElement('td');
+                    sessionmentornametabledata.innerHTML = `${childSnapshot.val().mentorName}`;
+                    
+                    
+                    var sessionLink = childSnapshot.val().sessionLink; 
+                    var roomName = childSnapshot.val().roomName;
+                    var action = document.createElement('td');
+                    action.innerHTML = ` ${childSnapshot.val().roomName} <br /> ${childSnapshot.val().sessiontime} <br />
+                            <span
                             class="btn btn-deafult text-white rounded-pill py-1"
                             id="sessionbtn-${session_count}"
-                            style=" display:none; background-color: #08165c"
+                            style="display: none; background-color: #08165c"
                             onclick="startSession('${sessionLink}', '${roomName}')"
                             >Join</span
                         >
-                    `
-                    session_contain.appendChild(newsession);
+                    `;
+        
+                    newtablerow.appendChild(sessionnametabledata);
+                    newtablerow.appendChild(sessiontimetabledata);
+                    newtablerow.appendChild(sessionmentornametabledata);
+                    newtablerow.appendChild(action);
+                    tablebody.appendChild(newtablerow);
                     session_count++;
                 }
             }
-            
         })
         checkSessionValidity();
     })
 }
 
 function checkSessionValidity() {
-    var len = document.getElementById('session_contain').querySelectorAll('div').length;
+    var len = document.getElementById('tablebody').querySelectorAll('tr').length;
     for(var i =0; i < len; i++) {
-        var sessioncontainerdiv = document.getElementById('session_contain').querySelectorAll('div')[i];
-        var time = sessioncontainerdiv.id;
+        var sessioncontainertable = document.getElementById('tablebody').querySelectorAll('tr')[i];
+        var time = sessioncontainertable.id;
         var date = moment().format(time);
         var today = moment();
         var status = today.to(date);
-        if(status.includes("in 10 minutes") || status.includes("in 10 minutes")  || status.includes("in 9 minutes") || status.includes("in 8 minutes") || status.includes("in 7 minutes") || status.includes("in 6 minutes")  || status.includes("in 5 minutes") || status.includes("in 4 minutes") || status.includes("in 3 minutes") || status.includes("in 2 minutes") ) {
-            document.getElementById('session_contain').querySelectorAll('div')[i].querySelector('span').style.display = 'block';
-            console.log('ok');
-            
+        var joinbtnvis = document.getElementById('tablebody').querySelectorAll('tr')[i].querySelector('span').style.display;
+        if(status.includes("in 10 minutes")  || status.includes("in 9 minutes") || status.includes("in 8 minutes") || status.includes("in 7 minutes") || status.includes("in 6 minutes")  || status.includes("in 5 minutes") || status.includes("in 4 minutes") || status.includes("in 3 minutes") || status.includes("in 2 minutes") ) {
+            firebase.database().ref('/room').on('value', function(snapshot){ 
+                snapshot.forEach((childSnapshot) => {
+                    if(sessioncontainertable.id === childSnapshot.val().sessiontime) {
+                        if(childSnapshot.val().mentoronline > 0 && joinbtnvis === 'none'){
+                            document.getElementById('tablebody').querySelectorAll('tr')[i].querySelector('span').style.display = 'block';
+                                  
+                        } 
+                            
+                    }
+                })
+                
+            })
         } 
     }
   
@@ -101,6 +143,7 @@ logoutbtn.addEventListener('click', ( e ) => {
 
 function myFunction() {
     myVar = setInterval(checkSessionValidity, 5000);
+    init = setInterval(showData, 2000);
 }
 
 myFunction();
