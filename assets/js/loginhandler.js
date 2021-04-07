@@ -45,24 +45,24 @@ function signInWithEmailPassword() {
 }
 adminloginbtn.addEventListener('click', signInWithEmailPassword);
 
-// document.getElementById('adminlogoutbtn').addEventListener('click', ( e ) => {
-//       firebase.auth().signOut().then(() => {
-//         firebase.database().ref('/login/admin').on('value', function(snapshot){
-//             snapshot.forEach((childSnapshot)=>{
-//                 if(childSnapshot.val().count > 0) {
-//                     firebase.database().ref('/login/admin/'+childSnapshot.val().random).update({
-//                         count: 0
-//                     });
-//                     sessionStorage.clear();
-//                     alertify.success('Signout Successfully');
-//                     location.replace(`${location.origin}/adminlogin`);
-//                 }
-//             })
-//         })
-//       }).catch((error) => {
-//         alertify.error('Please Try Again Later');
-//       });
-// } )
+document.getElementById('adminlogoutbtn').addEventListener('click', ( e ) => {
+      firebase.auth().signOut().then(() => {
+        firebase.database().ref('/login/admin').on('value', function(snapshot){
+            snapshot.forEach((childSnapshot)=>{
+                if(childSnapshot.val().count > 0) {
+                    firebase.database().ref('/login/admin/'+childSnapshot.val().random).update({
+                        count: 0
+                    });
+                    sessionStorage.clear();
+                    alertify.success('Signout Successfully');
+                    location.replace(`${location.origin}/adminlogin`);
+                }
+            })
+        })
+      }).catch((error) => {
+        alertify.error('Please Try Again Later');
+      });
+} )
 
 var adminresetpass = document.getElementById('adminresetpass');
 

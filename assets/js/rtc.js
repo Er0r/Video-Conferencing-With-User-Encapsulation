@@ -186,7 +186,7 @@
                      let newVid = document.createElement( 'video' );
                      newVid.id = `${ partnerName }-video`;
                      newVid.srcObject = str;
-                     newVid.autoplay = false;
+                     newVid.autoplay = true;
                      newVid.className = 'remote-video';
  
                      //video controls elements

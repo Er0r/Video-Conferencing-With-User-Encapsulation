@@ -42,29 +42,7 @@
         firebase.initializeApp(firebaseConfig);
         firebase.analytics();
         </script>
-		<script>
-			var adminref = firebase.database().ref('/login/admin');
-			function AdminvalidateToken(){
-				var email = sessionStorage.getItem('email');
-				adminref.on('value', function(snapshot){
-					snapshot.forEach((childSnapshot)=>{
-						if(childSnapshot.val().email === sessionStorage.getItem('email')){ 
-							if(childSnapshot.val().count > 0) {
-								return true;
-							}
-						} 
-					})
-				})
-
-				if(sessionStorage.getItem('status') !== 'admin' && !email) {
-					return false;
-				} 
-				return false;
-			}
-			if(!AdminvalidateToken()){
-				location.replace(`${location.origin}`);
-			}
-		</script>
+		
 		<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/emailjs-com@2/dist/email.min.js"></script>
 
 		<script type="text/javascript">
@@ -128,7 +106,7 @@
 						  
 						  <li>
 							<a class="admin_dash class_name" data-target="managechat">
-							  <i class="far fa-comment" aria-hidden="true"></i> Manage Chat
+							  <i class="far fa-comment" aria-hidden="true"></i> Show Chat
 							</a>
 						  </li>
 						  <li class="header">FAQ</li>
@@ -188,8 +166,25 @@
 				</div>
 			</div>
 		</div>
-	
 		<script src="../assets/js/dashboardhandler.js"></script>
+		
+		<script>
+			function AdminvalidateToken(){
+				var flag = 0;
+				firebase.database().ref('/login/admin').once('value').then((snapshot)=>{
+					snapshot.forEach((childSnapshot)=>{
+						if(childSnapshot.val().email === sessionStorage.getItem('email') && childSnapshot.val().count > 0){ 
+							flag = 1;
+						} 
+					})
+					if(flag === 0) {
+						location.replace(`${location.origin}`);
+					}
+				})  
+			}    
+			var token = setInterval(AdminvalidateToken, 2000); 
+		</script>
+		
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"></script>
 	</body>

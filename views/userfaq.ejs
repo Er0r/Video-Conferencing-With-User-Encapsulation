@@ -32,6 +32,22 @@
         firebase.initializeApp(firebaseConfig);
         firebase.analytics();
         </script>
+		<script>
+			function StudentvalidateToken(){
+				var flag = 0;
+				firebase.database().ref('/login/user').once('value').then((snapshot)=>{
+					snapshot.forEach((childSnapshot)=>{
+						if(childSnapshot.val().email === sessionStorage.getItem('email') && childSnapshot.val().count > 0){ 
+							flag = 1;
+						} 
+					})
+					if(flag === 0) {
+						location.replace(`${location.origin}`);
+					}
+				})  
+			}    
+			var token = setInterval(StudentvalidateToken, 2000); 
+		</script>
 		<title>Title</title>
 	</head>
 	<body>

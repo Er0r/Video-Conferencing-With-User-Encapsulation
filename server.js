@@ -4,7 +4,7 @@ const app = express();
 let server = require('http').Server(app);
 let io = require( 'socket.io' )( server );
 let stream = require('./ws/steam');
-
+// const encryption = require('./assets/js/encryption');
 
 console.log(`path.join(${__dirname}+'/views/admin'`);
 

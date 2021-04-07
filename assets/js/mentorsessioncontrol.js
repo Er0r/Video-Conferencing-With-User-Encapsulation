@@ -20,7 +20,7 @@ window.onload = function showData(){
     firebase.database().ref('/room').on('value', function(snapshot){
         snapshot.forEach((childSnapshot) => {
             var newsession = document.createElement('div');
-            newsession.className = "bg-light p-2 h5 font-weight-bold";
+            newsession.className = " p-2 font-weight-bold";
             
             let sessionLink = childSnapshot.val().sessionLink;
             let roomName = childSnapshot.val().roomName;

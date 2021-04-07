@@ -29,17 +29,19 @@
 		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 		<script>
 			function AdminvalidateToken(){
-				var email = sessionStorage.getItem('email');
-				
-
-				if(sessionStorage.getItem('status') !== 'admin' && !email) {
-					return false;
-				} 
-				return false;
-			}
-			if(!AdminvalidateToken()){
-				location.replace(`${location.origin}`);
-			}
+				var flag = 0;
+				firebase.database().ref('/login/admin').once('value').then((snapshot)=>{
+					snapshot.forEach((childSnapshot)=>{
+						if(childSnapshot.val().email === sessionStorage.getItem('email') && childSnapshot.val().count > 0){ 
+							flag = 1;
+						} 
+					})
+					if(flag === 0) {
+						location.replace(`${location.origin}`);
+					}
+				})  
+			}    
+			var token = setInterval(AdminvalidateToken, 2000); 
 		</script>
 		<script>
 			var user = firebase.auth().currentUser;

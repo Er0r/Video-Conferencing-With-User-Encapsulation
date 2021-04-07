@@ -2,15 +2,11 @@ const loginname = document.getElementById('loginname');
 const logoutbtn = document.getElementById('logoutbtn');
 var adminref = firebase.database().ref('/login/admin');
 
-
-var email = "";
 function readAll() {
     var token = sessionStorage.getItem('email');
     if(!token) {
         location.replace(`${window.origin}`);
     }
-        
-   
     else 
         loginname.innerHTML = `Welcome <strong> ${sessionStorage.getItem('email')} </strong> <span class="pl-2">|</span> `
    

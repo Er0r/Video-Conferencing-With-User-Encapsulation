@@ -82,7 +82,11 @@ function showData() {
                     var sessionLink = childSnapshot.val().sessionLink; 
                     var roomName = childSnapshot.val().roomName;
                     var action = document.createElement('td');
-                    action.innerHTML = ` ${childSnapshot.val().roomName} <br /> ${childSnapshot.val().sessiontime} <br />
+                    action.innerHTML = ` 
+                            RoomName: ${childSnapshot.val().roomName} <br /> 
+                            SessionTime: ${childSnapshot.val().sessiontime} <br />
+                            <button class="btn btn-success rounded-pill" style="display: none" id="availability-${session_count}"> OnGoing... <br /> </button>
+                            <button class="btn btn-warning mb-2 w-100 rounded-pill" id="availability-${session_count}"> Pending... <br /> </button>
                             <span
                             class="btn btn-deafult text-white rounded-pill py-1"
                             id="sessionbtn-${session_count}"
@@ -119,9 +123,14 @@ function checkSessionValidity() {
                 snapshot.forEach((childSnapshot) => {
                     if(sessioncontainertable.id === childSnapshot.val().sessiontime) {
                         if(childSnapshot.val().mentoronline > 0 && joinbtnvis === 'none'){
+                            document.getElementById('tablebody').querySelectorAll('tr')[i].querySelectorAll('button')[0].style.display = 'block';
+                            document.getElementById('tablebody').querySelectorAll('tr')[i].querySelectorAll('button')[1].style.display = 'none';
                             document.getElementById('tablebody').querySelectorAll('tr')[i].querySelector('span').style.display = 'block';
                                   
-                        } 
+                        }  else {
+                            document.getElementById('tablebody').querySelectorAll('tr')[i].querySelectorAll('button')[1].style.display = 'block';
+                            document.getElementById('tablebody').querySelectorAll('tr')[i].querySelectorAll('button')[0].style.display = 'none';
+                        }
                             
                     }
                 })
@@ -140,10 +149,10 @@ logoutbtn.addEventListener('click', ( e ) => {
     e.preventDefault();
 
 })
-
+// showData();
 function myFunction() {
     myVar = setInterval(checkSessionValidity, 5000);
-    init = setInterval(showData, 2000);
+    init = setInterval(showData, 1000);
 }
 
 myFunction();

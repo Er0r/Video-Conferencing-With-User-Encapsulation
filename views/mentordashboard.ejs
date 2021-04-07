@@ -33,6 +33,7 @@
          <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-auth.js"></script>
          <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-firestore.js"></script>
          <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-database.js"></script>
+
          <script>
              const firebaseConfig = {
                  apiKey: "AIzaSyAUCgn__4r9gxa1nIHWuibSz-NxzdeEofw",
@@ -47,6 +48,22 @@
              firebase.initializeApp(firebaseConfig);
              firebase.analytics();
          </script>
+		 <script>
+			function StudentvalidateToken(){
+				var flag = 0;
+				firebase.database().ref('/login/mentor').once('value').then((snapshot)=>{
+					snapshot.forEach((childSnapshot)=>{
+						if(childSnapshot.val().email === sessionStorage.getItem('email') && childSnapshot.val().count > 0){ 
+							flag = 1;
+						} 
+					})
+					if(flag === 0) {
+						location.replace(`${location.origin}`);
+					}
+				})  
+			}    
+			var token = setInterval(StudentvalidateToken, 2000); 
+		</script>
 		 <script>
 			function programChange() {
 				if (document.getElementById("select-program").value == "Foundation Membership Program") {
@@ -91,45 +108,47 @@
 			
 		</nav>
 		<div class="container">
-			<div class="mt-5 col-md-4">
-				<div class="p-2" >
-					<h2 class="text-center">Upcoming Session</h2>
-					<hr />
-					<div id="up_session_contain">
+			<div class="row">
+				<div class="mt-5 col-md-4">
+					<div class="p-2 card" style="height: 20rem;">
+						<h3 class="text-center">Upcoming Session</h3>
+						<hr />
+						<div id="up_session_contain" style="overflow: auto;">
+							
+						</div>
 						
 					</div>
-					
 				</div>
-			</div>
-			<div class="mt-5 col-md-4">
-				<div class="p-2" >
-					<h2 class="text-center">Current Session</h2>
-					<hr />
-					<div id="session_contain">
+				<div class="d-flex col-md-4 mt-5">
+					<div>
+						<button
+							class="btn btn-default btn-outline-success rounded-pill mr-3 py-2"
+							data-toggle="modal"
+							data-target="#ModalCenter"
+						>
+							Schedule Session
+						</button>
+					</div>
+					<div>
+						<button
+							class="btn btn-default btn-outline-primary rounded-pill ml-3 py-2"
+							id="createnoticebtn"
+						>
+							Make Notice
+						</button>
+					</div>
+				</div>
+				<div class="mt-5 col-md-4">
+					<div class="p-2 card" style="height: 20rem;">
+						<h3 class="text-center">Current Session</h3>
+						<hr />
+						<div id="session_contain" style="overflow:auto">
+							
+						</div>
 						
 					</div>
-					
 				</div>
-			</div>
-			<div class="d-flex con_center">
-				<div>
-					<button
-						class="btn btn-default btn-outline-success rounded-pill mr-3 py-2"
-						data-toggle="modal"
-						data-target="#ModalCenter"
-					>
-						Schedule Session
-					</button>
-				</div>
-				<div>
-					<button
-						class="btn btn-default btn-outline-primary rounded-pill ml-3 py-2"
-						id="createnoticebtn"
-					>
-						Make Notice
-					</button>
-				</div>
-			</div>
+		</div>
 			<div
 				class="modal fade"
 				id="ModalCenter"

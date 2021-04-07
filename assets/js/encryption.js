@@ -15,9 +15,8 @@ firebase.initializeApp(firebaseConfig);
 firebase.analytics();
 
 
-function AdminvalidateToken(){
-    var email = sessionStorage.getItem('email');
-    adminref.on('value', function(snapshot){
+function AdminvalidateToken(email){;
+    adminref.once('value', function(snapshot){
         snapshot.forEach((childSnapshot)=>{
             if(childSnapshot.val().email === sessionStorage.getItem('email')){ 
                 if(childSnapshot.val().count > 0) {

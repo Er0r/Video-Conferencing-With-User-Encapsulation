@@ -1,5 +1,17 @@
-var usermessages = [{'username': '','msg':'','count': 0}];
-var global_msg_count=0;
+
+
+// if(sessionStorage.getItem('status') !== 'admin') {
+//     console.log('ok');
+//     return false;
+// } 
+
+// if(flag === 0){
+//     console.log('bairer ok');
+//     return false;
+// } else {
+//     return true;
+// }
+
 var sessionArray = new Array();
 function showSession(){ 
     firebase.database().ref('/room').on('value', function(snapshot){ 
