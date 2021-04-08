@@ -1,7 +1,6 @@
 const deletebtn = document.getElementById('deletebtn');
 const editnoticesave = document.getElementById('editnoticesave');
 if(document.getElementById('noticebtn')){
-    
     var noticebtn = document.getElementById('noticebtn');
 
     noticebtn.addEventListener('click', () => {
@@ -9,11 +8,11 @@ if(document.getElementById('noticebtn')){
 
         var random = Math.random().toString(36).substring(2,7);
         try{
-            console.log('ok');
             firebase.database().ref('/login/admin/notice/'+random).set({
                 notice: notice,
                 random: random
             }) 
+            location.reload();
         }catch(err){
             alertify.error(err);
             console.log(err);
@@ -142,20 +141,20 @@ function deletehandler(count){
     showData();
 }
 
-function deleteentry(){
+ function deleteentry( ){
+
     firebase.database().ref('/login/admin/notice').on('value', function(snapshot){
         snapshot.forEach((childSnapshot)=>{
             if(childSnapshot.val().notice === sessionStorage.getItem('deletenotice')) {
                 var random = childSnapshot.val().random;
-                alert(random);
-                var ref = firebase.database().ref(`/login/admin/notice/${random}`);
-                alert(ref);
+                var ref =  firebase.database().ref(`/login/admin/notice/${random}`);
                 ref.remove();  
             }
         })
+    
     })
-    location.reload();
     showData();
+    location.reload();
 }
 
 function edithandler(count){

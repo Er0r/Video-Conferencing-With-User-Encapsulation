@@ -262,7 +262,7 @@ export default {
 
     setLocalStream( stream, mirrorMode = true ) {
         const localVidElem = document.getElementById( 'local' );
-        
+        //canvas e send korte hobe // 
         localVidElem.srcObject = stream;
         localVidElem
         mirrorMode ? localVidElem.classList.add( 'mirror-mode' ) : localVidElem.classList.remove( 'mirror-mode' );

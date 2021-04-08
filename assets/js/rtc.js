@@ -183,22 +183,35 @@
  
                  else {
                      //video elem
-                     let newVid = document.createElement( 'video' );
-                     newVid.id = `${ partnerName }-video`;
-                     newVid.srcObject = str;
-                     newVid.autoplay = true;
-                     newVid.className = 'remote-video';
- 
+                    let newVid = document.createElement( 'video' );
+                    newVid.id = `${ partnerName }-video`;
+                    newVid.srcObject = str;
+                    newVid.autoplay = true;
+                    
+                    newVid.className = 'remote-video';
+                    
+
+                    let newcaption = document.createElement( 'div' );
+                    newcaption.id = `${ partnerName }-caption`;
+                    //  newcaption.setAttribute('src', '../assets/css/logo.png')
+                    //  newcaption.setAttribute('position', 'absolute')
+                    //  newcaption.setAttribute('z-index', '1')
+                    //  documnet.getElementById('newcaption').appendChild(newcaption);
+                    newcaption.innerHTML = `<img src="../assets/css/logo.png" style="bottom:5px;right:5px;height:50px;width:50px;position: absolute; z-index: 1"></img>`;
+
+
                      //video controls elements
                      let controlDiv = document.createElement( 'div' );
                      controlDiv.className = 'remote-video-controls';
                      controlDiv.innerHTML = `<i class="fa fa-microphone text-white pr-3 mute-remote-mic" title="Mute"></i>
                          <i class="fa fa-expand text-white expand-remote-video" title="Expand"></i>`;
+                    // controlDiv.innerHTML = `<img src="../assets/css/logo.png" id="imgid" alt="" >`
  
                      //create a new div for card
                      let cardDiv = document.createElement( 'div' );
                      cardDiv.className = 'card card-sm';
                      cardDiv.id = partnerName;
+                     cardDiv.appendChild(newcaption);
                      cardDiv.appendChild( newVid );
                      cardDiv.appendChild( controlDiv );
  
