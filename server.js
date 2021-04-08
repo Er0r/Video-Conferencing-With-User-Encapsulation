@@ -4,9 +4,7 @@ const app = express();
 let server = require('http').Server(app);
 let io = require( 'socket.io' )( server );
 let stream = require('./ws/steam');
-// const encryption = require('./assets/js/encryption');
-
-console.log(`path.join(${__dirname}+'/views/admin'`);
+const port = process.env.PORT || 3000;
 
 app.use("/assets",express.static(__dirname + '/assets'));
 app.set('view engine', 'ejs');
@@ -91,4 +89,6 @@ app.get('/mentornotice', (req,res) => {
     res.render('mentornotice');
 })
 
-server.listen(3000, console.log('Server Is Running'));
+server.listen(port,() => {
+    console.log(`Server running at port `+port);
+  });
