@@ -356,7 +356,18 @@
          } );
  
            
- 
+
+     
+     document.getElementById('toggle-mute').addEventListener('click', (e) => {
+         e.preventDefault();
+
+         var x = document.getElementById("change");
+        if (x.innerHTML === "Mute") {
+            x.innerHTML = "Unmute";
+        } else {
+            x.innerHTML = "Mute";
+        }
+     });
          //When the mute icon is clicked
          document.getElementById( 'toggle-mute' ).addEventListener( 'click', ( e ) => {
              e.preventDefault();

@@ -96,7 +96,7 @@ document.getElementById('studentmsgsbtn').addEventListener('click', ( e ) => {
                     firebase.database().ref('/room/'+random+'/user/'+randomgenerate).set({
                         msg: studetnttxt,
                         status: 'student',
-                        username: sessionStorage.getItem('email'),
+                        username: sessionStorage.getItem('username'),
                         random: randomgenerate,
                         sessionName: sessionStorage.getItem('roomName')
                     }); 
@@ -130,7 +130,7 @@ function showUserMsg(){
     var roomName = sessionStorage.getItem('roomName');
     firebase.database().ref('/room/'+random+'/user').on('value', function(snap){ 
         snap.forEach((child) => {
-            if(child.val().username === sessionStorage.getItem('email') && child.val().status === 'student' && child.val().sessionName === roomName){
+            if((child.val().username === sessionStorage.getItem('email') || (child.val().username === sessionStorage.getItem('username'))) && child.val().status === 'student' && child.val().sessionName === roomName){
                 sessionStorage.setItem('msgrandom',child.val().random);
                 usermsgs.push(child.val().msg);
                 msgarray.push({'msg': child.val().msg, 'status': 'student'}); 

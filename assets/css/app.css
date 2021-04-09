@@ -1,7 +1,7 @@
 .chat-col{
     right: -100vw;
     bottom: 0;
-    top: 40.5px;
+    top: 10px;
     z-index: 1000;
     position: fixed;
     color: #fff;
@@ -97,7 +97,7 @@
 
 
 .local-video{
-    bottom: 0;
+    bottom: 30px;
     left: 0;
     position: fixed;
     width:15vw;

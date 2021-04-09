@@ -39,13 +39,13 @@
 
 <body>
 	
-    <nav>
+    
         <style>
 			i {
-				font-size: larger;
+				color: rgba(250, 243, 243, 0.541);
 			}
 		</style>
-		<div class="d-flex bg-info rounded-0">
+		<!-- <div class="d-flex bg-info rounded-0">
 			<div class="text-white"><i>Company</i></div>
 
 			<div class="pull-right room-comm d-flex ml-auto" hidden>
@@ -67,12 +67,6 @@
 							style="height: 20rem; width: 16rem; overflow: auto;"
 							id="msg-contain"
 						>
-							<!-- <div
-								class="bg-light p-2 h6 font-weight-bold justify-content-end"
-								style="color: #7b99ec; width: 50%; border-radius: 5px"
-							>
-								1st message
-							</div> -->
 							
 							<div
 								class="input-group"
@@ -138,8 +132,8 @@
 					></a>
 				</button>
 			</div>
-		</div>
-    </nav>
+		</div> -->
+    <div style="height: 100vh; background-color:black ">
     <div class="container-fluid room-comm" hidden>
         <div class="row">
             <video class="local-video mirror-mode" id='local' volume='0' autoplay muted></video>
@@ -150,9 +144,9 @@
                 <div class="row mt-2 mb-2" id='videos'></div>
             </div>
 
-            <div class="col-md-6 chat-col d-print-none mb-2 bg-info" id='chat-pane' hidden>
+            <div class="col-md-4 chat-col d-print-none mb-2" style="background-color:white;" id='chat-pane' hidden>
                 <div class="row">
-                    <div class="col-12 text-center h2 mb-3">CHAT</div>
+                    <div class="col-12 text-center text-dark h5 mb-3">CHAT</div>
                 </div>
 
                 <div id="chat-messages">
@@ -169,20 +163,20 @@
 
 						</div>
 					</div>
-					<hr />
+					<!-- <hr /> -->
 					<div class="row">
-						<div class="col-md-3 card" id="mentordiv" hidden>
-							<div class="text-center ml-2 mt-2 font-weight-bold text-dark">
+						<div class="col-md-3 card " style="height:87vh;" id="mentordiv" hidden>
+							<div class="text-center ml-2 mt-2 text-dark">
 								Student List
 							</div>
 							<hr />
-							<div style="overflow: auto; height: 25rem">
+							<div style="overflow: auto; height: 85vh">
 								<div id="userlist"></div>
 							</div>
 						</div>
 
-						<div class="col-md-8 card ml-1">
-							<div style="height: 30rem; overflow: auto">
+						<div class=" card ml-1 col-md-8" style="height:87vh;">
+							<div style="height: 35rem; overflow: auto">
 								<div id="usermsgs"></div>
 
 								<div id="adminmsgs"></div>
@@ -212,7 +206,7 @@
 							<div
 								class="input-group"
 								id="studentchatsection"
-								style="position: absolute; bottom: 0; left: 0"
+								style="position: absolute; bottom: 0px; left: 0"
 							>
 								<input
 									type="text"
@@ -237,7 +231,63 @@
 				<script src="../assets/js/studentsessionhandler.js"></script>
             </div>
         </div>
+		
     </div>
+	<div style="position: absolute; bottom:0">
+		<div class="rounded-0 d-flex" style="background-color:black;">
+			<!-- <div class="text-white"><i>Company</i></div> -->
+			<div class="room-comm d-flex col-5 justify-content-between" hidden>
+				<button
+					class="btn btn-sm rounded-0 btn-no-effect"
+					id="toggle-mute"
+					title="Mute"
+				>
+					<i class="fa fa-microphone-alt "><span class="p d-block" id="change">Mute</span></i>
+				</button>
+
+				<button
+					class="btn btn-sm rounded-0 btn-no-effect"
+					id="toggle-video"
+					title="Hide Video"
+				>
+					<i class="fa fa-video "><span class="p d-block">Video</span></i>
+				</button>
+
+				
+			</div>
+
+			<div class=" room-comm d-flex col-10 offset-md-12 justify-content-between"  hidden>
+				<button 
+					class="btn btn-sm pull-right btn-no-effect" 
+					id='toggle-chat-pane'
+					title="chatpane"
+					>
+					<i class="fa fa-comment"><span class="p d-block">Chat</span></i> <span class="badge badge-danger very-small font-weight-lighter" id='new-chat-notification' hidden>New</span>
+				</button>
+
+				<button
+					class="btn btn-sm rounded-0 btn-no-effect"
+					id="share-screen"
+					title="Share screen"
+				>
+					<i class="fa fa-desktop" ><span class=" d-block " style="font-weight:0.5rem;">Share Screen</span></i>
+				</button>
+
+				<button class="btn btn-sm rounded-0 btn-no-effect">
+					<a href="" class="text-white text-decoration-none"
+						><i
+							class="fa fa-sign-out-alt"
+							id="leavebtn"
+							title="Leave"
+						><span class=" d-block " style="font-weight:0.5rem;">Leave</span></i
+					></a>
+				</button>
+			</div>
+		</div>
+
+	</div>
+</div>
+	
 	
 <script src="../assets/js/videoaudiohandler.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.slim.min.js"></script>
