@@ -18,7 +18,6 @@ if(document.getElementById('faqbtn')){
             alertify.success('FAQ Successfully Added');
         }catch(err){
             alertify.error(err);
-            console.log(err);
         }
     })
 }

@@ -4,7 +4,6 @@ function initialize() {
     firebase.database().ref('/mentorship').on('value', function(snapshot){ 
         snapshot.forEach((childSnapshot) => { 
            var mentorshipstatus =  document.createElement('option');
-        //    console.log(childSnapshot.val().mentorshipname);
            mentorshipstatus.innerHTML = childSnapshot.val().mentorshipname;
            mentorship.appendChild(mentorshipstatus);
         })
@@ -21,7 +20,6 @@ addmentorbtn.addEventListener('click', ( e ) => {
     var mentorpass = Math.random().toString(36).substring(2,11); 
     var mentorship = document.getElementById('mentorship').value;
     var mentorname = document.getElementById('mentorname').value;
-    console.log(mentormail + ' ' +  mentorpass + ' ' + mentorship);
     signupmentor(mentormail,mentorpass, mentorship, mentorname);
 })
 

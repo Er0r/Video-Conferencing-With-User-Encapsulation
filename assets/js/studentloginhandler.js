@@ -73,9 +73,9 @@ function signInWithEmailPassword() {
       alert('Please Provide your Email Address!');
     } else {
       auth.sendPasswordResetEmail(emailAddress).then(function() {
-        console.log('ok');
+      
       }).catch(function(error) {
-        console.log(error);
+        
       });
     }
     

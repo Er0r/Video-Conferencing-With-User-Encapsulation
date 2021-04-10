@@ -117,8 +117,9 @@ function checkSessionValidity() {
         var date = moment().format(time);
         var today = moment();
         var status = today.to(date);
+        console.log(status);
         var joinbtnvis = document.getElementById('tablebody').querySelectorAll('tr')[i].querySelector('span').style.display;
-        if(status.includes("in 10 minutes")  || status.includes("in 9 minutes") || status.includes("in 8 minutes") || status.includes("in 7 minutes") || status.includes("in 6 minutes")  || status.includes("in 5 minutes") || status.includes("in 4 minutes") || status.includes("in 3 minutes") || status.includes("in 2 minutes") ) {
+        if(status.includes("in 10 minutes")  || status.includes("in 9 minutes") || status.includes("in 8 minutes") || status.includes("in 7 minutes") || status.includes("in 6 minutes")  || status.includes("in 5 minutes") || status.includes("in 4 minutes") || status.includes("in 3 minutes") || status.includes("in 2 minutes") || status.includes("minutes ago") || status.includes("seconds ago")  ) {
             firebase.database().ref('/room').on('value', function(snapshot){ 
                 snapshot.forEach((childSnapshot) => {
                     if(sessioncontainertable.id === childSnapshot.val().sessiontime) {
@@ -151,8 +152,8 @@ logoutbtn.addEventListener('click', ( e ) => {
 })
 // showData();
 function myFunction() {
-    myVar = setInterval(checkSessionValidity, 5000);
-    init = setInterval(showData, 1000);
+    myVar = setInterval(checkSessionValidity, 4000);
+    init = setInterval(showData, 4000);
 }
 
 myFunction();

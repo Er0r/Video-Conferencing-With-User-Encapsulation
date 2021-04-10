@@ -12,7 +12,7 @@ window.addEventListener( 'load', () => {
     document.getElementById( 'create-room' ).addEventListener( 'click', ( e ) => {
         e.preventDefault();
         var selectprogram = sessionStorage.getItem('selectprogram');
-        console.log(selectprogram);
+      
         let roomName=``;
         if(selectprogram === 'Pro Membership Program') {
             roomName  = document.getElementById( 'promember1' ).value; 
@@ -21,7 +21,7 @@ window.addEventListener( 'load', () => {
         }
         
         let sessiontime = document.getElementById('sessiontime').value;
-        console.log(`${roomName}`);
+       
         if (sessiontime && roomName) {
             //remove error message, if any
             document.querySelector( '#err-msg' ).innerHTML = "";
@@ -61,7 +61,6 @@ window.addEventListener( 'load', () => {
 });
 
 function addvalue() {
-    console.log(`${sessionStorage.getItem('sessionLink')} ${sessionStorage.getItem('roomName')} ${sessionStorage.getItem('sessiontime')}`);
     var random = Math.random().toString(36).substring(2,7);  
     firebase.database().ref('/room/'+random).set({
         sessionLink: sessionStorage.getItem('sessionLink'),

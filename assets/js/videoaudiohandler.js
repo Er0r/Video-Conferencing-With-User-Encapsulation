@@ -21,7 +21,7 @@ const demo = document.querySelector(".demo");
           clearInterval(timer);
            loginPopup.classList.add("show");
          } 
-         console.log(i)
+         
         },1);
   }
 

@@ -15,7 +15,7 @@ if(document.getElementById('noticebtn')){
             location.reload();
         }catch(err){
             alertify.error(err);
-            console.log(err);
+        
         }
     })
 }

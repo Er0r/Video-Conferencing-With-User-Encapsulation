@@ -10,7 +10,7 @@ function signUpWithEmailPassword() {
     firebase.auth().createUserWithEmailAndPassword(email, password)
       .then((userCredential) => {
         var user = userCredential.user;
-        console.log(user);
+        
         var random = Math.random().toString(36).substring(2,7);  
         firebase.database().ref('/login/admin/'+random).set({
             email: user.email,
@@ -83,7 +83,7 @@ function signUpWithEmailPassworduser() {
 function readAll() {
   const request = window.indexedDB.open("firebaseLocalStorageDb", 1);
   request.onerror = function (event) {
-      console.err("error fetching data", event);
+     
   };
   request.onsuccess = function (dbEvent) {
       const db = request.result;
@@ -91,8 +91,7 @@ function readAll() {
       const objectStore = transaction.objectStore("firebaseLocalStorage");
       if ('getAll' in objectStore) {
           objectStore.getAll().onsuccess = function (getAllEvent) {
-              console.log(getAllEvent.target.result[0].value.email);
-              console.log(getAllEvent.target.result[0].value.apiKey);
+         
           };
       }
   };

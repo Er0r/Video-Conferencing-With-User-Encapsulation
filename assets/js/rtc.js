@@ -77,7 +77,7 @@
  
                          socket.emit( 'sdp', { description: pc[data.sender].localDescription, to: data.sender, sender: socketId } );
                      } ).catch( ( e ) => {
-                         console.error( e );
+                         
                      } );
                  }
  
@@ -100,7 +100,7 @@
  
                  h.setLocalStream( stream );
              } ).catch( ( e ) => {
-                 console.error( `stream error: ${ e }` );
+                 
              } );
          }
  
@@ -147,7 +147,7 @@
  
                      h.setLocalStream( stream );
                  } ).catch( ( e ) => {
-                     console.error( `stream error: ${ e }` );
+                    
                  } );
                  
              }
@@ -242,7 +242,7 @@
              pc[partnerName].onsignalingstatechange = ( d ) => {
                  switch ( pc[partnerName].signalingState ) {
                      case 'closed':
-                         console.log( "Signalling state is 'closed'" );
+                      
                          h.closeVideo( partnerName );
                          break;
                  }
@@ -272,7 +272,7 @@
                      stopSharingScreen();
                  } );
              } ).catch( ( e ) => {
-                 console.error( e );
+                
              } );
          }
  
@@ -290,7 +290,7 @@
                  h.toggleShareIcons( false );
                  broadcastNewTracks( myStream, 'video' );
              } ).catch( ( e ) => {
-                 console.error( e );
+                 
              } );
          }
  
