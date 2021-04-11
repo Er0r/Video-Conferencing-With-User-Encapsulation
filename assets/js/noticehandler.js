@@ -5,11 +5,13 @@ if(document.getElementById('noticebtn')){
 
     noticebtn.addEventListener('click', () => {
         const notice = document.getElementById('notice').value;
-
+        const noticeexpire = document.getElementById('noticedate').value;
+        // alert(moment(`${noticeexpire}`, "YYYY-MM-DD").fromNow()); // ago lekha ashlei delete
         var random = Math.random().toString(36).substring(2,7);
         try{
             firebase.database().ref('/login/admin/notice/'+random).set({
                 notice: notice,
+                expiredate: noticeexpire,
                 random: random
             }) 
             location.reload();
@@ -95,6 +97,13 @@ function showData() {
             `
             newtabledataemail.id = `email-${count}`;
            
+            var newtabledataexpiredate = document.createElement('td');
+            
+            newtabledataexpiredate.innerHTML = `
+                ${childSnapshot.val().expiredate};
+            `
+            newtabledataexpiredate.id = `expire-${count}`;
+
             var newtabledataend = document.createElement('td');
             newtabledataend.innerHTML = `
                 <a href="#editEmployeeModal" class="edit" data-toggle="modal"
@@ -123,7 +132,8 @@ function showData() {
   
             `
             newtablerow.appendChild(newtabledata);
-            newtablerow.appendChild(newtabledataemail); 
+            newtablerow.appendChild(newtabledataemail);
+            newtablerow.appendChild(newtabledataexpiredate); 
             newtablerow.appendChild(newtabledataend);
             tablebody.appendChild(newtablerow);
             count++;
@@ -156,6 +166,25 @@ function deletehandler(count){
     showData();
     location.reload();
 }
+
+function expireHandler() {
+
+    firebase.database().ref('/login/admin/notice').on('value', function(snapshot){
+        snapshot.forEach((childSnapshot)=>{
+            var timecondition = moment(`${childSnapshot.val().expiredate}`, "YYYY-MM-DD").fromNow();
+            if(timecondition.includes('ago')){
+                var random = childSnapshot.val().random;
+                var ref =  firebase.database().ref(`/login/admin/notice/${random}`);
+                ref.remove();  
+            }
+        })
+    
+    })
+    location.reload();
+    showData();
+}
+
+var myvar = setInterval(expireHandler, 5 * 60 * 60 * 1000);
 
 function edithandler(count){
     const tablerow = document.getElementById(`delete-${count}`).parentElement.parentElement.parentElement.id;

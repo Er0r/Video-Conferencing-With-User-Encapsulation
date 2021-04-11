@@ -118,3 +118,23 @@ var createnoticebtn = document.getElementById('createnoticebtn').addEventListene
     e.preventDefault();
     location.replace(`${window.location.origin}/mentornotice`);
 })
+
+const logoutbtn = document.getElementById('logoutbtn').addEventListener('click', ( e ) => {
+    firebase.auth().signOut().then(() => {
+        firebase.database().ref('/login/mentor').on('value', function(snapshot){
+            snapshot.forEach((childSnapshot)=>{
+                if(childSnapshot.val().count > 0) {
+                    firebase.database().ref('/login/mentor/'+childSnapshot.val().random).update({
+                        count: 0
+                    });
+                    document.cookie = "mentor=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                    sessionStorage.clear();
+                    alertify.success('Signout Successfully');
+                    location.replace(`${location.origin}/mentorlogin`);
+                }
+            })
+        })
+      }).catch((error) => {
+        alertify.error('Please Try Again Later');
+    });
+})

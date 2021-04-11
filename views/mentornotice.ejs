@@ -69,12 +69,7 @@
 									><i class="material-icons">&#xE147;</i>
 									<span>Add New Notice</span></a
 								>
-								<a
-									href="#bannedEmployeeModal"
-									class="btn btn-danger"
-									data-toggle="modal"
-									><i class="material-icons">&#xE15C;</i> <span>Banned</span></a
-								>
+								
 							</div>
 						</div>
 					</div>
@@ -88,6 +83,7 @@
 									</span>
 								</th>
 								<th>Notice</th>
+								<th>Expire Date</th>
                                 <th>Action</th>
 							</tr>
 						</thead>
@@ -119,10 +115,18 @@
 						<div class="modal-body">
 							<div class="form-group">
 								<label for=""><strong>Notice</strong></label>
-								<input
-									type="text"
+								<textarea
 									class="form-control"
 									id="notice"
+									placeholder="Enter Notice"
+								></textarea>
+							</div>
+							<div class="form-group">
+								<label for=""><strong>Expire Date: </strong></label>
+								<input
+									type="date"
+									class="form-control"
+									id="noticedate"
 									placeholder="Enter Notice"
 								/>
 							</div>

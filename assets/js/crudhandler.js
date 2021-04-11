@@ -1,5 +1,5 @@
-const addbtn = document.getElementById('adduser');
-const deletebtn = document.getElementById('deletebtn');
+const adduserbtn = document.getElementById('adduser');
+const deleteuserbtn = document.getElementById('deletebtn');
 
 // const myvar = setInterval(showData, 1000);
 
@@ -159,8 +159,8 @@ function deleteentry(){
 }
 
 
-deletebtn.addEventListener('click', deleteentry);
+deleteuserbtn.addEventListener('click', deleteentry);
 
-addbtn.addEventListener('click',addUser);
+adduserbtn.addEventListener('click',addUser);
 showData();
 readAll();

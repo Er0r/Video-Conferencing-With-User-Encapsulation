@@ -18,7 +18,7 @@ function signInWithEmailPassword() {
                 if(childSnapshot.val().email === user.email && childSnapshot.val().status === 'admin' && childSnapshot.val().count === 0) {
                   sessionStorage.setItem('email', user.email);
                   sessionStorage.setItem('status', 'admin');
-                  
+                  document.cookie = 'admin=adminisactive;'
                   firebase.database().ref('/login/admin/'+childSnapshot.val().random).update({
                     count: firebase.database.ServerValue.increment(1)
                   });
@@ -30,6 +30,7 @@ function signInWithEmailPassword() {
                   document.getElementById('errormsg').innerHTML = `You Are Logged In From Different Device. Please Press Logout TO Continue with this Session`;
                   document.getElementById('errormsg').hidden = false;
                   document.getElementById('adminlogoutbtn').hidden = false;
+                  document.getElementById('gobackbtn').hidden = false;
                   document.getElementById('test').style.display = 'none';
                   logginattempt = 1;
                   return true;
@@ -63,6 +64,10 @@ document.getElementById('adminlogoutbtn').addEventListener('click', ( e ) => {
         alertify.error('Please Try Again Later');
       });
 } )
+
+document.getElementById('gobackbtn').addEventListener('click', ( e ) => {
+  location.replace(`${location.origin}/adminlogin`);
+})
 
 var adminresetpass = document.getElementById('adminresetpass');
 

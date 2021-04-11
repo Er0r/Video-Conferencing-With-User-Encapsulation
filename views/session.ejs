@@ -1,298 +1,254 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta http-equiv="X-UA-Compatible" content="ie=edge">
-<meta name="Description" content="Enter your description here"/>
-<link rel="shortcut icon" type="image/x-icon" href="../Assets/css/favicon.ico" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
-<link rel="stylesheet" href="../assets/css/app.css">
-<title>Session</title>
-<script src='/socket.io/socket.io.js'></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/webrtc-adapter/7.3.0/adapter.min.js" integrity="sha256-2qQheewaqnZlXJ3RJRghVUwD/3fD9HNqxh4C+zvgmF4=" crossorigin="anonymous"></script>
-<script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-analytics.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-auth.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-firestore.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-database.js"></script>
-<link rel="stylesheet" href="../assets/css/session.css">
-<script>
-    const firebaseConfig = {
-        apiKey: "AIzaSyAUCgn__4r9gxa1nIHWuibSz-NxzdeEofw",
-        authDomain: "ishwarsingh-fe6da.firebaseapp.com",
-        projectId: "ishwarsingh-fe6da",
-        storageBucket: "ishwarsingh-fe6da.appspot.com",
-        messagingSenderId: "113178540955",
-        appId: "1:113178540955:web:f443106593679e5c937f3e",
-        measurementId: "G-NGDRDVFQ7S"
-    };
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<meta name="Description" content="Enter your description here" />
+		<link
+			rel="shortcut icon"
+			type="image/x-icon"
+			href="../Assets/css/favicon.ico"
+		/>
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css"
+		/>
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"
+		/>
+		<link rel="stylesheet" href="../assets/css/app.css" />
+		<title>Session</title>
+		<script src="/socket.io/socket.io.js"></script>
+		<script
+			src="https://cdnjs.cloudflare.com/ajax/libs/webrtc-adapter/7.3.0/adapter.min.js"
+			integrity="sha256-2qQheewaqnZlXJ3RJRghVUwD/3fD9HNqxh4C+zvgmF4="
+			crossorigin="anonymous"
+		></script>
+		<script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-app.js"></script>
+		<script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-analytics.js"></script>
+		<script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-auth.js"></script>
+		<script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-firestore.js"></script>
+		<script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-database.js"></script>
+		<link rel="stylesheet" href="../assets/css/session.css" />
+		<script>
+			const firebaseConfig = {
+				apiKey: "AIzaSyAUCgn__4r9gxa1nIHWuibSz-NxzdeEofw",
+				authDomain: "ishwarsingh-fe6da.firebaseapp.com",
+				projectId: "ishwarsingh-fe6da",
+				storageBucket: "ishwarsingh-fe6da.appspot.com",
+				messagingSenderId: "113178540955",
+				appId: "1:113178540955:web:f443106593679e5c937f3e",
+				measurementId: "G-NGDRDVFQ7S",
+			};
 
-    firebase.initializeApp(firebaseConfig);
-    firebase.analytics();
-</script>
+			firebase.initializeApp(firebaseConfig);
+			firebase.analytics();
+		</script>
+		
+		<script type="module" src="../assets/js/videohandler.js"></script>
+		<script type="module" src="../assets/js/rtc.js"></script>
+	</head>
 
-<script type="module" src='../assets/js/videohandler.js'></script>
-<script type="module" src="../assets/js/rtc.js"></script>
-</head>
-
-<body>
-	
-    
-        <style>
+	<body>
+		<style>
 			i {
 				color: rgba(250, 243, 243, 0.541);
 			}
 		</style>
-		<!-- <div class="d-flex bg-info rounded-0">
-			<div class="text-white"><i>Company</i></div>
+		<div style="height: 100vh; background-color: black; min-width: 100vh">
+			<div class="room-comm" style="max-width: 100vh" hidden>
+				<div class="row">
+					<video
+						class="local-video mirror-mode"
+						id="local"
+						volume="0"
+						autoplay
+						muted
+					></video>
+				</div>
 
-			<div class="pull-right room-comm d-flex ml-auto" hidden>
-				<div class="">
-					<button
-						class="btn btn-default"
-						type="button"
-						id="chat-mentor"
-						title="Chat With Mentor"
-						data-toggle="dropdown"
-						aria-haspopup="true"
-						aria-expanded="false"
+				<div class="row">
+					<div class="col-md-12 main" id="main-section">
+						<div class="row mt-2 mb-2" id="videos"></div>
+					</div>
+				</div>
+				<div>
+					<div
+						class="col-md-4 chat-col mb-2"
+						style="background-color: white"
+						id="chat-pane"
+						hidden
 					>
-						<i class="fa fa-user-circle text-white"></i>
-					</button>
-					<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-						<div
-							class="card p-1"
-							style="height: 20rem; width: 16rem; overflow: auto;"
-							id="msg-contain"
-						>
-							
-							<div
-								class="input-group"
-								style="position: absolute; bottom: 0; left: 0"
-							>
-								<input
-									type="text"
+						<div class="row">
+							<div class="col-12 text-center text-dark h6 mb-3">CHAT</div>
+						</div>
+
+						<div id="chat-messages">
+							<div class="form-group" id="sess-div">
+								<select
 									class="form-control"
-									id="studetnttxt"
-									placeholder="Enter Message"
-								/>
-								<div class="input-group-append">
-									<span
-										class="btn btn-default text-white"
-										style="background-color: #08165c"
-										id="studentmsgbtn"
-										>Send</span
+									id="sessoption"
+									onchange="showUser()"
+									hidden
+								>
+									<option>Select Session</option>
+								</select>
+								<div id="sess-name"></div>
+							</div>
+							<!-- <hr /> -->
+							<div class="row">
+								<div
+									class="col-md-3 card"
+									style="height: 87vh"
+									id="mentordiv"
+									hidden
+								>
+									<div class="text-center ml-2 mt-2 text-dark">
+										Student List
+									</div>
+									<hr />
+									<div style="overflow: auto; height: 85vh">
+										<div id="userlist"></div>
+									</div>
+								</div>
+
+								<div class="card ml-1 col-md-8" style="height: 87vh">
+									<div style="height: 35rem; overflow: auto">
+										<div id="usermsgs"></div>
+
+										<div id="adminmsgs"></div>
+									</div>
+									<div
+										class="input-group"
+										style="position: absolute; bottom: 0; left: 0"
+										id="mentorchatsection"
+										hidden
 									>
+										<input
+											type="text"
+											class="form-control"
+											id="adminmsgstxt"
+											required
+											placeholder="Enter Message"
+										/>
+										<div class="input-group-append">
+											<span
+												class="btn btn-default text-white"
+												style="background-color: #08165c"
+												id="adminmsgsbtn"
+												>Send</span
+											>
+										</div>
+									</div>
+									<div
+										class="input-group"
+										id="studentchatsection"
+										style="position: absolute; bottom: 0px; left: 0"
+									>
+										<input
+											type="text"
+											class="form-control"
+											id="studentmsgstxt"
+											required
+											placeholder="Enter Message"
+										/>
+										<div class="input-group-append">
+											<span
+												class="btn btn-default text-white"
+												style="background-color: #08165c"
+												id="studentmsgsbtn"
+												>Send</span
+											>
+										</div>
+									</div>
 								</div>
 							</div>
 						</div>
+						<!-- <script src="../assets/js/managechat.js"></script>  -->
+						<script src="../assets/js/studentsessionhandler.js"></script>
 					</div>
 				</div>
-				<button
-					class="btn btn-sm rounded-0 btn-no-effect"
-					id="toggle-video"
-					title="Hide Video"
-				>
-					<i class="fa fa-video text-white"></i>
-				</button>
-
-				<button
-					class="btn btn-sm rounded-0 btn-no-effect"
-					id="toggle-mute"
-					title="Mute"
-				>
-					<i class="fa fa-microphone-alt text-white"></i>
-				</button>
-
-				<button 
-					class="btn btn-sm text-white pull-right btn-no-effect" 
-					id='toggle-chat-pane'
-					title="chatpane"
-					>
-                    <i class="fa fa-comment"></i> <span class="badge badge-danger very-small font-weight-lighter" id='new-chat-notification' hidden>New</span>
-                </button>
-
-				<button
-					class="btn btn-sm rounded-0 btn-no-effect"
-					id="share-screen"
-					title="Share screen"
-				>
-					<i class="fa fa-desktop text-white"></i>
-				</button>
-
-				<button class="btn btn-sm rounded-0 btn-no-effect text-white">
-					<a href="" class="text-white text-decoration-none"
-						><i
-							class="fa fa-sign-out-alt text-white"
-							id="leavebtn"
-							title="Leave"
-						></i
-					></a>
-				</button>
 			</div>
-		</div> -->
-    <div style="height: 100vh; background-color:black ">
-    <div class="container-fluid room-comm" hidden>
-        <div class="row">
-            <video class="local-video mirror-mode" id='local' volume='0' autoplay muted></video>
-        </div>
-        
-        <div class="row">
-            <div class="col-md-12 main" id='main-section'>                    
-                <div class="row mt-2 mb-2" id='videos'></div>
-            </div>
-
-            <div class="col-md-4 chat-col d-print-none mb-2" style="background-color:white;" id='chat-pane' hidden>
-                <div class="row">
-                    <div class="col-12 text-center text-dark h5 mb-3">CHAT</div>
-                </div>
-
-                <div id="chat-messages">
-					<div class="form-group" id="sess-div">
-						<select
-							class="form-control"
-							id="sessoption"
-							onchange="showUser()"
-							hidden
+			<div style="position: absolute; bottom: 0">
+				<div class="rounded-0 d-flex" style="background-color: black">
+					<!-- <div class="text-white"><i>Company</i></div> -->
+					<div class="room-comm d-flex col-5 justify-content-between" hidden>
+						<button
+							class="btn btn-sm rounded-0 btn-no-effect"
+							id="toggle-mute"
+							title="Mute"
 						>
-							<option>Select Session</option>
-						</select>
-						<div id="sess-name">
+							<i class="fa fa-microphone-alt"
+								><span class="p d-block" id="change">Mute</span></i
+							>
+						</button>
 
-						</div>
+						<button
+							class="btn btn-sm rounded-0 btn-no-effect"
+							id="toggle-video"
+							title="Hide Video"
+						>
+							<i class="fa fa-video"><span class="p d-block">Video</span></i>
+						</button>
 					</div>
-					<!-- <hr /> -->
-					<div class="row">
-						<div class="col-md-3 card " style="height:87vh;" id="mentordiv" hidden>
-							<div class="text-center ml-2 mt-2 text-dark">
-								Student List
-							</div>
-							<hr />
-							<div style="overflow: auto; height: 85vh">
-								<div id="userlist"></div>
-							</div>
-						</div>
 
-						<div class=" card ml-1 col-md-8" style="height:87vh;">
-							<div style="height: 35rem; overflow: auto">
-								<div id="usermsgs"></div>
-
-								<div id="adminmsgs"></div>
-							</div>
-							<div
-								class="input-group"
-								style="position: absolute; bottom: 0; left: 0"
-								id="mentorchatsection"
+					<div
+						class="room-comm d-flex col-md-10 offset-md-9 justify-content-end"
+						hidden
+					>
+						<button
+							class="btn btn-sm pull-right btn-no-effect"
+							id="toggle-chat-pane"
+							title="chatpane"
+						>
+							<i class="fa fa-comment"><span class="p d-block">Chat</span></i>
+							<span
+								class="badge badge-danger very-small font-weight-lighter"
+								id="new-chat-notification"
 								hidden
+								>New</span
 							>
-								<input
-									type="text"
-									class="form-control"
-									id="adminmsgstxt"
-									required
-									placeholder="Enter Message"
-								/>
-								<div class="input-group-append">
-									<span
-										class="btn btn-default text-white"
-										style="background-color: #08165c"
-										id="adminmsgsbtn"
-										>Send</span
-									>
-								</div>
-							</div>
-							<div
-								class="input-group"
-								id="studentchatsection"
-								style="position: absolute; bottom: 0px; left: 0"
+						</button>
+
+						<button
+							class="btn btn-sm rounded-0 btn-no-effect"
+							id="share-screen"
+							title="Share screen"
+						>
+							<i class="fa fa-desktop"
+								><span class="d-block" style="font-weight: 0.5rem"
+									>Share Screen</span
+								></i
 							>
-								<input
-									type="text"
-									class="form-control"
-									id="studentmsgstxt"
-									required
-									placeholder="Enter Message"
-								/>
-								<div class="input-group-append">
-									<span
-										class="btn btn-default text-white"
-										style="background-color: #08165c"
-										id="studentmsgsbtn"
-										>Send</span
-									>
-								</div>
-							</div>
-						</div>
+						</button>
 					</div>
-				</div>
-				<!-- <script src="../assets/js/managechat.js"></script>  -->
-				<script src="../assets/js/studentsessionhandler.js"></script>
-            </div>
-        </div>
-		
-    </div>
-	<div style="position: absolute; bottom:0">
-		<div class="rounded-0 d-flex" style="background-color:black;">
-			<!-- <div class="text-white"><i>Company</i></div> -->
-			<div class="room-comm d-flex col-5 justify-content-between" hidden>
-				<button
-					class="btn btn-sm rounded-0 btn-no-effect"
-					id="toggle-mute"
-					title="Mute"
-				>
-					<i class="fa fa-microphone-alt "><span class="p d-block" id="change">Mute</span></i>
-				</button>
-
-				<button
-					class="btn btn-sm rounded-0 btn-no-effect"
-					id="toggle-video"
-					title="Hide Video"
-				>
-					<i class="fa fa-video "><span class="p d-block">Video</span></i>
-				</button>
-
-				
-			</div>
-
-			<div class=" room-comm d-flex col-10 offset-md-12 justify-content-between"  hidden>
-				<button 
-					class="btn btn-sm pull-right btn-no-effect" 
-					id='toggle-chat-pane'
-					title="chatpane"
+					<div
+						class="room-comm col-md-8 offset-md-10 d-flex justify-content-end"
+						hidden
 					>
-					<i class="fa fa-comment"><span class="p d-block">Chat</span></i> <span class="badge badge-danger very-small font-weight-lighter" id='new-chat-notification' hidden>New</span>
-				</button>
-
-				<button
-					class="btn btn-sm rounded-0 btn-no-effect"
-					id="share-screen"
-					title="Share screen"
-				>
-					<i class="fa fa-desktop" ><span class=" d-block " style="font-weight:0.5rem;">Share Screen</span></i>
-				</button>
-
-				<button class="btn btn-sm rounded-0 btn-no-effect">
-					<a href="" class="text-white text-decoration-none"
-						><i
-							class="fa fa-sign-out-alt"
+						<button
+							class="btn btn-sm rounded-1 bg-danger btn-no-effect"
 							id="leavebtn"
 							title="Leave"
-						><span class=" d-block " style="font-weight:0.5rem;">Leave</span></i
-					></a>
-				</button>
+						>
+							<a href="" class="text-white text-decoration-none">Leave </a>
+						</button>
+					</div>
+				</div>
 			</div>
 		</div>
-
-	</div>
-</div>
-	
-	
-<script src="../assets/js/videoaudiohandler.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.slim.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"></script>
-</body>
-
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.slim.min.js"></script>
+		
+		<script src="../assets/js/videoaudiohandler.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"></script>
+		<script>
+			$(document).ready(function() {
+				$("#toggle-mute").trigger("click");
+				
+			});
+		</script>
+	</body>
 </html>

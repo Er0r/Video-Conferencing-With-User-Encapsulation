@@ -24,6 +24,7 @@ function signInWithEmailPassword() {
                   sessionStorage.setItem('status', 'mentor');
                   sessionStorage.setItem('mentorship', childSnapshot.val().mentorship);
                   sessionStorage.setItem('mentorname', childSnapshot.val().name);
+                  document.cookie = `mentor=mentorisactive`;
                   firebase.database().ref('/login/mentor/'+childSnapshot.val().random).update({
                     count: firebase.database.ServerValue.increment(1)
                   });
@@ -59,6 +60,7 @@ document.getElementById('mentorlogoutbtn').addEventListener('click', ( e ) => {
                     firebase.database().ref('/login/mentor/'+childSnapshot.val().random).update({
                         count: 0
                     });
+                    document.cookie = "mentor=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
                     sessionStorage.clear();
                     alertify.success('Signout Successfully');
                     location.replace(`${location.origin}/mentorlogin`);
@@ -70,6 +72,10 @@ document.getElementById('mentorlogoutbtn').addEventListener('click', ( e ) => {
       });
 } )
 
+
+document.getElementById('gobackbtn').addEventListener('click', ( e ) => {
+  location.replace(`${location.origin}/mentorlogin`);
+})
 
 var mentorresetpass = document.getElementById('mentorresetpass');
 

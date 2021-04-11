@@ -86,7 +86,7 @@ function showData() {
                             RoomName: ${childSnapshot.val().roomName} <br /> 
                             SessionTime: ${childSnapshot.val().sessiontime} <br />
                             <button class="btn btn-success rounded-pill" style="display: none" id="availability-${session_count}"> OnGoing... <br /> </button>
-                            <button class="btn btn-warning mb-2 w-100 rounded-pill" id="availability-${session_count}"> Pending... <br /> </button>
+                            <button class="btn btn-warning mb-2 w-100 rounded-pill" id="availability-${session_count}"> Upcoming... <br /> </button>
                             <span
                             class="btn btn-deafult text-white rounded-pill py-1"
                             id="sessionbtn-${session_count}"
@@ -174,6 +174,8 @@ function logout() {
                         firebase.database().ref('/login/user/'+childSnapshot.val().random).update({
                             count: 0
                         });
+                        //cookie
+                        document.cookie = "student=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
                         sessionStorage.clear('email');
                         sessionStorage.clear('status');
                         flag = 1;

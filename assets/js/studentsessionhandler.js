@@ -61,11 +61,11 @@ function UserShow(userset){
     for (let item of userset){
         var userbtn = document.createElement('div');
         var status = 'mentor';
-        sessionStorage.setItem('email', item);
+        // sessionStorage.setItem('email', item);
         userbtn.classList="d-flex flex-column mb-2"
         userbtn.innerHTML = `
             <button class="btn btn-default btn-outline-primary rounded-sm mb-2"
-            onclick='showUserMsg()'>
+            onclick="showUserMsgFromAdmin('${item}')">
             ${item} 
             </button>
         `;
@@ -147,7 +147,32 @@ function showUserMsg(){
     
 }
 
-
+function showUserMsgFromAdmin(username){
+    var usermsgs = new Array();
+    var adminmsgs = new Array();
+    clearArray(adminmsgs);
+    clearArray(usermsgs);
+    clearArray(msgarray);
+    sessionStorage.setItem('email',username);
+    var random = sessionStorage.getItem('random');
+    var roomName = sessionStorage.getItem('roomName');
+    firebase.database().ref('/room/'+random+'/user').on('value', function(snap){ 
+        snap.forEach((child) => {
+            if(child.val().username === username && child.val().status === 'student' && child.val().sessionName === roomName){
+                sessionStorage.setItem('msgrandom',child.val().random);
+                usermsgs.push(child.val().msg);
+                msgarray.push({'msg': child.val().msg, 'status': 'student'}); 
+            } else if(child.val().studentName === username && child.val().status === 'mentor' && child.val().sessionName === roomName) {
+                sessionStorage.setItem('msgrandom',child.val().random);
+                adminmsgs.push(child.val().msg);
+                msgarray.push({'msg': child.val().msg, 'status': 'mentor'}); 
+            }
+                
+        })
+    })
+    showMsg(usermsgs,'student');
+    showMsg(adminmsgs,'mentor');
+}
 
 document.getElementById('adminmsgsbtn').addEventListener('click', ( e ) => {
     var adminMsgtxt = document.getElementById('adminmsgstxt').value;

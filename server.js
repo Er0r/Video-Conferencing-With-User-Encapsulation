@@ -5,7 +5,9 @@ let server = require('http').Server(app);
 let io = require( 'socket.io' )( server );
 let stream = require('./ws/steam');
 const port = process.env.PORT || 3000;
+var cookieParser = require('cookie-parser')
 
+app.use(cookieParser())
 app.use("/assets",express.static(__dirname + '/assets'));
 app.set('view engine', 'ejs');
 app.use("/ws",express.static(__dirname + '/ws'));
@@ -14,14 +16,24 @@ io.of('/stream').on('connection',stream);
 
 app.get('/adminlogin', (req,res) => {
     res.render('adminlogin');
+    
 })
 
 app.get('/', (req,res) => {
     res.render('login');
+    
 })
 
 app.get('/admindashboard', (req,res) => {
-    res.render('admindashboard');
+    if(req.cookies.admin){
+        res.render('admindashboard');
+        return;
+    }
+        
+    else {
+        res.render('errorlogin');
+        return;
+    }
 })
 
 app.get('/test', (req,res) => {
@@ -34,7 +46,14 @@ app.get('/room:id', (req,res) => {
 })
 
 app.get('/faq', (req,res) =>{
-    res.render('faq');
+    if(req.cookies.admin) {
+        res.render('faq');
+        return
+    }
+    else {
+        res.render('errorlogin');
+        return
+    }
 })
 
 app.get('/userfaq', (req,res) =>{
@@ -42,51 +61,92 @@ app.get('/userfaq', (req,res) =>{
 })
 
 app.get('/adminusercrud', (req,res) =>{
-    res.render('adminusercrud');
+    if(req.cookies.admin){
+        res.render('adminusercrud');
+        return
+    }
+    
+    else {
+        res.render('errorlogin');
+        return;
+    }
 })
 
 app.get('/adminmanage', (req,res) =>{
-    res.render('adminmanage');
+    if(req.cookies.admin)
+        res.render('adminmanage');
+    else {
+        res.render('errorlogin');
+    }
 })
 
 app.get('/admindash', (req,res) =>{
-    res.render('admindash');
+    if(req.cookies.admin)
+        res.render('admindash');
+    else {
+        res.render('errorlogin');
+    }
 })
 
 app.get('/mentordashboard', (req,res) => {
-    res.render('mentordashboard');
+    if(req.cookies.mentor)
+        return res.render('mentordashboard');
+    else 
+        res.render('errorlogin');
+        
 })
 
 app.get('/notice',(req,res) => {
-    res.render('notice');
+    if(req.cookies.admin)
+        res.render('notice');   
+    else 
+        res.render('errorlogin');
 })
 
 app.get('/studentlogin', (req,res) => {
     res.render('studentlogin');
+   
 })
 
 app.get('/studentdashboard',(req,res) => {
-    res.render('studentdashboard');
+    if(req.cookies.student)
+        res.render('studentdashboard');
+    else 
+        res.render('errorlogin'); 
 })
 
 app.get('/managechat',(req,res) => {
-    res.render('managechat');
+    if(req.cookies.admin)
+        res.render('managechat');
+    else {
+        res.render('errorlogin');
+    }
 })
 
 app.get('/mentorlogin', (req,res) => {
-    res.render('mentorlogin');
+        res.render('mentorlogin');
+        res.render('errorlogin'); 
 })
 
 app.get('/managementor', (req,res) => {
-    res.render('manageMentor');
+    if(req.cookies.admin)
+        res.render('manageMentor');
+    else 
+        res.render('errorlogin');
 })
 
 app.get('/manageMembership', (req,res) => {
-    res.render('manageMembership');
+    if(req.cookies.admin)
+        res.render('manageMembership');
+    else 
+        res.render('errorlogin');
 })
 
 app.get('/mentornotice', (req,res) => {
-    res.render('mentornotice');
+    if(req.cookies.mentor)
+        res.render('mentornotice');
+    else 
+        res.render('errorlogin');
 })
 
 server.listen(port,() => {

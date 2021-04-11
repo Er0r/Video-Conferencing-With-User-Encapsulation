@@ -19,6 +19,7 @@ function signInWithEmailPassword() {
                     sessionStorage.setItem('status', 'student')
                     sessionStorage.setItem('membership', childSnapshot.val().membership);
                     sessionStorage.setItem('username', childSnapshot.val().name);
+                    document.cookie = 'student=studentisactive;'
                     firebase.database().ref('/login/user/'+childSnapshot.val().random).update({
                       count: firebase.database.ServerValue.increment(1)
                     });
@@ -30,6 +31,7 @@ function signInWithEmailPassword() {
                   document.getElementById('errormsg').innerHTML = `You Are Logged In From Different Device. Please Logout to Continue with this Session`;
                   document.getElementById('errormsg').hidden = false;
                   document.getElementById('userlogoutbtn').hidden = false;
+                  document.getElementById('gobackbtn').hidden = false;
                   document.getElementById('test').style.display = 'none';
                   logginattempt = 1;
                   return true;
@@ -46,6 +48,10 @@ function signInWithEmailPassword() {
     }   
   }
   userloginbtn.addEventListener('click', signInWithEmailPassword);
+
+  document.getElementById('gobackbtn').addEventListener('click' , ( e ) => {
+    location.replace(`${location.origin}/studentlogin`);
+  })
 
   document.getElementById('userlogoutbtn').addEventListener('click', ( e ) => {
     firebase.auth().signOut().then(() => {

@@ -1,5 +1,4 @@
 import helpers from './helpers.js';
-var mentorref = firebase.database().ref('/login/mentor');
 
 window.addEventListener( 'load', () => {
     //When the chat icon is clicked
@@ -75,40 +74,40 @@ function addvalue() {
     location.reload();
 }
 
-function logout() {
-    var flag = 0;
-    firebase.auth().signOut().then(() => {
+// function logout() {
+//     var flag = 0;
+//     firebase.auth().signOut().then(() => {
         
-        window.indexedDB.databases().then((r) => {
-            for (var i = 0; i < r.length; i++) 
-                window.indexedDB.deleteDatabase(r[i].name);
+//         window.indexedDB.databases().then((r) => {
+//             for (var i = 0; i < r.length; i++) 
+//                 window.indexedDB.deleteDatabase(r[i].name);
             
-        })
-        mentorref.on('value', function(snapshot){
-            snapshot.forEach((childSnapshot)=>{
-                if(childSnapshot.val().email === sessionStorage.getItem('email') && flag === 0) {
-                    firebase.database().ref('/login/mentor/'+childSnapshot.val().random).update({
-                        count: 0
-                    });
-                    sessionStorage.clear('email');
-                    sessionStorage.clear('status');
-                    location.replace(`${location.origin}`);
-                    flag =1;
-                }
-            })
-        })
+//         })
+//         mentorref.on('value', function(snapshot){
+//             snapshot.forEach((childSnapshot)=>{
+//                 if(childSnapshot.val().email === sessionStorage.getItem('email') && flag === 0) {
+//                     firebase.database().ref('/login/mentor/'+childSnapshot.val().random).update({
+//                         count: 0
+//                     });
+//                     sessionStorage.clear('email');
+//                     sessionStorage.clear('status');
+//                     location.replace(`${location.origin}`);
+//                     flag =1;
+//                 }
+//             })
+//         })
             
-      }).catch((error) => {
-        alert('Please Try Again Later');
-    });
-}
+//       }).catch((error) => {
+//         alert('Please Try Again Later');
+//     });
+// }
 
 
-document.getElementById('logoutbtn').addEventListener('click', ( e ) => {
-    e.preventDefault();
-    if(!sessionStorage.getItem('email') && !sessionStorage.getItem('status')){
-        location.replace(`${window.origin}`);
-    } else {
-        logout();
-    }
-})
+// document.getElementById('logoutbtn').addEventListener('click', ( e ) => {
+//     e.preventDefault();
+//     if(!sessionStorage.getItem('email') && !sessionStorage.getItem('status')){
+//         location.replace(`${window.origin}`);
+//     } else {
+//         logout();
+//     }
+// })

@@ -36,6 +36,7 @@ function logout() {
                     });
                     sessionStorage.clear('email');
                     sessionStorage.clear('status');
+                    document.cookie = "admin=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
                     alertify.success('Signout Successfully');
                     flag = 1;
                     location.replace(`${location.origin}`);
