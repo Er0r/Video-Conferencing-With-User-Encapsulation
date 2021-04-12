@@ -97,7 +97,6 @@ function checkSessionValidity() {
         var date = moment().format(time);
         var today = moment();
         var status = today.to(date);
-        console.log(a);
         if(status.includes("in 10 minutes") || status.includes("minutes")  || status.includes("in 9 minutes") || status.includes("in 8 minutes") || status.includes("in 7 minutes") || status.includes("in 6 minutes")  || status.includes("in 5 minutes") || status.includes("in 4 minutes") || status.includes("in 3 minutes") || status.includes("in 2 minutes") ) {
             document.getElementById('session_contain').querySelectorAll('div')[i].style.display = 'block';
             document.getElementById('session_contain').querySelectorAll('div')[i].querySelector('span').style.display = 'block';
