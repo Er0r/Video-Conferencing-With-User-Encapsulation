@@ -1,8 +1,8 @@
-window.onload = function showData(){
+function showData(){
     var selectprogram = document.getElementById('select-program');
     var up_session_contain = document.getElementById('up_session_contain');
     var session_count=1;
-
+    selectprogram.innerHTML = ``;
     firebase.database().ref('/mentorship').on('value', function(snapshot){
         snapshot.forEach((childSnapshot) => { 
             if(childSnapshot.val().mentorshipname === sessionStorage.getItem('mentorship')) {
@@ -15,6 +15,7 @@ window.onload = function showData(){
     })
     
    var sessionlist = document.getElementById('sessionlist');
+   sessionlist.innerHTML = ``;
    firebase.database().ref('/mentorship/'+`${sessionStorage.getItem('randomsession')}/`+`${sessionStorage.getItem('mentorship')}`).on('value', function(snapshot){
         snapshot.forEach((childSnapshot) => { 
            var newsessionlist = document.createElement('option');
@@ -25,34 +26,39 @@ window.onload = function showData(){
         })
         
     })
-	
+	var session_contain = document.getElementById('session_contain');
+    session_contain.innerHTML = ``;
 	firebase.database().ref('/room').on('value', function(snapshot){
         snapshot.forEach((childSnapshot) => {
-            var newsession = document.createElement('div');
-            newsession.className = " p-2 font-weight-bold";
+            if(childSnapshot.val().membership === sessionStorage.getItem('mentorship')) {
+                var newsession = document.createElement('div');
+                newsession.className = " p-2 font-weight-bold";
+                
+                let sessionLink = childSnapshot.val().sessionLink;
+                let roomName = childSnapshot.val().roomName;
+                let sessionTime = childSnapshot.val().sessiontime;
+                newsession.id = `${sessionTime}`;
+                newsession.style.display = 'none'; 
+                newsession.innerHTML = `
+                    ${childSnapshot.val().roomName} <br /> ${childSnapshot.val().sessiontime} <br /><span
+                        class="btn btn-default text-white rounded-pill py-1"
+                        style="display:none; background-color: #08165c" 
+                        id="sessionbtn-${session_count}"
+                        onclick="startSession('${sessionLink}', '${roomName}')"
+                        >Join</span
+                    >
+                `
+                session_contain.appendChild(newsession);
+                session_count++;
+            }
             
-            let sessionLink = childSnapshot.val().sessionLink;
-            let roomName = childSnapshot.val().roomName;
-            let sessionTime = childSnapshot.val().sessiontime;
-            newsession.id = `${sessionTime}`;
-            newsession.style.display = 'none'; 
-            newsession.innerHTML = `
-                ${childSnapshot.val().roomName} <br /> ${childSnapshot.val().sessiontime} <br /><span
-                    class="btn btn-default text-white rounded-pill py-1"
-                    style="display:none; background-color: #08165c" 
-                    id="sessionbtn-${session_count}"
-                    onclick="startSession('${sessionLink}', '${roomName}')"
-                    >Join</span
-                >
-            `
-            session_contain.appendChild(newsession);
-            session_count++;
         })
         checkSessionValidity();
     })	
 
     firebase.database().ref('/room').on('value', function(snapshot){
         snapshot.forEach((childSnapshot) => {
+            if(childSnapshot.val().membership === sessionStorage.getItem('mentorship')) {
             var newsession = document.createElement('div');
             newsession.className = "bg-light p-2 h5 font-weight-bold";
             
@@ -72,6 +78,7 @@ window.onload = function showData(){
             `
             up_session_contain.appendChild(newsession);
             session_count++;
+            }
         })
         checkSessionValidity();
     })
@@ -80,6 +87,7 @@ window.onload = function showData(){
  
 }
 
+setInterval(showData,2000);
 
 function checkSessionValidity() {
     var len = document.getElementById('session_contain').querySelectorAll('div').length;
