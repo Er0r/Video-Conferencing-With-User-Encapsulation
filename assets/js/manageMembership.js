@@ -5,7 +5,8 @@ document.getElementById('addmentorshipbtn').addEventListener('click', ( e ) => {
     
     firebase.database().ref('/mentorship/'+ random).set({
         count: 0,
-        mentorshipname: mentorshipname
+        mentorshipname: mentorshipname,
+        random: random
     }).then(() => {
         alert('Successfully Done!');
     })

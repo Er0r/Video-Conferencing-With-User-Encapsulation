@@ -97,7 +97,7 @@
              h.getUserFullMedia().then( ( stream ) => {
                  //save my stream
                  myStream = stream;
- 
+                
                  h.setLocalStream( stream );
              } ).catch( ( e ) => {
                  
@@ -132,6 +132,7 @@
  
              else if ( myStream ) {
                  myStream.getTracks().forEach( ( track ) => {
+                    console.log(track);
                      pc[partnerName].addTrack( track, myStream );//should trigger negotiationneeded event
                  } );
              }
@@ -142,6 +143,7 @@
                      myStream = stream;
  
                      stream.getTracks().forEach( ( track ) => {
+                         console.log(track);
                          pc[partnerName].addTrack( track, stream );//should trigger negotiationneeded event
                      } );
  
@@ -354,26 +356,11 @@
  
              broadcastNewTracks( myStream, 'video' );
          } );
- 
-           
 
-     
-     document.getElementById('toggle-mute').addEventListener('click', (e) => {
-         e.preventDefault();
-
-         var x = document.getElementById("change");
-        if (x.innerHTML === "Mute") {
-            x.innerHTML = "Unmute";
-        } else {
-            x.innerHTML = "Mute";
-        }
-     });
-         //When the mute icon is clicked
          document.getElementById( 'toggle-mute' ).addEventListener( 'click', ( e ) => {
              e.preventDefault();
  
              let elem = document.getElementById( 'toggle-mute' );
- 
              if ( myStream.getAudioTracks()[0].enabled ) {
                  e.target.classList.remove( 'fa-microphone-alt' );
                  e.target.classList.add( 'fa-microphone-alt-slash' );

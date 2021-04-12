@@ -65,7 +65,7 @@
 			}    
 			var token = setInterval(StudentvalidateToken, 2000); 
 		</script>
-		 <script>
+		 <!-- <script>
 			function programChange() {
 				if (document.getElementById("select-program").value == "Foundation Membership Program") {
 					sessionStorage.setItem('selectprogram', document.getElementById("select-program").value);
@@ -89,7 +89,7 @@
 					}
 				}
 			}
-		</script>
+		</script> -->
 		 
 	</head>
 	<body>
@@ -181,73 +181,23 @@
 								<select
 									class="form-control select-program"
 									id="select-program"
-									onchange="programChange()"
 									required
 								>
 									<option selected>Program List</option>
-									<option value="Foundation Membership Program">Foundation Membership Program</option>
-									<option value="Pro Membership Program">Pro Membership Program</option>
 								</select>
 							</div>
-							<div id="promembership-1" hidden>
+							<div id="promembership-1">
 								<div class="form-group">
 									<label for="exampleFormControlSelect1"
-										>Foundation Membership Program</label
+										>Membership Program(Sessions List)</label
 									>
-									<select class="form-control chequed" id="foundationmember1">
-										<option selected>Session List</option>
-										<option value="fsession1">Session-1</option>
-										<option value="fsession2">Session-2</option>
-										<option value="fsession3">Session-3</option>
-										<option value="fsession4">Session-4</option>
-										<option value="fsession5">Session-5</option>
-										<option value="fsession6">Session-6</option>
-										<option value="fsession7">Session-7</option>
-										<option value="fsession8">Session-8</option>
+									<select class="form-control chequed" id="sessionlist">
+										
 									</select>
 								</div>
-								<div class="form-group">
-									<label>Pro Membership Program</label>
-									<select class="form-control cheque" id="promember1">
-										<option selected>Session List</option>
-										<option value="psession1">Session-1</option>
-										<option value="psession2">Session-2</option>
-										<option value="psession3">Session-3</option>
-										<option value="psession4">Session-4</option>
-										<option value="psession5">Session-5</option>
-										<option value="psession6">Session-6</option>
-										<option value="psession7">Session-7</option>
-										<option value="psession8">Session-8</option>
-										<option value="psession9">Session-9</option>
-										<option value="psession10">Session-10</option>
-									</select>
-								</div>
+								
 							</div>
 							
-						</div>
-						<div id="promembership-2" hidden>
-							<div class="form-group">
-								<label>Foundation Membership Program</label>
-								<select class="form-control chequed" id="foundationmember2">
-									<option selected>Session List</option>
-									<option value="fsession6">Session-6</option>
-									<option value="fsession7">Session-7</option>
-									<option value="fsession8">Session-8</option>
-								</select>
-							</div>
-							<div class="form-group">
-								<label for="exampleFormControlSelect1"
-									>Pro Membership Program</label
-								>
-								<select class="form-control cheque" id="promember2">
-									<option selected>Session List</option>
-									<option value="psession6">Session-6</option>
-									<option value="psession7">Session-7</option>
-									<option value="psession8">Session-8</option>
-									<option value="psession9">Session-9</option>
-									<option value="psession10">Session-10</option>
-								</select>
-							</div>
 						</div>
 
 						<div class="mb-3">

@@ -3,6 +3,22 @@ const deleteuserbtn = document.getElementById('deletebtn');
 
 // const myvar = setInterval(showData, 1000);
 
+
+function showSession() {
+    const usermembership = document.getElementById('usermembership');
+
+    firebase.database().ref('/mentorship').on('value', function(snapshot){
+        snapshot.forEach((childSnapshot)=>{ 
+            let newsession = document.createElement('option');
+            newsession.innerHTML = `${childSnapshot.val().mentorshipname}`;
+            newsession.id = `${newsession.innerHTML}`;
+            usermembership.appendChild(newsession);
+        })
+    })
+}
+
+setInterval(showSession(), 60*60*1000);
+
 function addUser(){
 
     var useremail = document.getElementById('useremail').value;

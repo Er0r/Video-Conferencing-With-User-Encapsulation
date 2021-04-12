@@ -13,11 +13,8 @@ window.addEventListener( 'load', () => {
         var selectprogram = sessionStorage.getItem('selectprogram');
       
         let roomName=``;
-        if(selectprogram === 'Pro Membership Program') {
-            roomName  = document.getElementById( 'promember1' ).value; 
-        } else if(selectprogram === 'Foundation Membership Program') {
-            roomName  = document.getElementById( 'foundationmember1' ).value; 
-        }
+        
+        roomName  = document.getElementById('sessionlist').value; 
         
         let sessiontime = document.getElementById('sessiontime').value;
        
@@ -66,6 +63,7 @@ function addvalue() {
         roomName: sessionStorage.getItem('roomName'),
         mentoronline: 0,
         mentorName: sessionStorage.getItem('mentorname'),
+        membership: sessionStorage.getItem('mentorship'),
         sessiontime: sessionStorage.getItem('sessiontime'),
         selectprogram: sessionStorage.getItem('selectprogram'),
         random: random,

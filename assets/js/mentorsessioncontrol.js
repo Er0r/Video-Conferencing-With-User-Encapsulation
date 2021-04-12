@@ -1,23 +1,32 @@
 window.onload = function showData(){
-    var session_contain = document.getElementById('session_contain');
+    var selectprogram = document.getElementById('select-program');
     var up_session_contain = document.getElementById('up_session_contain');
     var session_count=1;
-    var promembership1 = document.getElementById('promembership-1');
-    var promembership2 = document.getElementById('promembership-2');
-    // if(sessionStorage.getItem('mentorship') === 'Pro Mentorship-1') {
-    //     var promembership1 = document.getElementById('promembership-1'); 
-    //     var promembership2 = document.getElementById('promembership-2');
-    //     promembership1.hidden = false;
-    //     promembership2.hidden = true;
-    // }else if(sessionStorage.getItem('mentorship') === 'Pro Mentorship-2'){
-    //     var promembership1 = document.getElementById('promembership-1');
-    //     var promembership2 = document.getElementById('promembership-2');
-    //     promembership2.hidden = false;
-    //     promembership1.hidden = true;
-    // }
-    promembership2.hidden = true;
-    promembership1.hidden = false;
-    firebase.database().ref('/room').on('value', function(snapshot){
+
+    firebase.database().ref('/mentorship').on('value', function(snapshot){
+        snapshot.forEach((childSnapshot) => { 
+            if(childSnapshot.val().mentorshipname === sessionStorage.getItem('mentorship')) {
+                var showsession = document.createElement('option');
+                sessionStorage.setItem('randomsession', childSnapshot.val().random);
+                showsession.innerHTML = `${childSnapshot.val().mentorshipname}`;
+                selectprogram.appendChild(showsession);
+            }
+        })
+    })
+    
+   var sessionlist = document.getElementById('sessionlist');
+   firebase.database().ref('/mentorship/'+`${sessionStorage.getItem('randomsession')}/`+`${sessionStorage.getItem('mentorship')}`).on('value', function(snapshot){
+        snapshot.forEach((childSnapshot) => { 
+           var newsessionlist = document.createElement('option');
+           newsessionlist.innerHTML = `
+                ${childSnapshot.val().sessionName}
+            `;
+           sessionlist.appendChild(newsessionlist);
+        })
+        
+    })
+	
+	firebase.database().ref('/room').on('value', function(snapshot){
         snapshot.forEach((childSnapshot) => {
             var newsession = document.createElement('div');
             newsession.className = " p-2 font-weight-bold";
@@ -40,8 +49,7 @@ window.onload = function showData(){
             session_count++;
         })
         checkSessionValidity();
-    })
-
+    })	
 
     firebase.database().ref('/room').on('value', function(snapshot){
         snapshot.forEach((childSnapshot) => {
@@ -71,6 +79,7 @@ window.onload = function showData(){
 
  
 }
+
 
 function checkSessionValidity() {
     var len = document.getElementById('session_contain').querySelectorAll('div').length;

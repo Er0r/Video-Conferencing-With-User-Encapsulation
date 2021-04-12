@@ -27,83 +27,47 @@ function showData() {
     firebase.database().ref('/room').on('value', function(snapshot){
         
         snapshot.forEach((childSnapshot)=> { 
-            if(sessionStorage.getItem('membership').includes('Foundation')) {
-                if(childSnapshot.val().selectprogram === 'Foundation Membership Program') {
-                    var newtablerow = document.createElement('tr');
-                    newtablerow.id = `${childSnapshot.val().sessiontime}`;
-                    var sessionnametabledata = document.createElement('td');
-                    sessionnametabledata.id = `data-${session_count}`;
-                    sessionnametabledata.innerHTML = `${childSnapshot.val().roomName}`;
-                    
-                    var sessiontimetabledata = document.createElement('td');
-                    sessiontimetabledata.innerHTML = `${childSnapshot.val().sessiontime}`;
+
+            if(childSnapshot.val().membership === sessionStorage.getItem('membership')) {
+                var newtablerow = document.createElement('tr');
+                newtablerow.id = `${childSnapshot.val().sessiontime}`;
+                var sessionnametabledata = document.createElement('td');
+                sessionnametabledata.id = `data-${session_count}`;
+                sessionnametabledata.innerHTML = `${childSnapshot.val().roomName}`;
+                
+                var sessiontimetabledata = document.createElement('td');
+                sessiontimetabledata.innerHTML = `${childSnapshot.val().sessiontime}`;
+    
         
-            
-                    var sessionmentornametabledata = document.createElement('td');
-                    sessionmentornametabledata.innerHTML = `${childSnapshot.val().mentorName}`;
+                var sessionmentornametabledata = document.createElement('td');
+                sessionmentornametabledata.innerHTML = `${childSnapshot.val().mentorName}`;
+                
+                
+                var sessionLink = childSnapshot.val().sessionLink; 
+                var roomName = childSnapshot.val().roomName;
+                var action = document.createElement('td');
+                action.innerHTML = ` 
+                        RoomName: ${childSnapshot.val().roomName} <br /> 
+                        SessionTime: ${childSnapshot.val().sessiontime} <br />
+                        <button class="btn btn-success rounded-pill" style="display: none" id="availability-${session_count}"> OnGoing... <br /> </button>
+                        <button class="btn btn-warning mb-2 w-100 rounded-pill" id="availability-${session_count}"> Upcoming... <br /> </button>
+                        <span
+                        class="btn btn-deafult text-white rounded-pill py-1"
+                        id="sessionbtn-${session_count}"
+                        style="display: none; background-color: #08165c"
+                        onclick="startSession('${sessionLink}', '${roomName}')"
+                        >Join</span
                     
-                    
-                    var sessionLink = childSnapshot.val().sessionLink; 
-                    var roomName = childSnapshot.val().roomName;
-                    var action = document.createElement('td');
-                    action.innerHTML = ` ${childSnapshot.val().roomName} <br /> ${childSnapshot.val().sessiontime} <br />
-                            <span
-                            class="btn btn-deafult text-white rounded-pill py-1"
-                            id="sessionbtn-${session_count}"
-                            style="display: none; background-color: #08165c"
-                            onclick="startSession('${sessionLink}', '${roomName}')"
-                            >Join</span
-                        >
-                    `;
-        
-                    newtablerow.appendChild(sessionnametabledata);
-                    newtablerow.appendChild(sessiontimetabledata);
-                    newtablerow.appendChild(sessionmentornametabledata);
-                    newtablerow.appendChild(action);
-                    tablebody.appendChild(newtablerow);
-                    session_count++;
-                }
-            } else {
-                if(childSnapshot.val().selectprogram === 'Pro Membership Program') { 
-                    var newtablerow = document.createElement('tr');
-                    newtablerow.id = `${childSnapshot.val().sessiontime}`;
-                    var sessionnametabledata = document.createElement('td');
-                    sessionnametabledata.id = `data-${session_count}`;
-                    sessionnametabledata.innerHTML = `${childSnapshot.val().roomName}`;
-                    
-                    var sessiontimetabledata = document.createElement('td');
-                    sessiontimetabledata.innerHTML = `${childSnapshot.val().sessiontime}`;
-        
-            
-                    var sessionmentornametabledata = document.createElement('td');
-                    sessionmentornametabledata.innerHTML = `${childSnapshot.val().mentorName}`;
-                    
-                    
-                    var sessionLink = childSnapshot.val().sessionLink; 
-                    var roomName = childSnapshot.val().roomName;
-                    var action = document.createElement('td');
-                    action.innerHTML = ` 
-                            RoomName: ${childSnapshot.val().roomName} <br /> 
-                            SessionTime: ${childSnapshot.val().sessiontime} <br />
-                            <button class="btn btn-success rounded-pill" style="display: none" id="availability-${session_count}"> OnGoing... <br /> </button>
-                            <button class="btn btn-warning mb-2 w-100 rounded-pill" id="availability-${session_count}"> Upcoming... <br /> </button>
-                            <span
-                            class="btn btn-deafult text-white rounded-pill py-1"
-                            id="sessionbtn-${session_count}"
-                            style="display: none; background-color: #08165c"
-                            onclick="startSession('${sessionLink}', '${roomName}')"
-                            >Join</span
-                        >
-                    `;
-        
-                    newtablerow.appendChild(sessionnametabledata);
-                    newtablerow.appendChild(sessiontimetabledata);
-                    newtablerow.appendChild(sessionmentornametabledata);
-                    newtablerow.appendChild(action);
-                    tablebody.appendChild(newtablerow);
-                    session_count++;
-                }
+                `;
+    
+                newtablerow.appendChild(sessionnametabledata);
+                newtablerow.appendChild(sessiontimetabledata);
+                newtablerow.appendChild(sessionmentornametabledata);
+                newtablerow.appendChild(action);
+                tablebody.appendChild(newtablerow);
+                session_count++;
             }
+            
         })
         checkSessionValidity();
     })
@@ -118,26 +82,29 @@ function checkSessionValidity() {
         var today = moment();
         var status = today.to(date);
         console.log(status);
-        var joinbtnvis = document.getElementById('tablebody').querySelectorAll('tr')[i].querySelector('span').style.display;
-        if(status.includes("in 10 minutes")  || status.includes("in 9 minutes") || status.includes("in 8 minutes") || status.includes("in 7 minutes") || status.includes("in 6 minutes")  || status.includes("in 5 minutes") || status.includes("in 4 minutes") || status.includes("in 3 minutes") || status.includes("in 2 minutes") || status.includes("minutes ago") || status.includes("seconds ago")  ) {
-            firebase.database().ref('/room').on('value', function(snapshot){ 
-                snapshot.forEach((childSnapshot) => {
-                    if(sessioncontainertable.id === childSnapshot.val().sessiontime) {
-                        if(childSnapshot.val().mentoronline > 0 && joinbtnvis === 'none'){
-                            document.getElementById('tablebody').querySelectorAll('tr')[i].querySelectorAll('button')[0].style.display = 'block';
-                            document.getElementById('tablebody').querySelectorAll('tr')[i].querySelectorAll('button')[1].style.display = 'none';
-                            document.getElementById('tablebody').querySelectorAll('tr')[i].querySelector('span').style.display = 'block';
-                                  
-                        }  else {
-                            document.getElementById('tablebody').querySelectorAll('tr')[i].querySelectorAll('button')[1].style.display = 'block';
-                            document.getElementById('tablebody').querySelectorAll('tr')[i].querySelectorAll('button')[0].style.display = 'none';
+        if(document.getElementById('tablebody').querySelectorAll('tr')[i]) {
+            var joinbtnvis = document.getElementById('tablebody').querySelectorAll('tr')[i].querySelector('span').style.display;
+            if(status.includes("in 10 minutes")  || status.includes("in 9 minutes") || status.includes("in 8 minutes") || status.includes("in 7 minutes") || status.includes("in 6 minutes")  || status.includes("in 5 minutes") || status.includes("in 4 minutes") || status.includes("in 3 minutes") || status.includes("in 2 minutes") || status.includes("minutes ago") || status.includes("seconds ago")  ) {
+                firebase.database().ref('/room').on('value', function(snapshot){ 
+                    snapshot.forEach((childSnapshot) => {
+                        if(sessioncontainertable.id === childSnapshot.val().sessiontime) {
+                            if(childSnapshot.val().mentoronline > 0 && joinbtnvis === 'none'){
+                                document.getElementById('tablebody').querySelectorAll('tr')[i].querySelectorAll('button')[0].style.display = 'block';
+                                document.getElementById('tablebody').querySelectorAll('tr')[i].querySelectorAll('button')[1].style.display = 'none';
+                                document.getElementById('tablebody').querySelectorAll('tr')[i].querySelector('span').style.display = 'block';
+                                    
+                            }  else {
+                                document.getElementById('tablebody').querySelectorAll('tr')[i].querySelectorAll('button')[1].style.display = 'block';
+                                document.getElementById('tablebody').querySelectorAll('tr')[i].querySelectorAll('button')[0].style.display = 'none';
+                            }
+                                
                         }
-                            
-                    }
+                    })
+                    
                 })
-                
-            })
-        } 
+            } 
+        }
+        
     }
   
 }
@@ -150,10 +117,12 @@ logoutbtn.addEventListener('click', ( e ) => {
     e.preventDefault();
 
 })
+// checkSessionValidity();
+// showData();
 // showData();
 function myFunction() {
-    myVar = setInterval(checkSessionValidity, 4000);
-    init = setInterval(showData, 4000);
+    myVar = setInterval(checkSessionValidity, 5000);
+    init = setInterval(showData, 5000);
 }
 
 myFunction();
