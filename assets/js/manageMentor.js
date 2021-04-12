@@ -51,6 +51,7 @@ function signupmentor(mentormail,mentorpass, mentorship, mentorname) {
                     uid: user.uid
                 })
                 alertify.success('Mentor Added!');
+                location.reload();
             }, (err) => {
                 alertify.error('Something Error Happened!');
             })

@@ -29,6 +29,8 @@ function signInWithEmailPassword() {
                   } 
                 else if(childSnapshot.val().email === user.email && childSnapshot.val().status === 'user' && childSnapshot.val().count > 0){
                   document.getElementById('errormsg').innerHTML = `You Are Logged In From Different Device. Please Logout to Continue with this Session`;
+                  sessionStorage.setItem('loginemail',email);
+                  sessionStorage.setItem('loginpassword',password);
                   document.getElementById('errormsg').hidden = false;
                   document.getElementById('userlogoutbtn').hidden = false;
                   document.getElementById('gobackbtn').hidden = false;
@@ -57,7 +59,7 @@ function signInWithEmailPassword() {
     firebase.auth().signOut().then(() => {
       firebase.database().ref('/login/user').on('value', function(snapshot){
           snapshot.forEach((childSnapshot)=>{
-              if(childSnapshot.val().count > 0) {
+              if(childSnapshot.val().count > 0 && childSnapshot.val().email === sessionStorage.getItem('loginemail')) {
                   firebase.database().ref('/login/user/'+childSnapshot.val().random).update({
                       count: 0
                   });
