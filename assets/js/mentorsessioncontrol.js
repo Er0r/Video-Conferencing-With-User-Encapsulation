@@ -86,8 +86,8 @@ function showData(){
 
  
 }
-
-setInterval(showData,2000);
+showData();
+setInterval(showData,8000);
 
 function checkSessionValidity() {
     var len = document.getElementById('session_contain').querySelectorAll('div').length;

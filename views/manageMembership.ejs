@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
 <script>
-    function AdminvalidateToken(){
+    function AdminvalidateToken(){  
         var flag = 0;
         firebase.database().ref('/login/admin').once('value').then((snapshot)=>{
             snapshot.forEach((childSnapshot)=>{

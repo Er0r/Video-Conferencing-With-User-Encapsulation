@@ -9,6 +9,8 @@ document.getElementById('addmentorshipbtn').addEventListener('click', ( e ) => {
         random: random
     }).then(() => {
         alert('Successfully Done!');
+        document.getElementById('membership').value = '';
+        document.getElementById('inputcontainer').value = '';
     })
 
     for(var i = 1; i < sessionlength;i++) {
