@@ -5,60 +5,45 @@ function showData(){
     selectprogram.innerHTML = ``;
     firebase.database().ref('/mentorship').on('value', function(snapshot){
         snapshot.forEach((childSnapshot) => { 
-            if(childSnapshot.val().mentorshipname === sessionStorage.getItem('mentorship')) {
-                var showsession = document.createElement('option');
-                sessionStorage.setItem('randomsession', childSnapshot.val().random);
-                showsession.innerHTML = `${childSnapshot.val().mentorshipname}`;
-                selectprogram.appendChild(showsession);
-            }
-        })
-    })
-    
-   var sessionlist = document.getElementById('sessionlist');
-   sessionlist.innerHTML = ``;
-   firebase.database().ref('/mentorship/'+`${sessionStorage.getItem('randomsession')}/`+`${sessionStorage.getItem('mentorship')}`).on('value', function(snapshot){
-        snapshot.forEach((childSnapshot) => { 
-           var newsessionlist = document.createElement('option');
-           newsessionlist.innerHTML = `
-                ${childSnapshot.val().sessionName}
+            var showsession = document.createElement('option');
+            showsession.innerHTML = `
+                ${childSnapshot.val().mentorshipname}
             `;
-           sessionlist.appendChild(newsessionlist);
+            selectprogram.appendChild(showsession);
         })
-        
     })
+   
+   
 	var session_contain = document.getElementById('session_contain');
     session_contain.innerHTML = ``;
 	firebase.database().ref('/room').on('value', function(snapshot){
         snapshot.forEach((childSnapshot) => {
-            if(childSnapshot.val().membership === sessionStorage.getItem('mentorship')) {
-                var newsession = document.createElement('div');
-                newsession.className = " p-2 font-weight-bold";
-                
-                let sessionLink = childSnapshot.val().sessionLink;
-                let roomName = childSnapshot.val().roomName;
-                let sessionTime = childSnapshot.val().sessiontime;
-                newsession.id = `${sessionTime}`;
-                newsession.style.display = 'none'; 
-                newsession.innerHTML = `
-                    ${childSnapshot.val().roomName} <br /> ${childSnapshot.val().sessiontime} <br /><span
-                        class="btn btn-default text-white rounded-pill py-1"
-                        style="display:none; background-color: #08165c" 
-                        id="sessionbtn-${session_count}"
-                        onclick="startSession('${sessionLink}', '${roomName}')"
-                        >Join</span
-                    >
-                `
-                session_contain.appendChild(newsession);
-                session_count++;
-            }
+            var newsession = document.createElement('div');
+            newsession.className = " p-2 font-weight-bold";
             
+            let sessionLink = childSnapshot.val().sessionLink;
+            let roomName = childSnapshot.val().roomName;
+            let sessionTime = childSnapshot.val().sessiontime;
+            newsession.id = `${sessionTime}`;
+            newsession.style.display = 'none'; 
+            newsession.innerHTML = `
+                ${childSnapshot.val().roomName} <br /> ${childSnapshot.val().sessiontime} <br /><span
+                    class="btn btn-default text-white rounded-pill py-1"
+                    style="display:none; background-color: #08165c" 
+                    id="sessionbtn-${session_count}"
+                    onclick="startSession('${sessionLink}', '${roomName}')"
+                    >Join</span
+                >
+            `
+            session_contain.appendChild(newsession);
+            session_count++;  
         })
         checkSessionValidity();
     })	
 
     firebase.database().ref('/room').on('value', function(snapshot){
         snapshot.forEach((childSnapshot) => {
-            if(childSnapshot.val().membership === sessionStorage.getItem('mentorship')) {
+          
             var newsession = document.createElement('div');
             newsession.className = "bg-light p-2 h5 font-weight-bold";
             
@@ -78,16 +63,44 @@ function showData(){
             `
             up_session_contain.appendChild(newsession);
             session_count++;
-            }
+            
         })
         checkSessionValidity();
     })
-    
-
- 
 }
+
+function showSessionList() {
+    var selectprogram = document.getElementById('select-program').value;
+    sessionStorage.setItem('membership',selectprogram );
+    
+    firebase.database().ref('/mentorship').on('value', function(snapshot){
+        snapshot.forEach((childSnapshot) => { 
+            if(childSnapshot.val().mentorshipname === selectprogram) {
+                sessionStorage.setItem('randomsession', childSnapshot.val().random);
+            }
+        })
+    })
+
+    var sessionlist = document.getElementById('sessionlist');
+    sessionlist.innerHTML = ``;
+    firebase.database().ref('/mentorship/'+`${sessionStorage.getItem('randomsession')}/`+`${sessionStorage.getItem('membership')}`).on('value', function(snapshot){
+        snapshot.forEach((childSnapshot) => { 
+        var newsessionlist = document.createElement('option');
+        newsessionlist.innerHTML = `
+                ${childSnapshot.val().sessionName}
+            `;
+        sessionlist.appendChild(newsessionlist);
+        })
+            
+    })
+}
+
 showData();
-setInterval(showData,8000);
+// showSessionList();
+// setInterval(showData,8000);
+// setInterval(showSessionList, 2000);
+
+
 
 function checkSessionValidity() {
     var len = document.getElementById('session_contain').querySelectorAll('div').length;

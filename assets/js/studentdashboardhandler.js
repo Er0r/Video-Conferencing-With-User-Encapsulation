@@ -118,7 +118,7 @@ logoutbtn.addEventListener('click', ( e ) => {
 
 })
 // checkSessionValidity();
-// showData();
+showData();
 // showData();
 function myFunction() {
     myVar = setInterval(checkSessionValidity, 5000);

@@ -63,7 +63,7 @@ function addvalue() {
         roomName: sessionStorage.getItem('roomName'),
         mentoronline: 0,
         mentorName: sessionStorage.getItem('mentorname'),
-        membership: sessionStorage.getItem('mentorship'),
+        membership: sessionStorage.getItem('membership'),
         sessiontime: sessionStorage.getItem('sessiontime'),
         selectprogram: sessionStorage.getItem('selectprogram'),
         random: random,

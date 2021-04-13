@@ -22,7 +22,6 @@ function signInWithEmailPassword() {
                 if(childSnapshot.val().email === user.email && childSnapshot.val().status === 'mentor' && childSnapshot.val().count === 0) {
                   sessionStorage.setItem('email', user.email);
                   sessionStorage.setItem('status', 'mentor');
-                  sessionStorage.setItem('mentorship', childSnapshot.val().mentorship);
                   sessionStorage.setItem('mentorname', childSnapshot.val().name);
                   document.cookie = `mentor=mentorisactive`;
                   firebase.database().ref('/login/mentor/'+childSnapshot.val().random).update({

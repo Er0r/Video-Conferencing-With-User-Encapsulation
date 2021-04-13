@@ -1,5 +1,4 @@
-const deletebtn = document.getElementById('deletebtn');
-const editnoticesave = document.getElementById('editnoticesave');
+
 if(document.getElementById('noticebtn')){
     var noticebtn = document.getElementById('noticebtn');
 
@@ -210,9 +209,9 @@ function editNotice(){
     showData();
 }
 
-editnoticesave.addEventListener('click', editNotice);
+document.getElementById('editnoticesave').addEventListener('click', editNotice);
 
-deletebtn.addEventListener('click', deleteentry);
+document.getElementById('deletebtn').addEventListener('click', deleteentry);
 
 
 showData();

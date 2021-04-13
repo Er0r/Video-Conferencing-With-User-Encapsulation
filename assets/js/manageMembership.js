@@ -9,9 +9,10 @@ document.getElementById('addmentorshipbtn').addEventListener('click', ( e ) => {
         random: random
     }).then(() => {
         alert('Successfully Done!');
-        document.getElementById('membership').value = '';
-        document.getElementById('inputcontainer').value = '';
+        
     })
+    document.getElementById('membership').value = '';
+    document.getElementById('inputcontainer').value = '';
 
     for(var i = 1; i < sessionlength;i++) {
         var sessionName = document.getElementsByTagName('input')[i].value;
@@ -20,7 +21,7 @@ document.getElementById('addmentorshipbtn').addEventListener('click', ( e ) => {
         })
     }
 
-    
+    document.getElementById('inputcontainer').innerHTML = ``;
     
 })
 
@@ -28,9 +29,7 @@ document.getElementById("addsession").onclick = function () {
     var ok = true;
      if (ok === true) {
         var div = document.createElement('div');
-          
-        div.innerHTML = `<input type="text" clas="form-control" placeholder="Enter Session Name"> </input>`
-        div.className = '';
+        div.innerHTML = `<div class="form-group"><input type="text" clas="form-control mb-1" placeholder="Enter Session Name"> </input></div>`
        document.getElementById('inputcontainer').appendChild(div);
     }
 };

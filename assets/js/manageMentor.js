@@ -18,14 +18,13 @@ addmentorbtn.addEventListener('click', ( e ) => {
     e.preventDefault();
     var mentormail = document.getElementById('mentormail').value;
     var mentorpass = Math.random().toString(36).substring(2,11); 
-    var mentorship = document.getElementById('mentorship').value;
     var mentorname = document.getElementById('mentorname').value;
-    signupmentor(mentormail,mentorpass, mentorship, mentorname);
+    signupmentor(mentormail,mentorpass, mentorname);
 })
 
 
-function signupmentor(mentormail,mentorpass, mentorship, mentorname) {
-    if( !mentormail || mentorship === 'Select Program') {
+function signupmentor(mentormail,mentorpass, mentorname) {
+    if( !mentormail) {
         alert('Please Fill Up the Information with Correct Credentials');
     } else {
         firebase.auth().createUserWithEmailAndPassword(mentormail, mentorpass)
@@ -45,13 +44,14 @@ function signupmentor(mentormail,mentorpass, mentorship, mentorname) {
                     count: 0,
                     name: mentorname,
                     email: mentormail,
-                    mentorship: mentorship,
                     random: random,
                     status: 'mentor',
                     uid: user.uid
                 })
+                alertify.set('notifier','position', 'top-center');
                 alertify.success('Mentor Added!');
-                location.reload();
+                document.getElementById('mentormail').value='';
+                document.getElementById('mentorname').value='';
             }, (err) => {
                 alertify.error('Something Error Happened!');
             })
