@@ -40,7 +40,8 @@ function showData(){
         })
         checkSessionValidity();
     })	
-
+    var up_session_contain = document.getElementById('up_session_contain');
+    up_session_contain.innerHTML = ``;
     firebase.database().ref('/room').on('value', function(snapshot){
         snapshot.forEach((childSnapshot) => {
           
@@ -60,6 +61,13 @@ function showData(){
                     onclick="startSession('${sessionLink}', '${roomName}')"
                     >Join</span
                 >
+                <br /><span
+                class="btn btn-danger text-white rounded-pill py-1"
+                style="" 
+                id="deletesession"
+                onclick="deleteSession('${sessionTime}')"
+                >Delete</span
+            >
             `
             up_session_contain.appendChild(newsession);
             session_count++;
@@ -67,6 +75,22 @@ function showData(){
         })
         checkSessionValidity();
     })
+}
+function deleteSession(id){
+    firebase.database().ref('/room').on('value', function(snapshot){
+        snapshot.forEach((childSnapshot)=>{ 
+            if(childSnapshot.val().sessiontime === id) {
+                var ref = firebase.database().ref(`/room/${childSnapshot.val().random}`);
+                ref.remove().then(() => {
+                    alertify.set('notifier', 'position', 'top-center');
+                    alertify.success(`Session is deleted`);
+                    showData();
+                    location.reload();
+                })
+            }   
+        })
+    })
+
 }
 
 function showSessionList() {
@@ -100,8 +124,6 @@ showData();
 // setInterval(showData,8000);
 // setInterval(showSessionList, 2000);
 
-
-
 function checkSessionValidity() {
     var len = document.getElementById('session_contain').querySelectorAll('div').length;
     for(var i =0; i < len; i++) {
@@ -123,7 +145,6 @@ function checkSessionValidity() {
 }
 
 function startSession(sessionLink, roomName) {
-
     firebase.database().ref('/room').on('value', function(snapshot){
         snapshot.forEach((childSnapshot) => { 
             if(childSnapshot.val().mentorName === sessionStorage.getItem('mentorname')) {
