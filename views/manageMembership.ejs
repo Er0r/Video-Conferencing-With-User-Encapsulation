@@ -28,23 +28,40 @@
 </head>
 <body>
     <div class="container">
-        <div class="card col-md-6">
-            <div class="p-2">
-                <div class="form-group">
-                    <label for="exampleFormControlInput1">Membership: </label>
-                    <input
-                        type="text"
-                        class="form-control"
-                        id="membership"
-                        placeholder="Enter Membership Status"
-                    />
-                </div>
+        <div class="row">
+            <div class=" col-md-5 ml-2">
+                <div class="p-2">
+                    <div class="form-group">
+                        <label for="exampleFormControlInput1">Membership: </label>
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="membership"
+                            placeholder="Enter Membership Status"
+                        />
+                    </div>
+                        
+                    <div id="inputcontainer" class="form-group"></div>
                     
-                <div id="inputcontainer" class="form-group"></div>
-                
-                <button class="btn btn-primary" id="addsession">(+)</button>       
+                    <button class="btn btn-primary" id="addsession">(+)</button>       
 
-                <button class="btn btn-primary" id="addmentorshipbtn">Save</button>
+                    <button class="btn btn-primary" id="addmentorshipbtn">Save</button>
+                </div>
+            </div>
+            <div class="card p-2 col-md-6">
+                <h3 class="text-center">Mentorship Details</h3>		
+                    <div style="height: 20rem ; overflow:auto;">
+                        <table class="table table-hover" id="sessiontable">
+                            <thead >
+                                <tr>
+                                    <th>MentorShip Name</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="mentorshiptablebody" class="font-weight-bold" >
+                            </tbody>
+                        </table>
+                    </div>
             </div>
         </div>
     </div>

@@ -132,3 +132,10 @@ background-color: transparent;
 .content-container {
 padding-left: 220px;
 }
+
+li{
+cursor: auto;
+}
+.active, li:hover {
+  background-color:#2574A9;
+}

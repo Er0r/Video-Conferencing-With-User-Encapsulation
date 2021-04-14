@@ -56,9 +56,11 @@ function signup(email,username,password, membership, useraddress, userlocation) 
                 userlocation: userlocation,
                 uid: user.uid
             })
+            alertify.set('notifier', 'position', 'top-center');
             alertify.success('User Added!');
             location.reload();
         }, (err) => {
+            alertify.set('notifier', 'position', 'top-center');
             alertify.error('Something Error Happened!');
         })
     })
