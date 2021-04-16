@@ -40,14 +40,14 @@ async function signInWithEmailPassword(){
                 }  
             })
             if(logginattempt === 0) {
-              document.getElementById('errormsg').innerHTML = `Marhaba, tomar password vul`;
+              document.getElementById('errormsg').innerHTML = `Your Credentials Are Wrong. Please Try Again With Right Credentials`;
               document.getElementById('errormsg').hidden = false;
             }
         }) 
      
       }).catch((error) => {
         var errormsg  = error.message;
-        document.getElementById('errormsg').innerHTML = `Your Email/Password Is Wrong. Please Try Again With Right Email And Password!`;
+        document.getElementById('errormsg').innerHTML = `Your Credentials Are Wrong. Please Try Again With Right Credentials`;
         document.getElementById('errormsg').hidden = false;  
         
       })
