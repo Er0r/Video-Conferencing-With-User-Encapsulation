@@ -73,7 +73,6 @@ async function signInWithEmailPassword(){
                   let em = sessionStorage.getItem('loginemail');
                   let pass = sessionStorage.getItem('loginpassword');
                   if(em && pass) {
-                    alert(em + ' ' + pass);
                     location.replace(`${location.origin}/testStudent`); 
                   } else {
                     location.replace(`${location.origin}/studentlogin`);
