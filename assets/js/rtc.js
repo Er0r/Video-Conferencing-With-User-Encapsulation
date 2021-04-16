@@ -8,20 +8,20 @@
         const room = window.location.href;
         const username = sessionStorage.getItem('email');
  
-         let commElem = document.getElementsByClassName( 'room-comm' );
+        let commElem = document.getElementsByClassName( 'room-comm' );
  
          for ( let i = 0; i < commElem.length; i++ ) {
              commElem[i].attributes.removeNamedItem( 'hidden' );
          }
  
          var pc = [];
- 
+
          let socket = io( '/stream' );
  
          var socketId = '';
          var myStream = '';
          var screen = '';
- 
+
          //Get user video by default
          getAndSetUserStream();
  
@@ -66,7 +66,7 @@
  
                          //save my stream
                          myStream = stream;
-                    
+ 
                          stream.getTracks().forEach( ( track ) => {
                              pc[data.sender].addTrack( track, stream );
                          } );
@@ -77,7 +77,7 @@
  
                          socket.emit( 'sdp', { description: pc[data.sender].localDescription, to: data.sender, sender: socketId } );
                      } ).catch( ( e ) => {
-                         
+                      
                      } );
                  }
  
@@ -97,10 +97,10 @@
              h.getUserFullMedia().then( ( stream ) => {
                  //save my stream
                  myStream = stream;
-                
+ 
                  h.setLocalStream( stream );
              } ).catch( ( e ) => {
-                 
+               
              } );
          }
  
@@ -123,7 +123,7 @@
  
          function init( createOffer, partnerName ) {
              pc[partnerName] = new RTCPeerConnection( h.getIceServer() );
-
+ 
              if ( screen && screen.getTracks().length ) {
                  screen.getTracks().forEach( ( track ) => {
                      pc[partnerName].addTrack( track, screen );//should trigger negotiationneeded event
@@ -132,7 +132,6 @@
  
              else if ( myStream ) {
                  myStream.getTracks().forEach( ( track ) => {
-                    console.log(track);
                      pc[partnerName].addTrack( track, myStream );//should trigger negotiationneeded event
                  } );
              }
@@ -143,18 +142,16 @@
                      myStream = stream;
  
                      stream.getTracks().forEach( ( track ) => {
-                         console.log(track);
                          pc[partnerName].addTrack( track, stream );//should trigger negotiationneeded event
                      } );
  
                      h.setLocalStream( stream );
                  } ).catch( ( e ) => {
-                    
+                     
                  } );
-                 
              }
  
-             
+ 
  
              //create offer
              if ( createOffer ) {
@@ -185,30 +182,23 @@
  
                  else {
                      //video elem
-                    let newVid = document.createElement( 'video' );
-                    newVid.id = `${ partnerName }-video`;
-                    newVid.srcObject = str;
-                    newVid.autoplay = true;
-                    
-                    newVid.className = 'remote-video';
-                    
-
-                    let newcaption = document.createElement( 'div' );
-                    newcaption.id = `${ partnerName }-caption`;
-                    //  newcaption.setAttribute('src', '../assets/css/logo.png')
-                    //  newcaption.setAttribute('position', 'absolute')
-                    //  newcaption.setAttribute('z-index', '1')
-                    //  documnet.getElementById('newcaption').appendChild(newcaption);
-                    newcaption.innerHTML = `<img src="../assets/css/logo.png" style="bottom:5px;right:5px;height:50px;width:50px;position: absolute; z-index: 1"></img>`;
-
-
-                     //video controls elements
+                     let newVid = document.createElement( 'video' );
+                     newVid.id = `${ partnerName }-video`;
+                     newVid.srcObject = str;
+                     newVid.autoplay = true;
+                     newVid.className = 'remote-video';
+ 
+                     let newcaption = document.createElement( 'div' );
+                     newcaption.id = `${ partnerName }-caption`;
+                     //  newcaption.setAttribute('src', '../assets/css/logo.png')
+                     //  newcaption.setAttribute('position', 'absolute')
+                     //  newcaption.setAttribute('z-index', '1')
+                     //  documnet.getElementById('newcaption').appendChild(newcaption);
+                     newcaption.innerHTML = `<img src="../assets/css/logo.png" style="bottom:5px;right:5px;height:50px;width:50px;position: absolute; z-index: 1"></img>`;                     //video controls elements
                      let controlDiv = document.createElement( 'div' );
                      controlDiv.className = 'remote-video-controls';
                      controlDiv.innerHTML = `<i class="fa fa-microphone text-white pr-3 mute-remote-mic" title="Mute"></i>
                          <i class="fa fa-expand text-white expand-remote-video" title="Expand"></i>`;
-                    // controlDiv.innerHTML = `<img src="../assets/css/logo.png" id="imgid" alt="" >`
- 
                      //create a new div for card
                      let cardDiv = document.createElement( 'div' );
                      cardDiv.className = 'card card-sm';
@@ -244,13 +234,11 @@
              pc[partnerName].onsignalingstatechange = ( d ) => {
                  switch ( pc[partnerName].signalingState ) {
                      case 'closed':
-                      
+                       
                          h.closeVideo( partnerName );
                          break;
                  }
              };
-             
-            
          }
  
  
@@ -292,7 +280,7 @@
                  h.toggleShareIcons( false );
                  broadcastNewTracks( myStream, 'video' );
              } ).catch( ( e ) => {
-                 
+               
              } );
          }
  
@@ -330,37 +318,41 @@
          }
  
  
-      
+       
  
-      
+ 
          //When the video icon is clicked
          document.getElementById( 'toggle-video' ).addEventListener( 'click', ( e ) => {
              e.preventDefault();
  
              let elem = document.getElementById( 'toggle-video' );
-             if ( !myStream.getVideoTracks()[0].enabled ) {
-                e.target.classList.remove( 'fa-video-slash' );
-                e.target.classList.add( 'fa-video' );
-                elem.setAttribute( 'title', 'Hide Video' );
-
-                myStream.getVideoTracks()[0].enabled = true;
+ 
+             if ( myStream.getVideoTracks()[0].enabled ) {
+                 e.target.classList.remove( 'fa-video' );
+                 e.target.classList.add( 'fa-video-slash' );
+                 elem.setAttribute( 'title', 'Show Video' );
+ 
+                 myStream.getVideoTracks()[0].enabled = false;
              }
  
              else {
-                e.target.classList.remove( 'fa-video' );
-                e.target.classList.add( 'fa-video-slash' );
-                elem.setAttribute( 'title', 'Show Video' );
-
-                myStream.getVideoTracks()[0].enabled = false;
+                 e.target.classList.remove( 'fa-video-slash' );
+                 e.target.classList.add( 'fa-video' );
+                 elem.setAttribute( 'title', 'Hide Video' );
+ 
+                 myStream.getVideoTracks()[0].enabled = true;
              }
  
              broadcastNewTracks( myStream, 'video' );
          } );
-
+ 
+ 
+         //When the mute icon is clicked
          document.getElementById( 'toggle-mute' ).addEventListener( 'click', ( e ) => {
              e.preventDefault();
  
              let elem = document.getElementById( 'toggle-mute' );
+ 
              if ( myStream.getAudioTracks()[0].enabled ) {
                  e.target.classList.remove( 'fa-microphone-alt' );
                  e.target.classList.add( 'fa-microphone-alt-slash' );
