@@ -22,21 +22,30 @@ function signInWithEmailPassword() {
                   firebase.database().ref('/login/admin/'+childSnapshot.val().random).update({
                     count: firebase.database.ServerValue.increment(1)
                   });
-                  logginattempt = 1;
+                  logginattempt=1; 
                   location.replace(`${location.origin}/admindashboard`); 
                   return true;
                 }
                 else if(childSnapshot.val().email === user.email && childSnapshot.val().status === 'admin' && childSnapshot.val().count > 0){
                   document.getElementById('errormsg').innerHTML = `You Are Logged In From Different Device. Please Press Logout TO Continue with this Session`;
                   document.getElementById('errormsg').hidden = false;
+                  sessionStorage.setItem('adminemail',email);
+                  sessionStorage.setItem('adminpassword', password);
+                  
                   document.getElementById('adminlogoutbtn').hidden = false;
                   document.getElementById('gobackbtn').hidden = false;
                   document.getElementById('test').style.display = 'none';
-                  logginattempt = 1;
+                  logginattempt=1; 
                   return true;
-                } 
+                }
+                
             })
+            if(logginattempt === 0) {
+                document.getElementById('errormsg').innerHTML = `Marhaba, tomar password vul`;
+                document.getElementById('errormsg').hidden = false;
+            }
         })
+        
       }).catch((error) => {
         var errormsg  = error.message;
         document.getElementById('errormsg').innerHTML = `${errormsg}`;
@@ -54,9 +63,16 @@ document.getElementById('adminlogoutbtn').addEventListener('click', ( e ) => {
                     firebase.database().ref('/login/admin/'+childSnapshot.val().random).update({
                         count: 0
                     });
-                    sessionStorage.clear();
+                    // sessionStorage.clear();
                     alertify.success('Signout Successfully');
-                    location.replace(`${location.origin}/adminlogin`);
+                    let em = sessionStorage.getItem('adminemail');
+                    let pass = sessionStorage.getItem('adminpassword');
+                    if(em && pass) {
+                      location.replace(`${location.origin}/test`);
+                    } else{
+                      location.replace(`${location.origin}/adminlogin`);
+                    } 
+                      
                 }
             })
         })

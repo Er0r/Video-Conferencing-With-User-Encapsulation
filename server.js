@@ -149,6 +149,14 @@ app.get('/mentornotice', (req,res) => {
         res.render('errorlogin');
 })
 
+app.get('/testStudent', (req,res) => {
+    res.render('testStudent');
+})
+
+app.get('/testMentor', (req,res) => {
+    res.render('testmentor');
+})
+
 server.listen(port,() => {
     console.log(`Server running at port `+port);
   });

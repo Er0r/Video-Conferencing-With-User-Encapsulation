@@ -2,16 +2,16 @@ var userref = firebase.database().ref('/login/user');
 
 var userloginbtn = document.getElementById('userloginbtn');
 
-function signInWithEmailPassword() {
+async function signInWithEmailPassword(){
     var email = document.getElementById('user_email').value;
     var password = document.getElementById('user_pass').value;
     if(!email || !password) { 
       alert('Please Enter Your Email And Password !');
     } else {
+      var logginattempt = 0;
       firebase.auth().signInWithEmailAndPassword(email, password)
       .then((userCredential) => {
         var user = userCredential.user;
-        var logginattempt = 0;
         firebase.database().ref('/login/user').orderByKey().once("value").then(function(snapshot){
             snapshot.forEach((childSnapshot)=>{
                 if(childSnapshot.val().email === user.email && childSnapshot.val().status === 'user' && childSnapshot.val().count === 0) {
@@ -39,14 +39,19 @@ function signInWithEmailPassword() {
                   return true;
                 }  
             })
+            if(logginattempt === 0) {
+              document.getElementById('errormsg').innerHTML = `Marhaba, tomar password vul`;
+              document.getElementById('errormsg').hidden = false;
+            }
         }) 
      
       }).catch((error) => {
         var errormsg  = error.message;
-        document.getElementById('errormsg').innerHTML = `${errormsg}`;
+        document.getElementById('errormsg').innerHTML = `Your Email/Password Is Wrong. Please Try Again With Right Email And Password!`;
         document.getElementById('errormsg').hidden = false;  
         
       })
+
     }   
   }
   userloginbtn.addEventListener('click', signInWithEmailPassword);
@@ -59,13 +64,20 @@ function signInWithEmailPassword() {
     firebase.auth().signOut().then(() => {
       firebase.database().ref('/login/user').on('value', function(snapshot){
           snapshot.forEach((childSnapshot)=>{
-              if(childSnapshot.val().count > 0 && childSnapshot.val().email === sessionStorage.getItem('loginemail')) {
+              if(childSnapshot.val().count > 0 ) {
                   firebase.database().ref('/login/user/'+childSnapshot.val().random).update({
                       count: 0
                   });
-                  sessionStorage.clear();
+                  // sessionStorage.clear();
                   alertify.success('Signout Successfully');
-                  location.replace(`${location.origin}/studentlogin`);
+                  let em = sessionStorage.getItem('loginemail');
+                  let pass = sessionStorage.getItem('loginpassword');
+                  if(em && pass) {
+                    alert(em + ' ' + pass);
+                    location.replace(`${location.origin}/testStudent`); 
+                  } else {
+                    location.replace(`${location.origin}/studentlogin`);
+                  } 
               }
           })
       })

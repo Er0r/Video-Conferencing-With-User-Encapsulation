@@ -34,12 +34,18 @@ function signInWithEmailPassword() {
                 else if(childSnapshot.val().email === user.email && childSnapshot.val().status === 'mentor' && childSnapshot.val().count > 0){
                   document.getElementById('errormsg').innerHTML = `You Are Logged In From Different Device. Please Press Logout TO Continue with this Session`;
                   document.getElementById('errormsg').hidden = false;
+                  sessionStorage.setItem('mentorloginemail',email);
+                  sessionStorage.setItem('mentorloginpassword', password);
                   document.getElementById('mentorlogoutbtn').hidden = false;
                   document.getElementById('test').style.display = 'none';
                   logginattempt = 1;
                   return true;
                 } 
             })
+            if(logginattempt === 0) {
+              document.getElementById('errormsg').innerHTML = `Marhaba, tomar password vul`;
+              document.getElementById('errormsg').hidden = false;
+            }
         })
       }).catch((error) => {
         var errormsg  = error.message;
@@ -60,9 +66,16 @@ document.getElementById('mentorlogoutbtn').addEventListener('click', ( e ) => {
                         count: 0
                     });
                     document.cookie = "mentor=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-                    sessionStorage.clear();
+                    // sessionStorage.clear();
                     alertify.success('Signout Successfully');
-                    location.replace(`${location.origin}/mentorlogin`);
+                    let em = sessionStorage.getItem('mentorloginemail');
+                    let pass = sessionStorage.getItem('mentorloginpassword');
+                    if(em && pass) {
+                      location.replace(`${location.origin}/testMentor`);
+                    } else {
+                      location.replace(`${location.origin}/mentorlogin`);
+                    }
+                    
                 }
             })
         })
