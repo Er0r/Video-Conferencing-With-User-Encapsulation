@@ -1,6 +1,6 @@
 window.addEventListener( 'load', () => { 
     if(!localStorage.getItem('usermsg'))
-        localStorage.setItem('usermsg',0);
+        localStorage.setItem('usermsg',Date.now());
     if(sessionStorage.getItem('status') === 'mentor') {
         document.getElementById('studentchatsection').hidden = true;
         document.getElementById('mentordiv').hidden = false;
@@ -57,7 +57,6 @@ function showUser() {
 
 
 function UserShow(userset){
-    console.log(userset);
     for (let item of userset){
         var userbtn = document.createElement('div');
         var status = 'mentor';
@@ -104,7 +103,7 @@ document.getElementById('studentmsgsbtn').addEventListener('click', ( e ) => {
             })
             
             count++;
-            localStorage.setItem('usermsg',count);
+            localStorage.setItem('usermsg',Date.now());
         })
         showUserMsg();
     }
