@@ -190,10 +190,7 @@
  
                      let newcaption = document.createElement( 'div' );
                      newcaption.id = `${ partnerName }-caption`;
-                     //  newcaption.setAttribute('src', '../assets/css/logo.png')
-                     //  newcaption.setAttribute('position', 'absolute')
-                     //  newcaption.setAttribute('z-index', '1')
-                     //  documnet.getElementById('newcaption').appendChild(newcaption);
+        
                      newcaption.innerHTML = `<img src="../assets/css/logo.png" style="bottom:5px;right:5px;height:50px;width:50px;position: absolute; z-index: 1"></img>`;                     //video controls elements
                      let controlDiv = document.createElement( 'div' );
                      controlDiv.className = 'remote-video-controls';
