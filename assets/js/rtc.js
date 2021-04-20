@@ -349,7 +349,7 @@
              e.preventDefault();
  
             let elem = document.getElementById( 'toggle-mute' );
-            console.log(myStream.getAudioTracks()[0]);
+       
              if ( myStream.getAudioTracks()[0].enabled ) {
                  e.target.classList.remove( 'fa-microphone-alt' );
                  e.target.classList.add( 'fa-microphone-alt-slash' );

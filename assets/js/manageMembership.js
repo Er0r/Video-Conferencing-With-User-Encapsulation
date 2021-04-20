@@ -42,6 +42,8 @@ function showData(){
 
 
 function editMentorShip(id) {
+    sessionStorage.setItem('editmembership', id);
+    document.getElementById('editmembership').value = sessionStorage.getItem('editmembership');
     firebase.database().ref('/mentorship').on('value', function(snapshot){
         snapshot.forEach((childSnapshot)=>{ 
             if(childSnapshot.val().mentorshipname === id) {
@@ -49,7 +51,7 @@ function editMentorShip(id) {
             }
         }) 
     })
-    sessionStorage.setItem('editmembership', id);
+    
 }
 
 function deleteMentorShip(id){
@@ -112,7 +114,7 @@ document.getElementById('editaddmentorshipbtn').addEventListener('click', ( e ) 
         alert('Successfully Done!');
         location.reload();
     })
-    document.getElementById('editmembership').value = '';
+    document.getElementById('editmembership').value = ``;
     document.getElementById('editinputcontainer').value = '';
 
     for(var i = 1; i < sessionlength;i++) {

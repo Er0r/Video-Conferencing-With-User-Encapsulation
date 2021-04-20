@@ -42,7 +42,16 @@ app.get('/test', (req,res) => {
 
 app.get('/room:id', (req,res) => {
     var link = req.link;
-    res.render('session', {link: link});
+    if(req.cookies.mentor || req.cookies.student){
+        res.render('session', {link: link});
+        return;
+    }
+    
+    else {
+        res.render('errorlogin');
+        return;
+    }
+    
 })
 
 app.get('/faq', (req,res) =>{

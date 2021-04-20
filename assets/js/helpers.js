@@ -215,7 +215,7 @@ export default {
         let parentdiv = e.target.parentElement.parentElement;
        elem.style.height= '100%';
        elem.style.width = '100%';
-       parentdiv.style.height= '300%';
+       parentdiv.style.height= '100%';
        parentdiv.style.width = '100%';
         // elem.requestFullscreen() || elem.mozRequestFullScreen() || elem.webkitRequestFullscreen() || elem.msRequestFullscreen();
     },
