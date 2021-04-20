@@ -1,27 +1,29 @@
 /**
- * @author MD.FAHIM HOSSEN <fahimmaria155@gmail.com>
+ * @author Amir Sanni <amirsanni@gmail.com>
  * @date 6th January, 2020
  */
  import h from './helpers.js';
 
  window.addEventListener( 'load', () => {
-        const room = window.location.href;
-        const username = sessionStorage.getItem('email');
+    const room = window.location.href;
+    const username = sessionStorage.getItem('email');
  
-        let commElem = document.getElementsByClassName( 'room-comm' );
+         let commElem = document.getElementsByClassName( 'room-comm' );
  
          for ( let i = 0; i < commElem.length; i++ ) {
              commElem[i].attributes.removeNamedItem( 'hidden' );
          }
  
          var pc = [];
-
+ 
          let socket = io( '/stream' );
  
          var socketId = '';
          var myStream = '';
          var screen = '';
-
+         var recordedStream = [];
+         var mediaRecorder = '';
+ 
          //Get user video by default
          getAndSetUserStream();
  
@@ -77,7 +79,7 @@
  
                          socket.emit( 'sdp', { description: pc[data.sender].localDescription, to: data.sender, sender: socketId } );
                      } ).catch( ( e ) => {
-                      
+                         console.error( e );
                      } );
                  }
  
@@ -100,7 +102,7 @@
  
                  h.setLocalStream( stream );
              } ).catch( ( e ) => {
-               
+                 console.error( `stream error: ${ e }` );
              } );
          }
  
@@ -114,6 +116,7 @@
  
              //emit chat message
              socket.emit( 'chat', data );
+ 
  
              //add localchat
              h.addChat( data, 'local' );
@@ -147,7 +150,7 @@
  
                      h.setLocalStream( stream );
                  } ).catch( ( e ) => {
-                     
+                     console.error( `stream error: ${ e }` );
                  } );
              }
  
@@ -188,19 +191,16 @@
                      newVid.autoplay = true;
                      newVid.className = 'remote-video';
  
-                     let newcaption = document.createElement( 'div' );
-                     newcaption.id = `${ partnerName }-caption`;
-        
-                     newcaption.innerHTML = `<img src="../assets/css/logo.png" style="bottom:5px;right:5px;height:50px;width:50px;position: absolute; z-index: 1"></img>`;                     //video controls elements
+                     //video controls elements
                      let controlDiv = document.createElement( 'div' );
                      controlDiv.className = 'remote-video-controls';
                      controlDiv.innerHTML = `<i class="fa fa-microphone text-white pr-3 mute-remote-mic" title="Mute"></i>
                          <i class="fa fa-expand text-white expand-remote-video" title="Expand"></i>`;
+ 
                      //create a new div for card
                      let cardDiv = document.createElement( 'div' );
                      cardDiv.className = 'card card-sm';
                      cardDiv.id = partnerName;
-                     cardDiv.appendChild(newcaption);
                      cardDiv.appendChild( newVid );
                      cardDiv.appendChild( controlDiv );
  
@@ -231,7 +231,7 @@
              pc[partnerName].onsignalingstatechange = ( d ) => {
                  switch ( pc[partnerName].signalingState ) {
                      case 'closed':
-                       
+                         console.log( "Signalling state is 'closed'" );
                          h.closeVideo( partnerName );
                          break;
                  }
@@ -259,7 +259,7 @@
                      stopSharingScreen();
                  } );
              } ).catch( ( e ) => {
-                
+                 console.error( e );
              } );
          }
  
@@ -277,7 +277,7 @@
                  h.toggleShareIcons( false );
                  broadcastNewTracks( myStream, 'video' );
              } ).catch( ( e ) => {
-               
+                 console.error( e );
              } );
          }
  
@@ -315,9 +315,33 @@
          }
  
  
-       
+         function startRecording( stream ) {
+             mediaRecorder = new MediaRecorder( stream, {
+                 mimeType: 'video/webm;codecs=vp9'
+             } );
  
+             mediaRecorder.start( 1000 );
+             toggleRecordingIcons( true );
  
+             mediaRecorder.ondataavailable = function ( e ) {
+                 recordedStream.push( e.data );
+             };
+ 
+             mediaRecorder.onstop = function () {
+                 toggleRecordingIcons( false );
+ 
+                 h.saveRecordedStream( recordedStream, username );
+ 
+                 setTimeout( () => {
+                     recordedStream = [];
+                 }, 3000 );
+             };
+ 
+             mediaRecorder.onerror = function ( e ) {
+                 console.error( e );
+             };
+         }
+
          //When the video icon is clicked
          document.getElementById( 'toggle-video' ).addEventListener( 'click', ( e ) => {
              e.preventDefault();
@@ -348,8 +372,8 @@
          document.getElementById( 'toggle-mute' ).addEventListener( 'click', ( e ) => {
              e.preventDefault();
  
-            let elem = document.getElementById( 'toggle-mute' );
-       
+             let elem = document.getElementById( 'toggle-mute' );
+ 
              if ( myStream.getAudioTracks()[0].enabled ) {
                  e.target.classList.remove( 'fa-microphone-alt' );
                  e.target.classList.add( 'fa-microphone-alt-slash' );
@@ -382,27 +406,58 @@
                  shareScreen();
              }
          } );
-         
-         document.getElementById('leavebtn').addEventListener('click', ( e ) => {
-            e.preventDefault();
-            if(sessionStorage.getItem('status') === 'mentor') {
-                location.replace(`${window.origin}/mentordashboard`);
-                var mentorname = sessionStorage.getItem('mentorname');
-                var random = sessionStorage.getItem('random');
-                var roomname = sessionStorage.getItem('roomName');
-                var ref = firebase.database().ref(`/room/${random}`);
-                ref.remove().then(() => {
-                    alert('ok');
-                });
-            }  
-            else if(sessionStorage.getItem('status') === 'student') 
-                location.replace(`${window.origin}/studentdashboard`);
-            else if(sessionStorage.getItem('status') === 'admin')
-                location.replace(`${window.origin}/admindashboard`);
-            else {
-                location.replace(`${window.origin}`);
-            }
-        })
+ 
+ 
+         //When record button is clicked
+         document.getElementById( 'record' ).addEventListener( 'click', ( e ) => {
+             /**
+              * Ask user what they want to record.
+              * Get the stream based on selection and start recording
+              */
+             if ( !mediaRecorder || mediaRecorder.state == 'inactive' ) {
+                 h.toggleModal( 'recording-options-modal', true );
+             }
+ 
+             else if ( mediaRecorder.state == 'paused' ) {
+                 mediaRecorder.resume();
+             }
+ 
+             else if ( mediaRecorder.state == 'recording' ) {
+                 mediaRecorder.stop();
+             }
+         } );
+ 
+ 
+         //When user choose to record screen
+         document.getElementById( 'record-screen' ).addEventListener( 'click', () => {
+             h.toggleModal( 'recording-options-modal', false );
+ 
+             if ( screen && screen.getVideoTracks().length ) {
+                 startRecording( screen );
+             }
+ 
+             else {
+                 h.shareScreen().then( ( screenStream ) => {
+                     startRecording( screenStream );
+                 } ).catch( () => { } );
+             }
+         } );
+ 
+ 
+         //When user choose to record own video
+         document.getElementById( 'record-video' ).addEventListener( 'click', () => {
+             h.toggleModal( 'recording-options-modal', false );
+ 
+             if ( myStream && myStream.getTracks().length ) {
+                 startRecording( myStream );
+             }
+ 
+             else {
+                 h.getUserFullMedia().then( ( videoStream ) => {
+                     startRecording( videoStream );
+                 } ).catch( () => { } );
+             }
+         } );
+     
  } );
  
-
